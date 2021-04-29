@@ -1,0 +1,108 @@
+.swiper-container {
+    height: 80vh;
+}
+
+.swiper-slide {
+    img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        display: block;
+        width: 100%;
+        min-height: 100%;
+        object-fit: cover;
+    }
+
+    &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(180deg, rgba(66, 66, 66, 0.675) 0%, rgba(66, 66, 66, 0) 37.54%), linear-gradient(0deg, rgba(53, 53, 53, 0.55), rgba(53, 53, 53, 0.55));
+    }
+}
+
+.swiper-pagination {
+    max-width: 1140px;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    padding: 0 15px;
+    bottom: 68px !important;
+    text-align: left !important;
+}
+
+.swiper-pagination-bullet {
+    width: 40px!important;
+    height: 3px!important;
+    border-radius: 0 !important;
+
+    background: #FFFFFF !important;
+    opacity: 0.3 !important;
+
+    &-active {
+        opacity: 1 !important;
+        background-color: #fff  !important;
+    }
+}
+
+.slider {
+    &__flex-wrapper {
+        position: relative;
+        z-index: 3;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding-bottom: 116px;
+    }
+
+    &__title {
+        font-family: 'CatLinz', serif;
+        font-size: 54px;
+        line-height: 100%;
+
+        color: #FFFFFF;
+        width: 80%;
+        margin-bottom: 30px;
+
+    }
+
+    &__text {
+        font-size: 18px;
+        line-height: 125%;
+        color: #FFFFFF;
+
+        width: 55%;
+    }
+
+    &__control-wrapper {
+        position: absolute;
+        height: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 15;
+    }
+
+    &__next, &__prev {
+        position: absolute;
+        width: 33px;
+        height: 30px;
+        bottom: 65px;
+        cursor: pointer;
+    }
+
+    &__next {
+        background: url('./imgs/arrowNext.svg') center center no-repeat;
+        right: 15px;
+    }
+
+    &__prev {
+        background: url('./imgs/arrowPrev.svg') center center no-repeat;
+        right: 73px;
+    }
+}

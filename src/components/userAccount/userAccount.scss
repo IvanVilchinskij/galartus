@@ -1,0 +1,28 @@
+.user-account {
+    padding: 50px 0;
+    margin-top: 113px;
+}
+
+.user {
+    width: 60%;
+    margin: 0 auto 30px;
+    padding: 20px;
+
+    &__title {
+        text-align: center;
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+    &__list-item {
+        display: flex;
+        justify-content: space-between;
+
+        margin-bottom: 10px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}

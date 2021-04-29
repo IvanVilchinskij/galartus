@@ -1,0 +1,16 @@
+.item-card {
+    width: 23.33%;
+    margin: 0 5% 30px;
+
+    &__img {
+        padding: 1.25rem;
+        height: 300px;
+        overflow: hidden;
+
+        img {
+            display: block;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+}

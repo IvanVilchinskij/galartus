@@ -1,0 +1,20 @@
+.footer {
+    padding: 15px 0 30px;
+    background-color: #343a40;
+
+    flex: 0 0 auto;
+
+    &__navbar {
+        margin-bottom: 15px;
+    }
+
+    &__info {
+        h4 {
+            text-align: center;
+            
+            a {
+                color: #fff;
+            }      
+        }
+    }
+}

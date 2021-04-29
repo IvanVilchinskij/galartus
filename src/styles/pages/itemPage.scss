@@ -1,0 +1,19 @@
+.item-page {
+    padding: 50px 0;
+    margin-top: 113px;
+}
+
+.item-info {
+    margin-bottom: 30px;
+    &__img {
+        padding-top: 15px;
+        height: 500px;
+        overflow: hidden;
+
+        img {
+            display: block;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+}
