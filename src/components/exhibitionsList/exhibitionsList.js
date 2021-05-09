@@ -14,20 +14,23 @@ import './exhibitionsList.scss';
 
 import * as actions from '../../actions/actions';
 import WithMuseamService from '../hoc/withMuseamService';
+import Spinner from '../spinner/spinner';
 
-const ExhibitionsList = ({MuseamService, exhibitionsLoaded, exhibitions}) => {
+const ExhibitionsList = ({MuseamService, exhibitionsLoaded, exhibitionsError, exhibitions, isLoadingExhibitions, isErrorExhibitions, exhibitionsRequsted}) => {
 
     useEffect(() => {
+        exhibitionsRequsted();
+        
         MuseamService.getList('/exhibitions')
             .then(res => {
                 exhibitionsLoaded(res);
             })
             .catch((err) => {
-                throw new Error(err);
+                exhibitionsError();
             })
     }, []);
 
-    const exhibitionsCards = exhibitions.map((item) => {
+    const exhibitionsCards = exhibitions ? exhibitions.map((item) => {
         return (
             <Card key={item.id} className='exhibitions-card'>
                 <div className="exhibitions-card__img">
@@ -42,22 +45,46 @@ const ExhibitionsList = ({MuseamService, exhibitionsLoaded, exhibitions}) => {
                 </CardBody>
             </Card>
         );
-    });
+    }) : null;
+
+    const loadingContent = isLoadingExhibitions ? <LoadingCard/> : null;
+
+    const errorContent = isErrorExhibitions ? <ErrorCard/> : null;
 
     return (
         <div className="exhibitions">
             <Container>
                 <div className="exhibitions__grid">
+                    {loadingContent}
                     {exhibitionsCards}
+                    {errorContent}
                 </div>    
             </Container>
         </div>
     );
 };
 
+const LoadingCard = () => {
+    return (
+        <div className="loading-card">
+            <Spinner/>
+        </div>
+    );
+};
+
+const ErrorCard = () => {
+    return (
+        <div className="error-card">
+            Error
+        </div>
+    );
+};
+
 const mapStateToProps = (state) => {
     return {
-        exhibitions: state.exhibitions
+        exhibitions: state.exhibitions,
+        isLoadingExhibitions: state.isLoadingExhibitions,
+        isErrorExhibitions: state.isErrorExhibitions
     }
 };
 

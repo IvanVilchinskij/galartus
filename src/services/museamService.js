@@ -1,7 +1,5 @@
 export default class MuseamService {
     _apiBase = 'http://217.66.18.54:8000';
-    triggerVar = false;
-
 
     getResource = async (url) => {
         const res = await fetch(`${this._apiBase}${url}`);
@@ -38,20 +36,14 @@ export default class MuseamService {
         return await this.getResource(`${url}?id=${+id}`);
     }
 
-    editCollection = async (formId, dataId) => {
+    editItem = async (url, formId, dataId) => {
         const form = document.querySelector(formId);
         const data = new FormData(form);
 
-        this.triggerVar = false;
-
-        const response = await fetch(`${this._apiBase}/categories/${dataId}`, {
+        const response = await fetch(`${this._apiBase}${url}${dataId}`, {
             method: 'PUT',
             body: data
         });
-
-        if (response.ok) {
-            this.triggerVar = true;
-        }
 
         if (!response.ok) {
             
@@ -61,16 +53,11 @@ export default class MuseamService {
         form.reset();
     }
 
-    deleteCollection = async (dataId) => {
-        this.triggerVar = false;
+    deleteItem = async (url, dataId) => {
 
-        const res = await fetch(`${this._apiBase}/categories/${dataId}/delete`, {
+        const res = await fetch(`${this._apiBase}${url}${dataId}/delete`, {
             method: 'DELETE'
         });
-
-        if (res.ok) {
-            this.triggerVar = true;
-        }
 
         if (!res.ok) {
             throw new Error('Submit Error');

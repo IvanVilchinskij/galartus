@@ -1,0 +1,119 @@
+.admin {
+    padding: 50px 0;
+    margin-top: 113px;
+
+    &__add-btn {
+        margin-bottom: 40px;
+    }
+}
+
+.admin-cards {
+    &__title {
+        display: flex;
+        justify-content: space-between;
+
+        margin-bottom: 30px;
+
+        
+    }
+
+    &__id {
+        width: 10%;
+
+    }
+
+    &__name {
+        width: 60%;
+
+        &--three {
+            width: 40%; 
+        }
+
+        &--five {
+            width: 20%;
+        }
+    }
+
+    &__price {
+        width: 15%;
+    }
+
+    &__date {
+        width: 20%;
+    }
+
+    &__categories {
+        width: 20%;
+
+        &--five {
+            width: 15%;
+        }
+    }
+
+    &__control {
+        width: 30%;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+.admin-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    &__id {
+        width: 10%;
+    }
+
+    &__name {
+        width: 60%;
+
+        &--three {
+            width: 40%; 
+        }
+
+        &--five {
+            width: 20%;
+        }
+    }
+
+    &__price {
+        width: 15%;
+    }
+
+    &__date {
+        width: 20%;
+    }
+
+    &__categories {
+        width: 20%;
+
+        &--five {
+            width: 15%;
+        }
+    }
+
+    &__control {
+        width: 30%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    &__edit, &__delete {
+        padding: 5px;
+        border-radius: 4px;
+        border: 1px solid #060606;
+        background-color: transparent;
+    }
+
+    &__edit {
+        margin-right: 20px;
+    }
+}

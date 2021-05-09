@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 
 import * as actions from '../actions/actions';
-import AdminControl from '../components/adminControl/adminControl';
+import AdminControl from '../components/admin/admin';
 
 const AdminPage = ({toggleHeaderColor}) => {
     useEffect(() => {

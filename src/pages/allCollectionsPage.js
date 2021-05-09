@@ -14,12 +14,12 @@ const AllCollectionsPage = ({toggleHeaderColor}) => {
         <>
             <div className='collection'>
             <Container>
-                <div className="collection__filter-btns">
+                {/* <div className="collection__filter-btns">
                     <ButtonGroup>
                         <Button>Коллекции музия</Button>
                         <Button>Личные коллекции</Button>
                     </ButtonGroup>
-                </div>
+                </div> */}
                 <Collcetions/>
             </Container>
         </div>

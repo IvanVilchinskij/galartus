@@ -2,7 +2,12 @@ const initialState = {
     collections: [],
     exhibitions: [],
     pictures: [],
-    loadingCollections: true,
+    isLoadingCollections: true,
+    isErrorCollcetions: false,
+    isLoadingPictures: true,
+    isErrorPictures: false,
+    isLoadingExhibitions: true,
+    isErrorExhibitions: false,
     darkHeader: false,
     currentCollection: null,
     currentPicture: []
@@ -19,18 +24,62 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 collections: action.payload,
-                loadingCollections: false
+                isLoadingCollections: false,
+                isErrorCollcetions: false
+            };
+        case 'COLLECTIONS_REQUSTED':
+            return {
+                ...state,
+                isErrorCollcetions: false,
+                isLoadingCollections: true
+            }
+        case 'COLLECTIONS_ERROR':
+            return {
+                ...state,
+                isLoadingCollections: false,
+                collections: null,
+                isErrorCollcetions: true
             };
         case 'EXHIBITIONS_LOADED':
             return {
                 ...state,
-                exhibitions: action.payload
+                exhibitions: action.payload,
+                isLoadingExhibitions: false,
+                isErrorExhibitions: false
+            };
+        case 'EXHIBITIONS_REQUSTED':
+            return {
+                ...state,
+                isErrorExhibitions: false,
+                isLoadingExhibitions: true
+            };
+        case 'EXHIBITIONS_ERROR':
+            return {
+                ...state,
+                exhibitions: null,
+                isLoadingExhibitions: false,
+                isErrorExhibitions: true
             };
         case 'PICTURES_LOADED':
             return {
                 ...state,
-                pictures: action.payload
+                pictures: action.payload,
+                isLoadingPictures: false,
+                isErrorPictures: false
             };
+        case 'PICTURES_REQUSTED':
+            return {
+                ...state,
+                isErrorPictures: false,
+                isLoadingPictures: true
+            };
+        case 'PICTURES_ERROR':
+            return {
+                ...state,
+                pictures: null,
+                isLoadingPictures: false,
+                isErrorPictures: true
+            }
         case 'DEF_CURRENT_COLLECTION':
             return {
                 ...state,

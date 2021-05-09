@@ -7,17 +7,20 @@ import './itemCards.scss';
 
 import WithMuseamService from '../hoc/withMuseamService';
 import * as actions from '../../actions/actions';
+import Spinner from '../spinner/spinner';
 
-const ItemCards = ({MuseamService, pictures, picturesLoaded, collectionId, currentCollection}) => {
+const ItemCards = ({MuseamService, pictures, picturesLoaded, collectionId, picturesError, currentCollection, picturesRequsted, isLoadingPictures, isErrorPictures}) => {
     useEffect(() => {
+        picturesRequsted();
+
         MuseamService.getList('/pictures')
             .then(res => picturesLoaded(res))
             .catch((err) => {
-                throw new Error(err)
+                picturesError();
             });
     }, []);
 
-    const currentPictures = pictures.filter((item) => {
+    const currentPictures = pictures ? pictures.filter((item) => {
         const itemCategories = item.categories;
 
         if (itemCategories.includes(collectionId)) {
@@ -25,9 +28,9 @@ const ItemCards = ({MuseamService, pictures, picturesLoaded, collectionId, curre
         } else {
             return false;
         }
-    });
+    }) : null;
 
-    const picturesCards = currentPictures.map((item) => {
+    const picturesCards = currentPictures ? currentPictures.map((item) => {
         return (
             <Card key={item.id} className='item-card'>
                 <div className="item-card__img">
@@ -47,18 +50,42 @@ const ItemCards = ({MuseamService, pictures, picturesLoaded, collectionId, curre
                 </CardBody>
             </Card>
         );
-    });
+    }) : null;
+
+    const loadingContent = isLoadingPictures ? <LoadingCard/> : null;
+
+    const errorContent = isErrorPictures ? <ErrorCard/> : null;
 
     return (
-        <>
+        <>  
+            {loadingContent}
             {picturesCards}
+            {errorContent}
         </>
+    );
+};
+
+const LoadingCard = () => {
+    return (
+        <div className="loading-card">
+            <Spinner/>
+        </div>
+    );
+};
+
+const ErrorCard = () => {
+    return (
+        <div className="error-card">
+            Error
+        </div>
     );
 };
 
 const mapStateToProps = (state) => {
     return {
         pictures: state.pictures,
+        isLoadingPictures: state.isLoadingPictures,
+        isErrorPictures: state.isErrorPictures,
         currentCollection: state.currentCollection
     }
 };

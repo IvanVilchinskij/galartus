@@ -5,6 +5,18 @@ const collectionsLoaded = (newCollections) => {
     }
 };
 
+const collectionsRequsted = () => {
+    return {
+        type: 'COLLECTIONS_REQUSTED'
+    }
+};
+
+const collectionsError = () => {
+    return {
+        type: 'COLLECTIONS_ERROR'
+    }
+};
+
 const exhibitionsLoaded = (newExhibitions) => {
     return {
         type: 'EXHIBITIONS_LOADED',
@@ -12,10 +24,34 @@ const exhibitionsLoaded = (newExhibitions) => {
     }
 };
 
+const exhibitionsRequsted = () => {
+    return {
+        type: 'EXHIBITIONS_REQUSTED'
+    }
+};
+
+const exhibitionsError = () => {
+    return {
+        type: 'EXHIBITIONS_ERROR'
+    }
+};
+
 const picturesLoaded = (newPictures) => {
     return {
         type: 'PICTURES_LOADED',
         payload: newPictures
+    }
+};
+
+const picturesRequsted = () => {
+    return {
+        type: 'PICTURES_REQUSTED'
+    }
+};
+
+const picturesError = () => {
+    return {
+        type: 'PICTURES_ERROR'
     }
 };
 
@@ -48,5 +84,11 @@ export {
     picturesLoaded,
     toggleHeaderColor,
     defCurrentCollection,
-    setCurrentPicture
+    setCurrentPicture,
+    collectionsError,
+    picturesError,
+    exhibitionsError,
+    collectionsRequsted,
+    exhibitionsRequsted,
+    picturesRequsted
 };
