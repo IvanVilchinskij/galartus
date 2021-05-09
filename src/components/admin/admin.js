@@ -1,21 +1,11 @@
 import React, {useState} from 'react';
 import { 
     Container, 
-    Button, 
-    Form, 
-    FormGroup, 
-    Label, 
-    Input, 
     TabContent, 
     TabPane, 
     Nav, 
     NavItem, 
-    NavLink, 
-    Card, 
-    CardTitle, 
-    CardText, 
-    Row, 
-    Col 
+    NavLink 
 } from 'reactstrap';
 import classnames from 'classnames';
 

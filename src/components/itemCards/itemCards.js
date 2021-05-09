@@ -18,6 +18,10 @@ const ItemCards = ({MuseamService, pictures, picturesLoaded, collectionId, pictu
             .catch((err) => {
                 picturesError();
             });
+
+        return function cleanup() {
+            picturesLoaded([]);
+        }
     }, []);
 
     const currentPictures = pictures ? pictures.filter((item) => {
@@ -56,10 +60,12 @@ const ItemCards = ({MuseamService, pictures, picturesLoaded, collectionId, pictu
 
     const errorContent = isErrorPictures ? <ErrorCard/> : null;
 
+    const content = !isLoadingPictures && !isErrorPictures ? picturesCards : null;
+
     return (
         <>  
             {loadingContent}
-            {picturesCards}
+            {content}
             {errorContent}
         </>
     );

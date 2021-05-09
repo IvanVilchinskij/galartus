@@ -27,7 +27,11 @@ const ExhibitionsList = ({MuseamService, exhibitionsLoaded, exhibitionsError, ex
             })
             .catch((err) => {
                 exhibitionsError();
-            })
+            });
+
+        return function cleanup() {
+            exhibitionsLoaded([]);
+        }
     }, []);
 
     const exhibitionsCards = exhibitions ? exhibitions.map((item) => {
@@ -51,12 +55,14 @@ const ExhibitionsList = ({MuseamService, exhibitionsLoaded, exhibitionsError, ex
 
     const errorContent = isErrorExhibitions ? <ErrorCard/> : null;
 
+    const content = !isLoadingExhibitions && !isErrorExhibitions ? exhibitionsCards : null;
+
     return (
         <div className="exhibitions">
             <Container>
                 <div className="exhibitions__grid">
                     {loadingContent}
-                    {exhibitionsCards}
+                    {content}
                     {errorContent}
                 </div>    
             </Container>

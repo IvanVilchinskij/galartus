@@ -51,8 +51,8 @@ const LogInModal = ({isOpen, toggle}) => {
                     <Form>
                         <ModalBody>
                             <FormGroup>
-                                <Label for='loginInput'>Логин</Label>
-                                <Input type='text' name='login' id='loginInput'/>
+                                <Label for='loginInput'>Почта</Label>
+                                <Input type='email' name='login' id='loginInput'/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for='passwordInput'>Пароль</Label>
