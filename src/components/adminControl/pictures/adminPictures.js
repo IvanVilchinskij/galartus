@@ -3,13 +3,13 @@ import {connect} from 'react-redux';
 import {Button} from 'reactstrap';
 
 import * as actions from '../../../actions/actions';
-import WithMuseamService from '../../hoc/withMuseamService';
+import axiosInstance from '../../../axios';
 import AddModalPictures from './addModalPictures';
 import EditModalPictures from './editModalPictures';
 import DeleteModal from '../deleteModal';
 import Spinner from '../../spinner/spinner';
 
-const AdminPictures = ({pictures, MuseamService, picturesLoaded, isLoadingPictures, isErrorPictures, picturesRequsted, picturesError}) => {
+const AdminPictures = ({pictures, picturesLoaded, isLoadingPictures, isErrorPictures, picturesRequsted, picturesError}) => {
     const [addModal, setAddModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
@@ -28,13 +28,14 @@ const AdminPictures = ({pictures, MuseamService, picturesLoaded, isLoadingPictur
     useEffect(() => {
         picturesRequsted();
 
-        MuseamService.getList('/pictures')
+        axiosInstance.get('pictures')
             .then(res => {
-                picturesLoaded(res);
+                picturesLoaded(res.data);
             })
-            .catch((err) => {
+            .catch(() => {
                 picturesError();
             });
+
     }, [refresh]);
 
     const picturesList = pictures ? pictures.map(item => {
@@ -98,7 +99,7 @@ const AdminPictures = ({pictures, MuseamService, picturesLoaded, isLoadingPictur
                 toggleRefresh={toggleRefresh}
                 modalId={modalId}
                 modalName={modalName}
-                url={`/pictures/`}
+                url={`pictures/`}
             />
         </>
     );
@@ -128,4 +129,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default WithMuseamService()(connect(mapStateToProps, actions)(AdminPictures));
+export default connect(mapStateToProps, actions)(AdminPictures);

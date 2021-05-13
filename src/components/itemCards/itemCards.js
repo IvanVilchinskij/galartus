@@ -5,17 +5,19 @@ import {Link} from 'react-router-dom';
 
 import './itemCards.scss';
 
-import WithMuseamService from '../hoc/withMuseamService';
+import axiosInstance from '../../axios';
 import * as actions from '../../actions/actions';
 import Spinner from '../spinner/spinner';
 
-const ItemCards = ({MuseamService, pictures, picturesLoaded, collectionId, picturesError, currentCollection, picturesRequsted, isLoadingPictures, isErrorPictures}) => {
+const ItemCards = ({pictures, picturesLoaded, collectionId, picturesError, currentCollection, picturesRequsted, isLoadingPictures, isErrorPictures}) => {
     useEffect(() => {
         picturesRequsted();
 
-        MuseamService.getList('/pictures')
-            .then(res => picturesLoaded(res))
-            .catch((err) => {
+        axiosInstance.get('pictures')
+            .then(res => {
+                picturesLoaded(res.data);
+            })
+            .catch(() => {
                 picturesError();
             });
 
@@ -96,4 +98,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default WithMuseamService()(connect(mapStateToProps, actions)(ItemCards));
+export default connect(mapStateToProps, actions)(ItemCards);

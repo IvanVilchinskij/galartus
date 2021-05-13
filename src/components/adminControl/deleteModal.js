@@ -1,19 +1,30 @@
 import React from 'react';
 import {
     Button,
-    Form,
-    FormGroup,
-    Label,
-    Input,
     Modal,
     ModalHeader,
     ModalBody,
     ModalFooter,
 } from 'reactstrap';
 
-import WithMuseamService from '../hoc/withMuseamService';
+import axiosInstance from '../../axios';
 
-const DeleteModal = ({MuseamService, isOpen, url, toggle, toggleRefresh, modalId, modalName}) => {
+const DeleteModal = ({isOpen, url, toggle, toggleRefresh, modalId, modalName}) => {
+    const handleSubmit = () => {
+        axiosInstance.delete(`${url}${modalId}/delete`)
+            .catch((err) => {
+                if (err.response) {
+					console.log(err.response.data);
+					console.log(err.response.status);
+					console.log(err.response.headers);
+				}
+            })
+            .then(() => {
+                toggleRefresh();
+                toggle();
+            });
+    };
+
     return (
         <Modal isOpen={isOpen} toggle={toggle}>
             <ModalHeader toggle={toggle}>Удаление {modalName}</ModalHeader>
@@ -21,17 +32,11 @@ const DeleteModal = ({MuseamService, isOpen, url, toggle, toggleRefresh, modalId
                 Вы уверены?
             </ModalBody>
             <ModalFooter>
-                <Button color="primary" onClick={() => {
-                    MuseamService.deleteItem(url, modalId)
-                        .then(res => {
-                            toggleRefresh();
-                            toggle();
-                        });
-                }}>Удалить</Button>
+                <Button color="primary" onClick={handleSubmit}>Удалить</Button>
                 <Button color="secondary" onClick={toggle}>Отмена</Button>
             </ModalFooter>  
         </Modal>
     );
 };
 
-export default WithMuseamService()(DeleteModal);
+export default DeleteModal;

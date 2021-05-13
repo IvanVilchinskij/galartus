@@ -3,13 +3,13 @@ import {connect} from 'react-redux';
 import {Button} from 'reactstrap';
 
 import * as actions from '../../../actions/actions';
-import WithMuseamService from '../../hoc/withMuseamService';
+import axiosInstance from '../../../axios';
 import AddModalExhibitions from './addModalExhibitions';
 import EditModalExhibitions from './editModalExhibitions';
 import DeleteModal from '../deleteModal';
 import Spinner from '../../spinner/spinner';
 
-const AdminExhibitions = ({exhibitions, MuseamService, exhibitionsLoaded, exhibitionsRequsted, exhibitionsError, isLoadingExhibitions, isErrorExhibitions}) => {
+const AdminExhibitions = ({exhibitions, exhibitionsLoaded, exhibitionsRequsted, exhibitionsError, isLoadingExhibitions, isErrorExhibitions}) => {
     const [addModal, setAddModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
@@ -28,13 +28,15 @@ const AdminExhibitions = ({exhibitions, MuseamService, exhibitionsLoaded, exhibi
     useEffect(() => {
         exhibitionsRequsted();
 
-        MuseamService.getList('/exhibitions')
+        axiosInstance.get('exhibitions')
             .then(res => {
-                exhibitionsLoaded(res);
+                exhibitionsLoaded(res.data);
             })
-            .catch((err) => {
-                exhibitionsError();
-            });
+            .catch(() => exhibitionsError());
+
+        return function cleanup() {
+            exhibitionsLoaded([]);
+        }
     }, [refresh]);
 
     const exhibitionsList = exhibitions ? exhibitions.map((item) => {
@@ -106,7 +108,7 @@ const AdminExhibitions = ({exhibitions, MuseamService, exhibitionsLoaded, exhibi
                 toggleRefresh={toggleRefresh}
                 modalId={modalId}
                 modalName={modalName}
-                url={`/exhibitions/`}
+                url={`exhibitions/`}
             />
         </>
         
@@ -137,4 +139,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default WithMuseamService()(connect(mapStateToProps, actions)(AdminExhibitions));
+export default connect(mapStateToProps, actions)(AdminExhibitions);

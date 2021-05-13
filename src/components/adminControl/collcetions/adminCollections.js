@@ -3,13 +3,13 @@ import {connect} from 'react-redux';
 import {Button} from 'reactstrap';
 
 import * as actions from '../../../actions/actions';
-import WithMuseamService from '../../hoc/withMuseamService';
+import axiosInstance from '../../../axios';
 import AddModalCollcetions from './addModalCollcetions';
 import EditModalCollcetions from './editModalCollcetions';
 import DeleteModal from '../deleteModal';
 import Spinner from '../../spinner/spinner';
 
-const AdminCollections = ({collections, MuseamService, collectionsLoaded, isErrorCollcetions, isLoadingCollections, collectionsRequsted, collectionsError}) => {
+const AdminCollections = ({collections, collectionsLoaded, isErrorCollcetions, isLoadingCollections, collectionsRequsted, collectionsError}) => {
     const [addModal, setAddModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
@@ -28,13 +28,18 @@ const AdminCollections = ({collections, MuseamService, collectionsLoaded, isErro
     useEffect(() => {
         collectionsRequsted();
 
-        MuseamService.getList('/categories')
+        axiosInstance.get('categories')
             .then(res => {
-                collectionsLoaded(res);
+                collectionsLoaded(res.data);
             })
-            .catch((err) => {
+            .catch(() => {
                 collectionsError();
             });
+
+        return function cleanup() {
+            collectionsLoaded([]);
+        }
+
     }, [refresh]);
 
     const collectionsList = collections ? collections.map((item) => {
@@ -96,7 +101,7 @@ const AdminCollections = ({collections, MuseamService, collectionsLoaded, isErro
                 toggleRefresh={toggleRefresh}
                 modalId={modalId}
                 modalName={modalName}
-                url={`/categories/`}
+                url={`categories/`}
             />
         </>
         
@@ -127,4 +132,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default WithMuseamService()(connect(mapStateToProps, actions)(AdminCollections));
+export default connect(mapStateToProps, actions)(AdminCollections);

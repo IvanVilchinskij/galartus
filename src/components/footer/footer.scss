@@ -1,20 +1,79 @@
 .footer {
-    padding: 15px 0 30px;
-    background-color: #343a40;
+    background: #424242;
+    padding: 45px 0 72px;
 
-    flex: 0 0 auto;
-
-    &__navbar {
-        margin-bottom: 15px;
+    &__flex-wrapper {
+        display: flex;
     }
 
-    &__info {
-        h4 {
-            text-align: center;
-            
+    &__logo {
+        width: 300/1100*100%;
+
+        &-name {
+            font-family: "CatLinz", serif;
+            font-size: 2.625rem;
+            line-height: 98%;
+
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+
+            margin-bottom: 10px;
+
+            a {
+                color: #FFFFFF;
+            }
+        }
+
+        &-year {
+            font-size: .875rem;
+            line-height: 125%;
+            color: #FFFFFF;
+            opacity: 0.6;   
+        }
+    }
+
+    &__nav {
+        width: 416/1100*100%;
+
+        &-link {
+            font-size: 1rem;
+            line-height: 125%;
+
+            margin-bottom: 10px;
+
             a {
                 color: #fff;
-            }      
+
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    &__contacts {
+        width: 394/1100*100%;
+        display: flex;
+        justify-content: space-between;
+
+        &-title {
+            font-family: "CatLinz", serif;
+            font-size: 2.625rem;
+            line-height: 98%;
+            color: #CCCCCC;
+        }
+
+        &-item {
+            font-size: 1rem;
+            line-height: 125%;
+            color: #fff;
+
+            margin-bottom: 10px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
         }
     }
 }

@@ -1,3 +1,5 @@
+import axiosInstance from '../axios';
+
 export default class MuseamService {
     _apiBase = 'http://217.66.18.54:8000';
 
@@ -15,21 +17,40 @@ export default class MuseamService {
         return await this.getResource(url);
     }
 
-    setItem = async (formId, url) => {
-        const form = document.querySelector(formId);
-        const data = new FormData(form);
-        
-        const response = await fetch(`${this._apiBase}${url}`, {
-            method: 'POST',
-            body: data
-        });
+    getUserInfo = async (accessToken) => {
+        const myHeaders = new Headers();
 
-        if (!response.ok) {
+        myHeaders.append('Authorization', `Bearer ${accessToken}`);
+
+        const requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow',
+        };
+
+        const res = await fetch(`${this._apiBase}/users/`, requestOptions);
+
+        return await res.json();
+    }
+
+    setItem = (url, form) => {
+        /* const form = document.querySelector(formId);
+        const data = new FormData(form); */
+        
+        /* const response = await fetch(`${this._apiBase}${url}`, {
+            method: 'POST',
+            body: form
+        }); */
+
+        /* if (!response.ok) {
             console.log(response.status);
             throw new Error('Submit Error');
-        }
+        } */
 
-        form.reset();
+        /* form.reset(); */
+
+        axiosInstance.post(`${url}`, form);
+
     }
 
     getItemById = async (url, id) => {
@@ -40,10 +61,15 @@ export default class MuseamService {
         const form = document.querySelector(formId);
         const data = new FormData(form);
 
+        if (data.has('categories')) {
+            console.log((data.get('categories')));
+        }
+
         const response = await fetch(`${this._apiBase}${url}${dataId}`, {
             method: 'PUT',
             body: data
         });
+
 
         if (!response.ok) {
             

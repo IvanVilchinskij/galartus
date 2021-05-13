@@ -78,6 +78,13 @@ const setCurrentPicture = (newPicture) => {
     }
 };
 
+const setAutorization = (isAuto) => {
+    return {
+        type: 'SET_IS_AUTORIZATION',
+        isAutorization: isAuto
+    }
+};
+
 export {
     collectionsLoaded,
     exhibitionsLoaded,
@@ -90,5 +97,6 @@ export {
     exhibitionsError,
     collectionsRequsted,
     exhibitionsRequsted,
-    picturesRequsted
+    picturesRequsted,
+    setAutorization,
 };

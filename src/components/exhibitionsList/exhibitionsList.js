@@ -13,43 +13,53 @@ import {
 import './exhibitionsList.scss';
 
 import * as actions from '../../actions/actions';
-import WithMuseamService from '../hoc/withMuseamService';
+import axiosInstance from '../../axios';
 import Spinner from '../spinner/spinner';
 
-const ExhibitionsList = ({MuseamService, exhibitionsLoaded, exhibitionsError, exhibitions, isLoadingExhibitions, isErrorExhibitions, exhibitionsRequsted}) => {
+const ExhibitionsList = ({exhibitionsLoaded, exhibitionsError, exhibitions, isLoadingExhibitions, isErrorExhibitions, exhibitionsRequsted}) => {
 
     useEffect(() => {
         exhibitionsRequsted();
         
-        MuseamService.getList('/exhibitions')
+        axiosInstance.get('exhibitions')
             .then(res => {
-                exhibitionsLoaded(res);
+                exhibitionsLoaded(res.data);
             })
-            .catch((err) => {
-                exhibitionsError();
-            });
+            .catch(() => exhibitionsError());
 
         return function cleanup() {
             exhibitionsLoaded([]);
         }
     }, []);
 
-    const exhibitionsCards = exhibitions ? exhibitions.map((item) => {
-        return (
-            <Card key={item.id} className='exhibitions-card'>
-                <div className="exhibitions-card__img">
-                    <CardImg top width="100%" src={item.image} alt={item.title} />
-                </div>
-                <CardBody>
-                    <CardTitle tag="h5">{item.title}</CardTitle>
-                    <CardSubtitle tag="h6" className="mb-2 text-muted">{item.date}</CardSubtitle>
-                    <CardText>
-                        <small className="text-muted">{item.address}</small>
-                    </CardText>
-                </CardBody>
-            </Card>
-        );
-    }) : null;
+    const setItemsContent = (items) => {
+        if (items.length === 0) {
+            return (
+                <p>Тут пусто(</p>
+            );
+        } else {
+            return (
+                items.map((item) => {
+                    return (
+                        <Card key={item.id} className='exhibitions-card'>
+                            <div className="exhibitions-card__img">
+                                <CardImg top width="100%" src={item.image} alt={item.title} />
+                            </div>
+                            <CardBody>
+                                <CardTitle tag="h5">{item.title}</CardTitle>
+                                <CardSubtitle tag="h6" className="mb-2 text-muted">{item.date}</CardSubtitle>
+                                <CardText>
+                                    <small className="text-muted">{item.address}</small>
+                                </CardText>
+                            </CardBody>
+                        </Card>
+                    );
+                })
+            );    
+        }
+    };
+
+    const exhibitionsCards = exhibitions ? setItemsContent(exhibitions) : null;
 
     const loadingContent = isLoadingExhibitions ? <LoadingCard/> : null;
 
@@ -94,4 +104,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default WithMuseamService()(connect(mapStateToProps, actions)(ExhibitionsList));
+export default connect(mapStateToProps, actions)(ExhibitionsList);

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Button,
     Form,
@@ -12,21 +12,58 @@ import {
 } from 'reactstrap';
 import {connect} from 'react-redux';
 
-import WithMuseamService from '../../hoc/withMuseamService';
+import axiosInstance from '../../../axios';
 import * as actions from '../../../actions/actions';
 
-const EditModalExhibitions = ({MuseamService, collections, collectionsLoaded, collectionsRequsted, collectionsError, isLoadingCollections, isErrorCollcetions, isOpen, toggle, modalId, toggleRefresh, modalName}) => {
-    useEffect(() => {
-        collectionsRequsted();
+const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollcetions, isOpen, toggle, modalId, toggleRefresh, modalName}) => {
+    const initialFormData = Object.freeze({
+        name: '',
+        description: '',
+        date: '',
+        time: '',
+        price: '',
+        address: '',
+        weekday: '',
+        categories: [],
+    });
 
-        MuseamService.getList('/categories')
-            .then(res => {
-                collectionsLoaded(res);
-            })
-            .catch(err => {
-                collectionsError();
+    const [exhibitionData, updateExhibitionData] = useState(initialFormData);
+    const [exhibitionImg, setExhibitionImg] = useState(null);
+
+    const handleChange = (e) => {
+        const target = e.target;
+
+        if([target.name] == 'image') {
+            setExhibitionImg({
+                image: target.files
             });
-    }, []);
+        }
+
+        updateExhibitionData({
+            ...exhibitionData,
+            [target.name]: target.value.trim()
+        });
+    };
+
+    const handleSubmit = (formId) => {
+        const form = document.querySelector(formId);
+        const formData = new FormData(form);
+
+        formData.set('name', exhibitionData.name);
+        formData.set('description', exhibitionData.description);
+        formData.set('image', exhibitionImg.image[0]);
+        formData.set('date', exhibitionData.date);
+        formData.set('time', exhibitionData.time);
+        formData.set('price', exhibitionData.price);
+        formData.set('address', exhibitionData.address);
+        formData.set('weekday', exhibitionData.weekday);
+
+        axiosInstance.put(`exhibitions/${modalId}`)
+            .then(() => {
+                toggleRefresh();
+                toggle();
+            });
+    };
 
     const collectionsOptions = collections ? collections.map((item) => {
         return (
@@ -45,35 +82,83 @@ const EditModalExhibitions = ({MuseamService, collections, collectionsLoaded, co
                 <ModalBody>
                     <FormGroup>
                         <Label for="exhEditName">Name</Label>
-                        <Input type="text" name="name" id="exhEditName"/>
+                        <Input 
+                            type="text" 
+                            name="name" 
+                            id="exhEditName"
+                            onChange={handleChange}
+                            autoComplete='name'
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label for="exhEditDescription">description</Label>
-                        <Input type="text" name="description" id="exhEditDescription"/>
+                        <Input 
+                            type="text" 
+                            name="description" 
+                            id="exhEditDescription"
+                            onChange={handleChange}
+                            autoComplete='description'
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label for="exhEditImage">File</Label>
-                        <Input type="file" name="image" id="exhEditImage" />
+                        <Input 
+                            type="file" 
+                            name="image" 
+                            id="exhEditImage" 
+                            onChange={handleChange}
+                            autoComplete='image'
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label for="exhEditDate">Date</Label>
-                        <Input type="date" name="date" id="exhEditDate"/>
+                        <Input 
+                            type="date" 
+                            name="date" 
+                            id="exhEditDate"
+                            onChange={handleChange}
+                            autoComplete='date'
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label for="exhEditTime">Time</Label>
-                        <Input type="time" name="time" id="exhEditTime"/>
+                        <Input 
+                            type="time" 
+                            name="time" 
+                            id="exhEditTime"
+                            onChange={handleChange}
+                            autoComplete='time'
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label for="exhEditPrice">Price</Label>
-                        <Input type="number" name="price" id="exhEditPrice"/>
+                        <Input 
+                            type="number" 
+                            name="price" 
+                            id="exhEditPrice"
+                            onChange={handleChange}
+                            autoComplete='price'
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label for="exhEditAddr">Address</Label>
-                        <Input type="text" name="address" id="exhEditAddr"/>
+                        <Input 
+                            type="text" 
+                            name="address" 
+                            id="exhEditAddr"
+                            onChange={handleChange}
+                            autoComplete='address'
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label for="exhEditWeekday">weekday</Label>
-                        <Input type="text" name="weekday" id="exhEditWeekday"/>
+                        <Input 
+                            type="text" 
+                            name="weekday" 
+                            id="exhEditWeekday"
+                            onChange={handleChange}
+                            autoComplete='weekday'
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label for='exhEditCategories'>Categories</Label>
@@ -91,11 +176,7 @@ const EditModalExhibitions = ({MuseamService, collections, collectionsLoaded, co
                 </ModalBody>
                 <ModalFooter>
                     <Button color="primary" onClick={() => {
-                        MuseamService.editItem('/exhibitions/','#editExhibitionsForm', modalId)
-                            .then(res => {
-                                toggleRefresh();
-                                toggle();
-                            });
+                        handleSubmit('#editExhibitionsForm');
                     }}>Изменить</Button>
                     <Button color="secondary" onClick={toggle}>Cancel</Button>
                 </ModalFooter>
@@ -113,4 +194,4 @@ const mapStateToProps = (state) => {
 };
 
 
-export default WithMuseamService()(connect(mapStateToProps, actions)(EditModalExhibitions));
+export default connect(mapStateToProps, actions)(EditModalExhibitions);

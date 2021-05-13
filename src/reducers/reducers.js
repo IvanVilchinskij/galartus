@@ -1,5 +1,5 @@
 const initialState = {
-    collections: [],
+    collections: null,
     exhibitions: [],
     pictures: [],
     isLoadingCollections: true,
@@ -10,7 +10,8 @@ const initialState = {
     isErrorExhibitions: false,
     darkHeader: false,
     currentCollection: null,
-    currentPicture: []
+    currentPicture: [],
+    isAutorization: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -89,6 +90,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 currentPicture: action.payload
+            }
+        case 'SET_IS_AUTORIZATION':
+            return {
+                ...state,
+                isAutorization: action.isAutorization
             }
         default:
             return state;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     Button,
     Form,
@@ -11,9 +11,46 @@ import {
     ModalFooter,
 } from 'reactstrap';
 
-import WithMuseamService from '../../hoc/withMuseamService';
+import axiosInstance from '../../../axios';
 
-const AddModalCollcetions = ({MuseamService, isOpen, toggle, toggleRefresh}) => {
+const AddModalCollcetions = ({isOpen, toggle, toggleRefresh}) => {
+    const initialFormData = Object.freeze({
+        name: '',
+    });
+
+    const [collectionData, updateCollcetionData] = useState(initialFormData);
+    const [collectionImg, setCollectionImg] = useState(null);
+
+    const handleChange = (e) => {
+        const target = e.target;
+        if([target.name] == 'image') {
+            setCollectionImg({
+                image: target.files,
+            });
+        }
+
+        if([target.name] == 'name') {
+            updateCollcetionData({
+                ...collectionData,
+                [target.name]: target.value.trim(),
+            });
+        }
+    };
+
+    const handleSubmit = () => {
+
+        let formData = new FormData();
+        
+        formData.append('name', collectionData.name);
+        formData.append('image', collectionImg.image[0]);
+
+        axiosInstance.post(`categories/create`, formData)
+            .then(() => {
+                toggleRefresh();
+                toggle();
+            });
+    };
+
     return (
         <Modal isOpen={isOpen} toggle={toggle}>
             <Form id='addCollcetionForm'>
@@ -21,26 +58,37 @@ const AddModalCollcetions = ({MuseamService, isOpen, toggle, toggleRefresh}) => 
                 <ModalBody>
                     <FormGroup>
                         <Label for="addName">Name</Label>
-                        <Input type="text" name="name" id="addName"/>
+                        <Input 
+                            type="text" 
+                            name="name" 
+                            id="addName"
+                            onChange={handleChange}
+                            autoComplete='name'
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label for="exampleImage">File</Label>
-                        <Input type="file" name="image" id="exampleImage" />
+                        <Input 
+                            accept='image/*'
+                            type="file" 
+                            name="image" 
+                            id="exampleImage"
+                            onChange={handleChange} 
+                        />
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={() => {
-                        MuseamService.setItem('#addCollcetionForm', '/categories/create')
-                            .then((res) => {
-                                toggleRefresh();
-                                toggle();
-                            });
-                    }}>Добавить</Button>
-                    <Button color="secondary" onClick={toggle}>Cancel</Button>
+                    <Button 
+                        color="primary" 
+                        onClick={handleSubmit}
+                    >
+                        Добавить
+                    </Button>
+                    <Button color="secondary" onClick={toggle}>Отмена</Button>
                 </ModalFooter>
             </Form>
         </Modal>
     );
 };
 
-export default WithMuseamService()(AddModalCollcetions);
+export default AddModalCollcetions;

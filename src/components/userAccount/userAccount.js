@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
         Container, 
         Card, 
@@ -16,11 +16,25 @@ import classnames from 'classnames';
 import './userAccount.scss';
 
 const UserAccount = () => {
+
     const [activeTab, setActiveTab] = useState('1');
 
     const toggle = tab => {
         if(activeTab !== tab) setActiveTab(tab);
     };
+
+    /* useEffect(() => {
+        const login = localStorage.getItem('login');
+        const accessToken = localStorage.getItem('access_token');
+
+        if (login) {
+            MuseamService.getUserInfo(accessToken)
+                .then(res => {
+                    console.log(res);
+                });
+        }
+        
+    }); */
 
     return (
         <div className="user-account">

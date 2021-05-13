@@ -68,6 +68,4 @@ const AdminControl = () => {
     );
 };
 
-
-
 export default AdminControl;

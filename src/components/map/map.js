@@ -1,11 +1,39 @@
 import React from 'react';
+import {Container } from 'reactstrap';
 
 import './map.scss';
 
 const Map = () => {
     return (
         <div className="map">
-            <iframe title='map' src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d17946.671958700725!2d49.093792928857084!3d55.78743812806881!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x415ead219941ae53%3A0x5b0126a895b9ce7d!2z0JrQsNC30LDQvdGB0LrQuNC5INC60YDQtdC80LvRjA!5e0!3m2!1sru!2sru!4v1617035864836!5m2!1sru!2sru" loading="lazy"></iframe>
+            <Container>
+                <div className="map__flex-wrapper">
+                    <div className="map__contacts">
+                        <div className="map__title">
+                            Наши 
+                            <br/>
+                            контакты
+                        </div>
+                        <div className="map__info">
+                            <div className="map__info-item">
+                                Казань, Карла Маркса, 57
+                            </div>
+                            <div className="map__info-item">
+                                +7 (843) 223-45-40
+                            </div>
+                            <div className="map__info-item">
+                                info@gallartus.ru
+                            </div>
+                            <div className="map__info-item">
+                                Факс: +7 843 223-40-40
+                            </div>
+                        </div>
+                    </div>
+                    <div className="map__frame">
+                        <iframe title='map' src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2242.867002300653!2d49.13377195193049!3d55.795547280469485!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x415ead6cef895d73%3A0x2d9ec991f30a540f!2z0YPQuy4g0JrQsNGA0LvQsCDQnNCw0YDQutGB0LAsIDU3LCDQmtCw0LfQsNC90YwsINCg0LXRgdC_LiDQotCw0YLQsNGA0YHRgtCw0L0sIDQyMDAxNQ!5e0!3m2!1sru!2sru!4v1620655192330!5m2!1sru!2sru" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </Container>
         </div>
     );
 };

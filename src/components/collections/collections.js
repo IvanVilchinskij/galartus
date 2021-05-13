@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {connect} from 'react-redux';
 import {Card, 
         CardTitle, 
@@ -7,13 +7,12 @@ import {Card,
 import {Link} from 'react-router-dom';
 
 import * as actions from '../../actions/actions';
-import WithMuseamService from '../hoc/withMuseamService';
+import axiosInstance from '../../axios';
 import Spinner from '../spinner/spinner';
 
 import './collections.scss';
 
-const Collections = ({
-    MuseamService, 
+const Collections = ({ 
     collectionsLoaded, 
     collections, 
     collectionsRequsted,  
@@ -25,35 +24,45 @@ const Collections = ({
     useEffect(() => {
         collectionsRequsted();
 
-        MuseamService.getList('/categories')
-            .then(res => {    
-                collectionsLoaded(res);
+        axiosInstance.get('categories')
+            .then(res => {
+                collectionsLoaded(res.data);
             })
-            .catch(() => {
-                collectionsError();
-            });
+            .catch(() => collectionsError() );
 
         return function cleanup() {
             collectionsLoaded([]);
         }
     }, []);
-    
 
-    const collectionsCards = collections ? collections.map((item) => {
-        return (
-            <Card className='collection-card' key={item.id} body>
-                <div className="collection-card__content-wrapper">
-                    <div className="collection-card__img">
-                        <img src={item.image} alt={item.name}/>                       
-                    </div>     
-                    <CardTitle className='collection-card__title'>{item.name}</CardTitle>
-                </div>       
-                <Button>
-                    <Link onClick={() => defCurrentCollection(item.id)} to={`/collections/${item.id}`}>Подробнее</Link>
-                </Button>
-            </Card>
-        );
-    }) : null;
+    const setItemsContent = (items) => {
+        if (items.length === 0) {
+            return (
+                <p>Тут пусто(</p>
+            );
+        } else {
+            return (
+                items.map((item) => {
+                    return (
+                        <Card className='collection-card' key={item.id} body>
+                            <div className="collection-card__content-wrapper">
+                                <div className="collection-card__img">
+                                    <img src={item.image} alt={item.name}/>                       
+                                </div>     
+                                <CardTitle className='collection-card__title'>{item.name}</CardTitle>
+                            </div>       
+                            <Button>
+                                <Link onClick={() => defCurrentCollection(item.id)} to={`/collections/${item.id}`}>Подробнее</Link>
+                            </Button>
+                        </Card>
+                    );
+                })
+            );
+            
+        }
+    };
+
+    const collectionsCards = collections ? setItemsContent(collections) : null;
     
     const loadingContent = isLoadingCollections ? <LoadingCard/> : null;
 
@@ -95,4 +104,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default WithMuseamService()(connect(mapStateToProps, actions)(Collections));
+export default connect(mapStateToProps, actions)(Collections);

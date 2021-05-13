@@ -14,14 +14,20 @@ import ItemPage from '../../pages/itemPage';
 import AdminPage from '../../pages/adminPage';
 import Header from '../header/header';
 
-const App = ({currentCollection, defCurrentCollection}) => {
+const App = ({currentCollection, defCurrentCollection, isAutorization, setAutorization}) => {
     useEffect(() => {
         if (!currentCollection) {
-            const num =localStorage.getItem('collectionId');
+            const num = localStorage.getItem('collectionId');
 
             defCurrentCollection(num);
         }
-    });
+
+        if (localStorage.getItem('access_token')) {
+            setAutorization(true);
+        } else {
+            setAutorization(false);
+        }
+    }, [isAutorization]);
     
     return (
         <Router>
@@ -58,7 +64,8 @@ const App = ({currentCollection, defCurrentCollection}) => {
 
 const mapStateToProps = (state) => {
     return {
-        currentCollection: state.currentCollection
+        currentCollection: state.currentCollection,
+        isAutorization: state.isAutorization
     }
 };
 

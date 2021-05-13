@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useState} from 'react';
 import {
     Button,
     Form,
@@ -12,21 +12,50 @@ import {
 } from 'reactstrap';
 import {connect} from 'react-redux';
 
-import WithMuseamService from '../../hoc/withMuseamService';
+import axiosInstance from '../../../axios';
 import * as actions from '../../../actions/actions';
 
-const EditModalPictures = ({MuseamService, collections, collectionsLoaded, collectionsRequsted, collectionsError, isLoadingCollections, isErrorCollcetions, isOpen, toggle, modalId, toggleRefresh, modalName}) => {
-    useEffect(() => {
-        collectionsRequsted();
+const EditModalPictures = ({ collections, isLoadingCollections, isErrorCollcetions, isOpen, toggle, modalId, toggleRefresh, modalName}) => {
 
-        MuseamService.getList('/categories')
-            .then(res => {
-                collectionsLoaded(res);
-            })
-            .catch(err => {
-                collectionsError();
+    const initialFormData = Object.freeze({
+        name: '',
+        author: '',
+        description: '',
+    });
+
+    const [pictureData, updatePictureData] = useState(initialFormData);
+    const [pictureImg, setPictureImg] = useState(null);
+
+    const handleChange = (e) => {
+        const target = e.target;
+
+        if([target.name] == 'image') {
+            setPictureImg({
+                image: target.files
             });
-    }, []);
+        }
+
+        updatePictureData({
+            ...pictureData,
+            [target.name]: target.value.trim()
+        });
+    };
+
+    const handleSubmit = (formId) => {
+        const form = document.querySelector(formId);
+        const formData = new FormData(form);
+
+        formData.set('name', pictureData.name);
+        formData.set('author', pictureData.author);
+        formData.set('description', pictureData.description);
+        formData.set('image', pictureImg.image[0]);
+
+        axiosInstance.put(`pictures/${modalId}`)
+            .then(() => {
+                toggleRefresh();
+                toggle();
+            });
+    };
 
     const collectionsOptions = collections ? collections.map((item) => {
         return (
@@ -45,19 +74,42 @@ const EditModalPictures = ({MuseamService, collections, collectionsLoaded, colle
                 <ModalBody>
                     <FormGroup>
                         <Label for="picEditName">Name</Label>
-                        <Input type="text" name="name" id="addEditName"/>
+                        <Input 
+                            type="text" 
+                            name="name" 
+                            id="addEditName"
+                            autoComplete='name'
+                            onChange={handleChange}
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label for="picEditAuthor">author</Label>
-                        <Input type="text" name="author" id="picEditAuthor"/>
+                        <Input 
+                            type="text" 
+                            name="author" 
+                            id="picEditAuthor"
+                            autoComplete='author'
+                            onChange={handleChange}
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label for="picEditDescription">description</Label>
-                        <Input type="text" name="description" id="picEditDescription"/>
+                        <Input 
+                            type="text" 
+                            name="description" 
+                            id="picEditDescription"
+                            autoComplete='description'
+                            onChange={handleChange}
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label for="picEditImage">image</Label>
-                        <Input type="file" name="image" id="picEditImage" />
+                        <Input 
+                            type="file" 
+                            name="image" 
+                            id="picEditImage"
+                            onChange={handleChange} 
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label for='picEditCategories'>Categories</Label>
@@ -65,6 +117,7 @@ const EditModalPictures = ({MuseamService, collections, collectionsLoaded, colle
                             type="select" 
                             name="categories" 
                             id="picEditCategories"
+                            onChange={handleChange}
                             multiple
                         >
                             {loadingContent}
@@ -75,11 +128,7 @@ const EditModalPictures = ({MuseamService, collections, collectionsLoaded, colle
                 </ModalBody>
                 <ModalFooter>
                     <Button color="primary" onClick={() => {
-                        MuseamService.editItem('/pictures/', '#editPictureForm', modalId)
-                            .then(res => {
-                                toggleRefresh();
-                                toggle();
-                            });
+                        handleSubmit('#editPictureForm');
                     }}>Изменить</Button>
                     <Button color="secondary" onClick={toggle}>Cancel</Button>
                 </ModalFooter>
@@ -96,4 +145,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default WithMuseamService()(connect(mapStateToProps, actions)(EditModalPictures));
+export default connect(mapStateToProps, actions)(EditModalPictures);

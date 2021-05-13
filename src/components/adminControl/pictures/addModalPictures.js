@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState} from 'react';
 import {
     Button,
     Form,
@@ -12,21 +12,52 @@ import {
 } from 'reactstrap';
 import {connect} from 'react-redux';
 
-import WithMuseamService from '../../hoc/withMuseamService';
+import axiosInstance from '../../../axios';
 import * as actions from '../../../actions/actions';
 
-const AddModalPictures = ({MuseamService, collections, collectionsLoaded, collectionsRequsted, collectionsError, isLoadingCollections, isErrorCollcetions, isOpen, toggle, toggleRefresh}) => {
-    useEffect(() => {
-        collectionsRequsted();
+const AddModalPictures = ({collections, isLoadingCollections, isErrorCollcetions, isOpen, toggle, toggleRefresh}) => {
 
-        MuseamService.getList('/categories')
-            .then(res => {
-                collectionsLoaded(res);
-            })
-            .catch(err => {
-                collectionsError();
+    const initialFormData = Object.freeze({
+        name: '',
+        author: '',
+        description: '',
+        categories: [],
+    });
+
+    const [picturesData, updatePicturesData] = useState(initialFormData);
+    const [picturesImg, setPicturesImg] = useState(null);
+
+    const handleChange = (e) => {
+        const target = e.target;
+
+        if ([target.name] == 'image') {
+            setPicturesImg({
+                image: target.files,
             });
-    }, []);
+        }
+
+        updatePicturesData({
+            ...picturesData,
+            [target.name]: target.value.trim(),
+        });
+        
+    };
+
+    const handleSubmit = (formId) => {
+        const form = document.querySelector(formId);
+        const formData = new FormData(form);
+
+        formData.set('name', picturesData.name);
+        formData.set('author', picturesData.author);
+        formData.set('description', picturesData.description);
+        formData.set('image', picturesImg.image[0]);
+
+        axiosInstance.post('pictures/create', formData)
+            .then(() => {
+                toggleRefresh();
+                toggle();
+            });
+    };
 
     const collectionsOptions = collections ? collections.map((item) => {
         return (
@@ -45,19 +76,42 @@ const AddModalPictures = ({MuseamService, collections, collectionsLoaded, collec
                 <ModalBody>
                 <FormGroup>
                     <Label for="picName">Name</Label>
-                    <Input type="text" name="name" id="addName"/>
+                    <Input 
+                        type="text" 
+                        name="name" 
+                        id="addName"
+                        onChange={handleChange}
+                        autoComplete='name'
+                    />
                 </FormGroup>
                 <FormGroup>
                     <Label for="picAuthor">author</Label>
-                    <Input type="text" name="author" id="picAuthor"/>
+                    <Input 
+                        type="text" 
+                        name="author" 
+                        id="picAuthor"
+                        onChange={handleChange}
+                        autoComplete='author'
+                    />
                 </FormGroup>
                 <FormGroup>
                     <Label for="picDescription">description</Label>
-                    <Input type="text" name="description" id="picDescription"/>
+                    <Input 
+                        type="text" 
+                        name="description" 
+                        id="picDescription"
+                        onChange={handleChange}
+                        autoComplete='description'
+                    />
                 </FormGroup>
                 <FormGroup>
                     <Label for="picImage">image</Label>
-                    <Input type="file" name="image" id="picImage" />
+                    <Input 
+                        type="file" 
+                        name="image" 
+                        id="picImage"
+                        onChange={handleChange} 
+                    />
                 </FormGroup>
                 <FormGroup>
                     <Label for='picCategories'>Categories</Label>
@@ -66,6 +120,7 @@ const AddModalPictures = ({MuseamService, collections, collectionsLoaded, collec
                         name="categories" 
                         id="picCategories"
                         multiple
+                        onChange={handleChange}
                     >
                         {loadingContent}
                         {collectionsOptions} 
@@ -74,13 +129,7 @@ const AddModalPictures = ({MuseamService, collections, collectionsLoaded, collec
                 </FormGroup>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={() => {
-                        MuseamService.setItem('#addPictureForm', '/pictures/create')
-                            .then((res) => {
-                                toggleRefresh();
-                                toggle();
-                            });
-                    }}>Добавить</Button>
+                    <Button color="primary" onClick={() => handleSubmit('#addPictureForm')}>Добавить</Button>
                     <Button color="secondary" onClick={toggle}>Cancel</Button>
                 </ModalFooter>
             </Form>
@@ -96,4 +145,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default WithMuseamService()(connect(mapStateToProps, actions)(AddModalPictures));
+export default connect(mapStateToProps, actions)(AddModalPictures);
