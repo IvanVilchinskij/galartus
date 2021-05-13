@@ -7,18 +7,12 @@ import './styles/index.scss';
 
 import App from './components/app/app';
 import store from './store';
-import MuseamService from './services/museamService';
-import MuseamServiceContext from './components/museamServiceContext/museamServiceContext';
-
-const museamService = new MuseamService();
 
 ReactDOM.render(
   <Provider store={store}>
-        <MuseamServiceContext.Provider value={museamService}>
-            <div className="content-wrapper">
-                <App/>
-            </div>
-        </MuseamServiceContext.Provider> 
+        <div className="content-wrapper">
+            <App/>
+        </div>
   </Provider>,
   document.getElementById('root')
 );

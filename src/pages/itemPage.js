@@ -14,20 +14,21 @@ import {connect} from 'react-redux';
 import '../styles/pages/itemPage.scss';
 
 import * as actions from '../actions/actions';
-import WithMuseamService from '../components/hoc/withMuseamService';
+import axiosInstance from '../axios';
 
-const ItemPage = ({MuseamService, toggleHeaderColor, currentCollection, itemId, setCurrentPicture, currentPicture}) => {
+const ItemPage = ({toggleHeaderColor, currentCollection, itemId, setCurrentPicture, currentPicture}) => {
 
     useEffect(() => {
         toggleHeaderColor(true);
 
-        MuseamService.getItemById('/pictures', itemId)
+        axiosInstance.get(`pictures?id=${itemId}`)
             .then(res => {
-                setCurrentPicture(res)
+                setCurrentPicture(res.data);
             })
-            .catch((err) => {
-                throw new Error(err)
+            .catch(err => {
+                console.log(err);
             });
+
     }, []);
 
     const currentItem = currentPicture.map(item => {
@@ -66,4 +67,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default WithMuseamService()(connect(mapStateToProps, actions)(ItemPage));
+export default connect(mapStateToProps, actions)(ItemPage);
