@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
     Button,
     Form,
@@ -12,10 +12,10 @@ import {
 } from 'reactstrap';
 import {connect} from 'react-redux';
 
-import axiosInstance from '../../../axios';
-import * as actions from '../../../actions/actions';
+import axiosInstance from '../../../../axios';
+import * as actions from '../../../../actions/actions';
 
-const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollcetions, isOpen, toggle, modalId, toggleRefresh, modalName}) => {
+const AddModalExhibitions = ({collections, isLoadingCollections, isErrorCollcetions, isOpen, toggle, toggleRefresh}) => {
     const initialFormData = Object.freeze({
         name: '',
         description: '',
@@ -33,20 +33,22 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
     const handleChange = (e) => {
         const target = e.target;
 
-        if([target.name] == 'image') {
+        if ([target.name] == 'image') {
             setExhibitionImg({
-                image: target.files
+                image: target.files,
             });
         }
 
         updateExhibitionData({
             ...exhibitionData,
-            [target.name]: target.value.trim()
+            [target.name]: target.value.trim(),
         });
+        
+   
     };
 
     const handleSubmit = (formId) => {
-        const form = document.querySelector(formId);
+        const form = document.querySelector(formId)
         const formData = new FormData(form);
 
         formData.set('name', exhibitionData.name);
@@ -58,14 +60,14 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
         formData.set('address', exhibitionData.address);
         formData.set('weekday', exhibitionData.weekday);
 
-        axiosInstance.put(`exhibitions/${modalId}`)
+        axiosInstance.post('exhibitions/create', formData)
             .then(() => {
                 toggleRefresh();
                 toggle();
             });
     };
 
-    const collectionsOptions = collections ? collections.map((item) => {
+    const collectionsOptions = collections ?  collections.map((item) => {
         return (
             <option label={item.name} key={item.id}>{item.id}</option>
         );
@@ -77,107 +79,107 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
 
     return (
         <Modal isOpen={isOpen} toggle={toggle}>
-            <Form id='editExhibitionsForm'>
-                <ModalHeader toggle={toggle}>Изменеие {modalName}</ModalHeader>
+            <Form id='addExhibitionsForm'>
+                <ModalHeader toggle={toggle}>Добавление выставки</ModalHeader>
                 <ModalBody>
                     <FormGroup>
-                        <Label for="exhEditName">Name</Label>
+                        <Label for="exhName">Name</Label>
                         <Input 
                             type="text" 
                             name="name" 
-                            id="exhEditName"
+                            id="exhName"
                             onChange={handleChange}
                             autoComplete='name'
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exhEditDescription">description</Label>
+                        <Label for="exhDescription">description</Label>
                         <Input 
                             type="text" 
                             name="description" 
-                            id="exhEditDescription"
+                            id="exhDescription"
                             onChange={handleChange}
                             autoComplete='description'
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exhEditImage">File</Label>
+                        <Label for="exhImage">File</Label>
                         <Input 
+                            accept='image/*'
                             type="file" 
                             name="image" 
-                            id="exhEditImage" 
-                            onChange={handleChange}
-                            autoComplete='image'
+                            id="exhImage" 
+                            onChange={handleChange} 
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exhEditDate">Date</Label>
+                        <Label for="exhDate">Date</Label>
                         <Input 
                             type="date" 
                             name="date" 
-                            id="exhEditDate"
+                            id="exhDate"
                             onChange={handleChange}
                             autoComplete='date'
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exhEditTime">Time</Label>
+                        <Label for="exhTime">Time</Label>
                         <Input 
                             type="time" 
                             name="time" 
-                            id="exhEditTime"
+                            id="exhTime"
                             onChange={handleChange}
                             autoComplete='time'
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exhEditPrice">Price</Label>
+                        <Label for="exhPrice">Price</Label>
                         <Input 
                             type="number" 
                             name="price" 
-                            id="exhEditPrice"
+                            id="exhPrice"
                             onChange={handleChange}
                             autoComplete='price'
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exhEditAddr">Address</Label>
+                        <Label for="exhAddr">Address</Label>
                         <Input 
                             type="text" 
                             name="address" 
-                            id="exhEditAddr"
+                            id="exhAddr"
                             onChange={handleChange}
                             autoComplete='address'
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exhEditWeekday">weekday</Label>
+                        <Label for="exhWeekday">weekday</Label>
                         <Input 
                             type="text" 
                             name="weekday" 
-                            id="exhEditWeekday"
+                            id="exhWeekday"
                             onChange={handleChange}
                             autoComplete='weekday'
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for='exhEditCategories'>Categories</Label>
+                        <Label for="exhCateg">categories</Label>
                         <Input 
                             type="select" 
                             name="categories" 
-                            id="exhEditCategories"
+                            id="exhCateg"
                             multiple
                         >   
                             {loadingContent}
-                            {collectionsOptions}
+                            {collectionsOptions}  
                             {errorContent}
                         </Input>
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>
                     <Button color="primary" onClick={() => {
-                        handleSubmit('#editExhibitionsForm');
-                    }}>Изменить</Button>
+                        handleSubmit('#addExhibitionsForm');
+                    }}>Добавить</Button>
                     <Button color="secondary" onClick={toggle}>Cancel</Button>
                 </ModalFooter>
             </Form>
@@ -193,5 +195,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-
-export default connect(mapStateToProps, actions)(EditModalExhibitions);
+export default connect(mapStateToProps, actions)(AddModalExhibitions);

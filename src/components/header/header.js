@@ -28,7 +28,11 @@ const Header = ({darkHeader, isAutorization}) => {
 
     const toggleBurger = () => setIsOpenBurger(!isOpenBurger);
 
-    const headerControl = !isAutorization ? <LogInBtn toggle={toggle} darkClass={darkClass} smallArrow={smallArrow}/> : <LogOutBtn toggleExit={toggleExit} darkClass={darkClass}/>;
+    const headerEnterOrExit = !isAutorization ? 
+        <LogInBtn toggle={toggle} darkClass={darkClass} smallArrow={smallArrow}/> : 
+        <LogOutBtn toggleExit={toggleExit} darkClass={darkClass}/>;
+
+    const headerUserBtns = isAutorization ? <><AdminBtn darkClass={darkClass}/><UserPA darkClass={darkClass}/></> : null;
 
     const activeBurger = isOpenBurger ? 'active' : '';
 
@@ -59,13 +63,14 @@ const Header = ({darkHeader, isAutorization}) => {
                         </ul>
                     </nav>
                     <div className="header__control-btns btns-group">
-                        <button className={`btns-group__btn ${darkClass}`}>
+                        {/* <button className={`btns-group__btn ${darkClass}`}>
                             <Link className={darkClass} to='/admin'>Управление</Link>
                         </button>
                         <button className={`btns-group__btn ${darkClass}`}>
                             <Link className={darkClass} to='/user'>Личный кабинет</Link>
-                        </button>  
-                        {headerControl}
+                        </button>   */}
+                        {headerUserBtns}
+                        {headerEnterOrExit}
                     </div>
                 </div>
                 <div className={`burger ${activeBurger}`} onClick={toggleBurger}>
@@ -94,6 +99,22 @@ const LogOutBtn = ({toggleExit, darkClass}) => {
     return (
         <button  onClick={toggleExit}  className={`btns-group__btn ${darkClass}`}>
             Выйти
+        </button> 
+    );
+};
+
+const AdminBtn = ({darkClass}) => {
+    return (
+        <button className={`btns-group__btn ${darkClass}`}>
+            <Link className={darkClass} to='/admin'>Управление</Link>
+        </button>
+    );
+};
+
+const UserPA = ({darkClass}) => {
+    return (
+        <button className={`btns-group__btn ${darkClass}`}>
+            <Link className={darkClass} to='/user'>Личный кабинет</Link>
         </button> 
     );
 };

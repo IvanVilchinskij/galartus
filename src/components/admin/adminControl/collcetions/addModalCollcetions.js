@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
     Button,
     Form,
@@ -11,38 +11,40 @@ import {
     ModalFooter,
 } from 'reactstrap';
 
-import axiosInstance from '../../../axios';
+import axiosInstance from '../../../../axios';
 
-const EditModalCollcetions = ({ isOpen, toggle, modalId, toggleRefresh, modalName}) => {
+const AddModalCollcetions = ({isOpen, toggle, toggleRefresh}) => {
     const initialFormData = Object.freeze({
         name: '',
     });
 
-    const [collectionData, updateCollectionData] = useState(initialFormData);
-    const [formImg, setFormImg] = useState(null);
+    const [collectionData, updateCollcetionData] = useState(initialFormData);
+    const [collectionImg, setCollectionImg] = useState(null);
 
     const handleChange = (e) => {
         const target = e.target;
-
-        if ([target.name] == 'image') {
-            setFormImg({
+        if([target.name] == 'image') {
+            setCollectionImg({
                 image: target.files,
-            })
+            });
         }
 
-        updateCollectionData({
-            ...collectionData,
-            [target.name]: target.value.trim(),
-        });
+        if([target.name] == 'name') {
+            updateCollcetionData({
+                ...collectionData,
+                [target.name]: target.value.trim(),
+            });
+        }
     };
 
     const handleSubmit = () => {
-        const formData = new FormData();
 
+        let formData = new FormData();
+        
         formData.append('name', collectionData.name);
-        formData.append('image', formImg.image[0]);
+        formData.append('image', collectionImg.image[0]);
 
-        axiosInstance.put(`categories/${modalId}`, formData)
+        axiosInstance.post(`categories/create`, formData)
             .then(() => {
                 toggleRefresh();
                 toggle();
@@ -51,8 +53,8 @@ const EditModalCollcetions = ({ isOpen, toggle, modalId, toggleRefresh, modalNam
 
     return (
         <Modal isOpen={isOpen} toggle={toggle}>
-            <Form id='editCollcetionForm'>
-                <ModalHeader toggle={toggle}>Изменеие {modalName}</ModalHeader>
+            <Form id='addCollcetionForm'>
+                <ModalHeader toggle={toggle}>Добавление коллекции</ModalHeader>
                 <ModalBody>
                     <FormGroup>
                         <Label for="addName">Name</Label>
@@ -60,27 +62,33 @@ const EditModalCollcetions = ({ isOpen, toggle, modalId, toggleRefresh, modalNam
                             type="text" 
                             name="name" 
                             id="addName"
-                            autoComplete='name'
                             onChange={handleChange}
+                            autoComplete='name'
                         />
                     </FormGroup>
                     <FormGroup>
                         <Label for="exampleImage">File</Label>
                         <Input 
+                            accept='image/*'
                             type="file" 
                             name="image" 
-                            id="exampleImage" 
-                            onChange={handleChange}
+                            id="exampleImage"
+                            onChange={handleChange} 
                         />
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={handleSubmit}>Изменить</Button>
-                    <Button color="secondary" onClick={toggle}>Cancel</Button>
+                    <Button 
+                        color="primary" 
+                        onClick={handleSubmit}
+                    >
+                        Добавить
+                    </Button>
+                    <Button color="secondary" onClick={toggle}>Отмена</Button>
                 </ModalFooter>
             </Form>
         </Modal>
     );
 };
 
-export default EditModalCollcetions;
+export default AddModalCollcetions;

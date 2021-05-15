@@ -12,8 +12,8 @@ import {
 } from 'reactstrap';
 import {connect} from 'react-redux';
 
-import axiosInstance from '../../../axios';
-import * as actions from '../../../actions/actions';
+import axiosInstance from '../../../../axios';
+import * as actions from '../../../../actions/actions';
 
 const AddModalPictures = ({collections, isLoadingCollections, isErrorCollcetions, isOpen, toggle, toggleRefresh}) => {
 
@@ -107,6 +107,7 @@ const AddModalPictures = ({collections, isLoadingCollections, isErrorCollcetions
                 <FormGroup>
                     <Label for="picImage">image</Label>
                     <Input 
+                        accept='image/*'
                         type="file" 
                         name="image" 
                         id="picImage"

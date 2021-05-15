@@ -13,6 +13,8 @@ import CollectionPage from '../../pages/collectonPage';
 import ItemPage from '../../pages/itemPage';
 import AdminPage from '../../pages/adminPage';
 import Header from '../header/header';
+import NotFoundPage from '../../pages/notFoundPage';
+import ExhibitionInfo from '../exhibitionInfo/exhibitionInfo';
 
 const App = ({currentCollection, defCurrentCollection, isAutorization, setAutorization}) => {
     useEffect(() => {
@@ -39,21 +41,11 @@ const App = ({currentCollection, defCurrentCollection, isAutorization, setAutori
                     <Route path='/collections' exact component={AllCollectionsPage}/>
                     <Route path='/about' component={AboutPage}/>
                     <Route path='/user' component={UserPage} />
-                    <Route path={`/collections/:id`} exact render={
-                        ({match}) => {
-                            const {id} = match.params;
-
-                            return <CollectionPage collcetionId={id}/>
-                        }
-                    }/>
-                    <Route path={`/collections/${currentCollection}/pictures/:id`} exact render={
-                        ({match}) => {
-                            const {id} = match.params;
-
-                            return <ItemPage itemId={id} />
-                        }
-                    } />
+                    <Route exact path='/collections/:id' component={CollectionPage}/>
+                    <Route exact path={`/collections/${currentCollection}/pictures/:id`} component={ItemPage} />
+                    <Route exact path='/exhibitions/:id' component={ExhibitionInfo}/>
                     <Route path='/admin' component={AdminPage}/>
+                    <Route component={NotFoundPage}/>
                 </Switch>
             </div>  
             <Footer/>

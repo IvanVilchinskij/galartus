@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {Card, CardImg, CardBody, CardTitle, CardText, Button} from 'reactstrap';
 import {Link} from 'react-router-dom';
@@ -13,7 +13,7 @@ const ItemCards = ({pictures, picturesLoaded, collectionId, picturesError, curre
     useEffect(() => {
         picturesRequsted();
 
-        axiosInstance.get('pictures')
+        axiosInstance.get(`pictures?categories=${collectionId}`)
             .then(res => {
                 picturesLoaded(res.data);
             })
@@ -26,17 +26,11 @@ const ItemCards = ({pictures, picturesLoaded, collectionId, picturesError, curre
         }
     }, []);
 
-    const currentPictures = pictures ? pictures.filter((item) => {
-        const itemCategories = item.categories;
+    const handleLike = () => {
 
-        if (itemCategories.includes(collectionId)) {
-            return true;
-        } else {
-            return false;
-        }
-    }) : null;
+    };
 
-    const picturesCards = currentPictures ? currentPictures.map((item) => {
+    const picturesCards = pictures ? pictures.map((item) => {
         return (
             <Card key={item.id} className='item-card'>
                 <div className="item-card__img">
@@ -53,6 +47,7 @@ const ItemCards = ({pictures, picturesLoaded, collectionId, picturesError, curre
                         <small className="text-muted">Last updated 3 mins ago</small>
                     </CardText>
                     <Button><Link to={`/collections/${currentCollection}/pictures/${item.id}`}>Подробнее</Link></Button>
+                    <Button>Like</Button>
                 </CardBody>
             </Card>
         );

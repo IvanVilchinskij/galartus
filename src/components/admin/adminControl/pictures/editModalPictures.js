@@ -12,8 +12,8 @@ import {
 } from 'reactstrap';
 import {connect} from 'react-redux';
 
-import axiosInstance from '../../../axios';
-import * as actions from '../../../actions/actions';
+import axiosInstance from '../../../../axios';
+import * as actions from '../../../../actions/actions';
 
 const EditModalPictures = ({ collections, isLoadingCollections, isErrorCollcetions, isOpen, toggle, modalId, toggleRefresh, modalName}) => {
 
@@ -45,16 +45,44 @@ const EditModalPictures = ({ collections, isLoadingCollections, isErrorCollcetio
         const form = document.querySelector(formId);
         const formData = new FormData(form);
 
-        formData.set('name', pictureData.name);
+        let counter = 0;
+        const isImage = pictureImg ? pictureImg.image : null;
+        const imageLength = isImage ? pictureImg.image.length : 0;
+
+        for (let key in pictureData) {
+            if (!pictureData[key]) {
+                formData.delete(key);
+            }
+        }
+
+        if (!pictureImg || !imageLength) {
+            formData.delete('image');
+        }
+
+        for (let [name] of formData.keys()) {
+            counter++;
+        }
+
+        if (counter === 0) {
+            toggle();
+        } else {
+            axiosInstance.put(`pictures/${modalId}`, formData)
+                .then(() => {
+                    toggleRefresh();
+                    toggle();
+                });
+        }
+
+       /*  formData.set('name', pictureData.name);
         formData.set('author', pictureData.author);
         formData.set('description', pictureData.description);
-        formData.set('image', pictureImg.image[0]);
+        formData.set('image', pictureImg.image[0]); */
 
-        axiosInstance.put(`pictures/${modalId}`)
+        /* axiosInstance.put(`pictures/${modalId}`, formData)
             .then(() => {
                 toggleRefresh();
                 toggle();
-            });
+            }); */
     };
 
     const collectionsOptions = collections ? collections.map((item) => {
@@ -105,6 +133,7 @@ const EditModalPictures = ({ collections, isLoadingCollections, isErrorCollcetio
                     <FormGroup>
                         <Label for="picEditImage">image</Label>
                         <Input 
+                            accept='image/*'
                             type="file" 
                             name="image" 
                             id="picEditImage"

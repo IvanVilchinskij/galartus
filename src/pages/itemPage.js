@@ -8,7 +8,7 @@ import {
         CardBody,
         Button
     } from 'reactstrap';
-import {Link} from 'react-router-dom';
+import {Link , useParams} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import '../styles/pages/itemPage.scss';
@@ -16,12 +16,13 @@ import '../styles/pages/itemPage.scss';
 import * as actions from '../actions/actions';
 import axiosInstance from '../axios';
 
-const ItemPage = ({toggleHeaderColor, currentCollection, itemId, setCurrentPicture, currentPicture}) => {
+const ItemPage = ({toggleHeaderColor, currentCollection,  setCurrentPicture, currentPicture}) => {
+    const {id} = useParams();
 
     useEffect(() => {
         toggleHeaderColor(true);
 
-        axiosInstance.get(`pictures?id=${itemId}`)
+        axiosInstance.get(`pictures?id=${id}`)
             .then(res => {
                 setCurrentPicture(res.data);
             })
@@ -33,7 +34,7 @@ const ItemPage = ({toggleHeaderColor, currentCollection, itemId, setCurrentPictu
 
     const currentItem = currentPicture.map(item => {
         return (
-            <Card className='item-info'>
+            <Card key={item.id} className='item-info'>
                 <div className="item-info__img">
                     <CardImg top width="100%" src={item.image} alt={item.name} />
                 </div>               
@@ -53,7 +54,14 @@ const ItemPage = ({toggleHeaderColor, currentCollection, itemId, setCurrentPictu
         <div className="item-page">
             <Container>
                 {currentItem}
-                <Button ><Link onClick={() => setCurrentPicture([])} to={`/collections/${currentCollection}`}>Назад к коллекциям</Link></Button>
+                <Button >
+                    <Link 
+                        onClick={() => setCurrentPicture([])} 
+                        to={`/collections/${currentCollection}`}
+                    >
+                        Назад к коллекциям
+                    </Link>
+                </Button>
             </Container>
         </div>          
     );

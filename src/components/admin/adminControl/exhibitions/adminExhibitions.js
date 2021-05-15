@@ -2,14 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {Button} from 'reactstrap';
 
-import * as actions from '../../../actions/actions';
-import axiosInstance from '../../../axios';
-import AddModalCollcetions from './addModalCollcetions';
-import EditModalCollcetions from './editModalCollcetions';
+import * as actions from '../../../../actions/actions';
+import axiosInstance from '../../../../axios';
+import AddModalExhibitions from './addModalExhibitions';
+import EditModalExhibitions from './editModalExhibitions';
 import DeleteModal from '../deleteModal';
-import Spinner from '../../spinner/spinner';
+import Spinner from '../../../spinner/spinner';
 
-const AdminCollections = ({collections, collectionsLoaded, isErrorCollcetions, isLoadingCollections, collectionsRequsted, collectionsError}) => {
+const AdminExhibitions = ({exhibitions, exhibitionsLoaded, exhibitionsRequsted, exhibitionsError, isLoadingExhibitions, isErrorExhibitions}) => {
     const [addModal, setAddModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
@@ -26,27 +26,31 @@ const AdminCollections = ({collections, collectionsLoaded, isErrorCollcetions, i
     const toggleDeleteModal = () => setDeleteModal(!deleteModal);
 
     useEffect(() => {
-        collectionsRequsted();
+        exhibitionsRequsted();
 
-        axiosInstance.get('categories')
+        axiosInstance.get('exhibitions')
             .then(res => {
-                collectionsLoaded(res.data);
+                exhibitionsLoaded(res.data);
             })
-            .catch(() => {
-                collectionsError();
-            });
+            .catch(() => exhibitionsError());
 
         return function cleanup() {
-            collectionsLoaded([]);
+            exhibitionsLoaded([]);
         }
-
     }, [refresh]);
 
-    const collectionsList = collections ? collections.map((item) => {
+    const exhibitionsList = exhibitions ? exhibitions.map((item) => {
         return (
             <div key={item.id} className="admin-card">
                 <div className="admin-card__id">{item.id}</div>
-                <div className="admin-card__name">{item.name}</div>
+                <div className="admin-card__name admin-card__name--five">{item.name}</div>
+                <div className="admin-card__categories admin-card__categories--five">{item.categories.join(', ')}</div>
+                <div className="admin-card__price">{item.price}</div>
+                <div className="admin-card__date">
+                    {item.date}
+                    <br/>
+                    {item.time}
+                </div>
                 <div className="admin-card__control">
                     <button onClick={() => {
                         setModalId(item.id);
@@ -63,33 +67,36 @@ const AdminCollections = ({collections, collectionsLoaded, isErrorCollcetions, i
         );
     }) : null;
 
-    const loadingContent = isLoadingCollections ? <LoadingCard/> : null;
+    const loadingContent = isLoadingExhibitions ? <LoadingCard/> : null;
 
-    const errorContent = isErrorCollcetions ? <ErrorCard/> : null;
+    const errorContent = isErrorExhibitions ? <ErrorCard/> : null;
 
     return (
         <>  
-            <Button className='admin__add-btn' onClick={toggleAddModal}>+ collection</Button>
+            <Button className='admin__add-btn' onClick={toggleAddModal}>+ exhibition</Button>
             <div className="admin-cards">
                 <div className="admin-cards__title">
                     <div className="admin-cards__id">Id</div>
-                    <div className="admin-cards__name">Name</div>
+                    <div className="admin-cards__name admin-cards__name--five">Name</div>
+                    <div className="admin-cards__categories admin-cards__categories--five">Categories</div>
+                    <div className="admin-cards__price">price</div>
+                    <div className="admin-cards__date">Date</div>
                     <div className="admin-cards__control">
                         <div className="admin-cards__edit">EDIT</div>
                         <div className="admin-cards__delete">DELETE</div>
                     </div>
                 </div>
                 {loadingContent}
-                {collectionsList}
+                {exhibitionsList}
                 {errorContent}
             </div>
-            <AddModalCollcetions 
+            <AddModalExhibitions 
                 isOpen={addModal} 
                 toggle={toggleAddModal} 
                 toggleRefresh={toggleRefresh}
             />
-            <EditModalCollcetions 
-                isOpen={editModal}
+            <EditModalExhibitions 
+                isOpen={editModal} 
                 toggle={toggleEditModal} 
                 toggleRefresh={toggleRefresh} 
                 modalId={modalId}
@@ -101,7 +108,7 @@ const AdminCollections = ({collections, collectionsLoaded, isErrorCollcetions, i
                 toggleRefresh={toggleRefresh}
                 modalId={modalId}
                 modalName={modalName}
-                url={`categories/`}
+                url={`exhibitions/`}
             />
         </>
         
@@ -126,10 +133,10 @@ const ErrorCard = () => {
 
 const mapStateToProps = (state) => {
     return {
-        collections: state.collections,
-        isLoadingCollections: state.loadingCollections,
-        isErrorCollcetions: state.isErrorCollcetions
+        exhibitions: state.exhibitions,
+        isLoadingExhibitions: state.isLoadingExhibitions,
+        isErrorExhibitions: state.isErrorExhibitions
     }
 };
 
-export default connect(mapStateToProps, actions)(AdminCollections);
+export default connect(mapStateToProps, actions)(AdminExhibitions);

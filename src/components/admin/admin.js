@@ -11,9 +11,9 @@ import classnames from 'classnames';
 
 import './admin.scss';
 
-import AdminCollections from '../adminControl/collcetions/adminCollections';
-import AdminPictures from '../adminControl/pictures/adminPictures';
-import AdminExhibitions from '../adminControl/exhibitions/adminExhibitions';
+import AdminCollections from './adminControl/collcetions/adminCollections';
+import AdminPictures from './adminControl/pictures/adminPictures';
+import AdminExhibitions from './adminControl/exhibitions/adminExhibitions';
 
 const AdminControl = () => {
     const [activeTab, setActiveTab] = useState('1');

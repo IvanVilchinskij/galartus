@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {Button} from 'reactstrap';
 
-import * as actions from '../../../actions/actions';
-import axiosInstance from '../../../axios';
+import * as actions from '../../../../actions/actions';
+import axiosInstance from '../../../../axios';
 import AddModalPictures from './addModalPictures';
 import EditModalPictures from './editModalPictures';
 import DeleteModal from '../deleteModal';
-import Spinner from '../../spinner/spinner';
+import Spinner from '../../../spinner/spinner';
 
 const AdminPictures = ({pictures, picturesLoaded, isLoadingPictures, isErrorPictures, picturesRequsted, picturesError}) => {
     const [addModal, setAddModal] = useState(false);

@@ -7,7 +7,7 @@ import {
     ModalFooter,
 } from 'reactstrap';
 
-import axiosInstance from '../../axios';
+import axiosInstance from '../../../axios';
 
 const DeleteModal = ({isOpen, url, toggle, toggleRefresh, modalId, modalName}) => {
     const handleSubmit = () => {

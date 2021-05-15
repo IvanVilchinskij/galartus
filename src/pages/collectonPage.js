@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {Container} from 'reactstrap';
 import {connect} from 'react-redux';
+import {useParams} from 'react-router-dom';
 
 import * as actions from '../actions/actions';
 import ItemCards from '../components/itemCards/itemCards';
@@ -12,11 +13,13 @@ const CollectionPage = ({collcetionId, toggleHeaderColor}) => {
         toggleHeaderColor(true);
     }, []);
 
+    const {id} = useParams();
+    
     return (
         <div className="collection-page">
             <Container>
                 <div className="collection-page__wrapper">
-                    <ItemCards collectionId={+collcetionId}/>
+                    <ItemCards collectionId={+id}/>
                 </div>    
             </Container>        
         </div>      

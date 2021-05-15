@@ -7,6 +7,8 @@ import axiosInstance from '../../axios';
 import * as actions from '../../actions/actions';
 
 const LogOutModal = ({isOpenExit, toggleExit, setAutorization}) => {
+    const history = useHistory();
+
     const handleSubmit = () => {
         const refreshToken = localStorage.getItem('refresh_token');
 
@@ -21,6 +23,8 @@ const LogOutModal = ({isOpenExit, toggleExit, setAutorization}) => {
 
                     axiosInstance.defaults.headers['Authorization'] = null;
                     setAutorization(false);
+                    
+                    history.push('/');
                     window.location.reload();
                 });
         } else {
