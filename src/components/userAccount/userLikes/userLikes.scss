@@ -1,0 +1,18 @@
+.likes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.like-card {
+    width: 40%;
+
+    margin-bottom: 15px;
+
+    &__img {
+        img {
+            width: 100%;
+        }
+    }
+}

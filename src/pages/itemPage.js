@@ -16,7 +16,7 @@ import '../styles/pages/itemPage.scss';
 import * as actions from '../actions/actions';
 import axiosInstance from '../axios';
 
-const ItemPage = ({toggleHeaderColor, currentCollection,  setCurrentPicture, currentPicture}) => {
+const ItemPage = ({toggleHeaderColor, setCurrentPicture, currentPicture}) => {
     const {id} = useParams();
 
     useEffect(() => {
@@ -54,14 +54,6 @@ const ItemPage = ({toggleHeaderColor, currentCollection,  setCurrentPicture, cur
         <div className="item-page">
             <Container>
                 {currentItem}
-                <Button >
-                    <Link 
-                        onClick={() => setCurrentPicture([])} 
-                        to={`/collections/${currentCollection}`}
-                    >
-                        Назад к коллекциям
-                    </Link>
-                </Button>
             </Container>
         </div>          
     );
@@ -70,7 +62,6 @@ const ItemPage = ({toggleHeaderColor, currentCollection,  setCurrentPicture, cur
 const mapStateToProps = (state) => {
     return {
         darkHeader: state.darkHeader,
-        currentCollection: state.currentCollection,
         currentPicture: state.currentPicture
     }
 };

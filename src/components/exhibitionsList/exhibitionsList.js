@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {
     Container
   } from 'reactstrap';
+import {Link} from 'react-router-dom';
 
 import './exhibitionsList.scss';
 
@@ -129,7 +130,7 @@ const ExhibitionsList = ({exhibitionsLoaded, exhibitionsError, exhibitions, isLo
                             </div>
                             <div className="exhibition-card__footer">
                                 <div className="exhibition-card__title">
-                                    {item.name}
+                                    <Link to={`/exhibitions/${item.id}`}>{item.name}</Link>
                                 </div>
                             </div>
                         </div>

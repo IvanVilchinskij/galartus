@@ -17,7 +17,7 @@ const ExhibitionsPage = ({toggleHeaderColor}) => {
 
 const mapStateToProps = (state) => {
     return {
-        darkHeader: state.darkHeader
+        darkHeader: state.darkHeader,
     }
 };
 

@@ -8,7 +8,7 @@ import ItemCards from '../components/itemCards/itemCards';
 
 import '../styles/pages/collectionPage.scss';
 
-const CollectionPage = ({collcetionId, toggleHeaderColor}) => {
+const CollectionPage = ({toggleHeaderColor}) => {
     useEffect(() => {
         toggleHeaderColor(true);
     }, []);
@@ -18,9 +18,7 @@ const CollectionPage = ({collcetionId, toggleHeaderColor}) => {
     return (
         <div className="collection-page">
             <Container>
-                <div className="collection-page__wrapper">
-                    <ItemCards collectionId={+id}/>
-                </div>    
+                <ItemCards collectionId={+id}/>            
             </Container>        
         </div>      
     );

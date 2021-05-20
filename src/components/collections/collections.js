@@ -18,8 +18,7 @@ const Collections = ({
     collectionsRequsted,  
     isLoadingCollections, 
     isErrorCollcetions, 
-    collectionsError, 
-    defCurrentCollection
+    collectionsError
 }) => {
     useEffect(() => {
         collectionsRequsted();
@@ -52,7 +51,7 @@ const Collections = ({
                                 <CardTitle className='collection-card__title'>{item.name}</CardTitle>
                             </div>       
                             <Button>
-                                <Link onClick={() => defCurrentCollection(item.id)} to={`/collections/${item.id}`}>Подробнее</Link>
+                                <Link to={`/collections/${item.id}`}>Подробнее</Link>
                             </Button>
                         </Card>
                     );
@@ -100,7 +99,6 @@ const mapStateToProps = (state) => {
         collections: state.collections,
         isLoadingCollections: state.isLoadingCollections,
         isErrorCollcetions: state.isErrorCollcetions,
-        currentCollection: state.currentCollection
     }
 };
 

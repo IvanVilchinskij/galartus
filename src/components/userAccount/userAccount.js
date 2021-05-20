@@ -17,6 +17,7 @@ import './userAccount.scss';
 
 import axiosInstance from '../../axios';
 import EditUserModal from './editUserModal/editUserModal';
+import UserLikes from './userLikes/userLikes';
 
 const UserAccount = () => {
     const [userInfo, setUserInfo] = useState(null);
@@ -35,14 +36,10 @@ const UserAccount = () => {
     const toggleEditModal = () => setIsOpen(!isOpen);
 
     useEffect(() => {
-        const login = localStorage.getItem('login');
-
-        if (login) {
-            axiosInstance.get(`users/?email=${login}`)
-                .then(res => {
-                    setUserInfo(res.data[0])
-                });
-        }
+        axiosInstance.get(`users/`)
+            .then(res => {
+                setUserInfo(res.data[0]);
+            });
     }, [refresh]);
 
     const content = userInfo ? 
@@ -80,7 +77,7 @@ const UserAccount = () => {
                     <TabPane tabId="1">
                         <Row>
                             <Col sm="12">
-                                <h4>Тут пока пусто</h4>
+                                <UserLikes/>
                             </Col>
                         </Row>
                     </TabPane>

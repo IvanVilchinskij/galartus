@@ -12,6 +12,7 @@ const initialState = {
     currentCollection: null,
     currentPicture: [],
     isAutorization: null,
+    likesId: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -81,11 +82,6 @@ const reducer = (state = initialState, action) => {
                 isLoadingPictures: false,
                 isErrorPictures: true
             }
-        case 'DEF_CURRENT_COLLECTION':
-            return {
-                ...state,
-                currentCollection: action.currentId
-            }
         case 'SET_CURRENT_PICTURE':
             return {
                 ...state,
@@ -95,6 +91,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isAutorization: action.isAutorization
+            }
+        case 'SET_LIKES_ID':
+            return {
+                ...state,
+                likesId: action.payload,
             }
         default:
             return state;

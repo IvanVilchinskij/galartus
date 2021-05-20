@@ -48,16 +48,22 @@ axiosInstance.interceptors.response.use(
 			if (refreshToken) {
 				const tokenParts = JSON.parse(atob(refreshToken.split('.')[1]));
 
+                console.log(`tokenParts = ${JSON.stringify(tokenParts) }`);
+
 				// exp date in token is expressed in seconds, while now() returns milliseconds:
 				const now = Math.ceil(Date.now() / 1000);
-				console.log(tokenParts.exp);
-
+				console.log(`TokenParts.exp = ${tokenParts.exp}`);
+                
 				if (tokenParts.exp > now) {
 					return axiosInstance
 						.post('/token/refresh/', {
 							refresh: refreshToken
 						})
 						.then((response) => {
+                            console.log(`Response - ${JSON.stringify(response) }`);
+                            console.log(`response.data.access = ${response.data.access}`);
+                            console.log(`response.data.refresh = ${response.data.refresh}`);
+
 							localStorage.setItem('access_token', response.data.access);
 							localStorage.setItem('refresh_token', response.data.refresh);
 
@@ -65,6 +71,8 @@ axiosInstance.interceptors.response.use(
 								'Bearer ' + response.data.access;
 							originalRequest.headers['Authorization'] =
 								'Bearer ' + response.data.access;
+
+                            console.log(`originalRequest = ${JSON.stringify(originalRequest) }`);
 
 							return axiosInstance(originalRequest);
 						})

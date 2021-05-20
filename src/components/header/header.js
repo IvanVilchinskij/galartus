@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {connect} from 'react-redux';
-import { Container} from 'reactstrap';
+import { Container, Button} from 'reactstrap';
 import {Link} from 'react-router-dom';
 
 import LogInModal from '../logInModal/logInModal';
@@ -63,12 +63,6 @@ const Header = ({darkHeader, isAutorization}) => {
                         </ul>
                     </nav>
                     <div className="header__control-btns btns-group">
-                        {/* <button className={`btns-group__btn ${darkClass}`}>
-                            <Link className={darkClass} to='/admin'>Управление</Link>
-                        </button>
-                        <button className={`btns-group__btn ${darkClass}`}>
-                            <Link className={darkClass} to='/user'>Личный кабинет</Link>
-                        </button>   */}
                         {headerUserBtns}
                         {headerEnterOrExit}
                     </div>
@@ -80,6 +74,7 @@ const Header = ({darkHeader, isAutorization}) => {
                     <span className='burger__down-line'></span>
                 </div>
             </Container>
+            <Button><Link style={{color: '#fff'}} to='/cart'>Корзина</Link></Button>
             <LogInModal isOpen={isOpen} toggle={toggle}/> 
             <LogOutModal isOpenExit={isOpenExit} toggleExit={toggleExit}/>      
         </header>

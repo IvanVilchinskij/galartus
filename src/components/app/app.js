@@ -14,16 +14,11 @@ import ItemPage from '../../pages/itemPage';
 import AdminPage from '../../pages/adminPage';
 import Header from '../header/header';
 import NotFoundPage from '../../pages/notFoundPage';
-import ExhibitionInfo from '../exhibitionInfo/exhibitionInfo';
+import ExhibitionInfoPage from '../../pages/exhibitionInfoPage';
+import CartPage from '../../pages/cartPage';
 
-const App = ({currentCollection, defCurrentCollection, isAutorization, setAutorization}) => {
+const App = ({isAutorization, setAutorization}) => {
     useEffect(() => {
-        if (!currentCollection) {
-            const num = localStorage.getItem('collectionId');
-
-            defCurrentCollection(num);
-        }
-
         if (localStorage.getItem('access_token')) {
             setAutorization(true);
         } else {
@@ -36,15 +31,16 @@ const App = ({currentCollection, defCurrentCollection, isAutorization, setAutori
             <Header/>
             <div className="content">
                 <Switch>
-                    <Route path='/' exact component={MainPage}/>
-                    <Route path='/exhibitions' component={ExhibitionsPage}/>
-                    <Route path='/collections' exact component={AllCollectionsPage}/>
-                    <Route path='/about' component={AboutPage}/>
-                    <Route path='/user' component={UserPage} />
+                    <Route exact path='/' component={MainPage}/>
+                    <Route exact path='/exhibitions' component={ExhibitionsPage}/>
+                    <Route exact path='/collections' component={AllCollectionsPage}/>
+                    <Route exact path='/about' component={AboutPage}/>
+                    <Route exact path='/user' component={UserPage} />
                     <Route exact path='/collections/:id' component={CollectionPage}/>
-                    <Route exact path={`/collections/${currentCollection}/pictures/:id`} component={ItemPage} />
-                    <Route exact path='/exhibitions/:id' component={ExhibitionInfo}/>
-                    <Route path='/admin' component={AdminPage}/>
+                    <Route exact path={`/pictures/:id`} component={ItemPage} />
+                    <Route exact path='/exhibitions/:id' component={ExhibitionInfoPage}/>
+                    <Route exact path='/admin' component={AdminPage}/>
+                    <Route exact path='/cart' component={CartPage} />
                     <Route component={NotFoundPage}/>
                 </Switch>
             </div>  
@@ -56,7 +52,6 @@ const App = ({currentCollection, defCurrentCollection, isAutorization, setAutori
 
 const mapStateToProps = (state) => {
     return {
-        currentCollection: state.currentCollection,
         isAutorization: state.isAutorization
     }
 };

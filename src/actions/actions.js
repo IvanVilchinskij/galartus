@@ -62,15 +62,6 @@ const toggleHeaderColor = (isDarkHeader) => {
     }
 };
 
-const defCurrentCollection = (collectionId) => {
-    localStorage.setItem('collectionId', collectionId);
-
-    return {
-        type: 'DEF_CURRENT_COLLECTION',
-        currentId: collectionId
-    }
-};
-
 const setCurrentPicture = (newPicture) => {
     return {
         type: 'SET_CURRENT_PICTURE',
@@ -85,12 +76,26 @@ const setAutorization = (isAuto) => {
     }
 };
 
+const setLikesId = (newLikes) => {
+    const newLikesId = new Set();
+
+    if (newLikes) {
+        newLikes.forEach(item => {
+            newLikesId.add(item.picture.id);
+        });
+    }
+
+    return {
+        type: 'SET_LIKES_ID',
+        payload: newLikesId,
+    }
+}
+
 export {
     collectionsLoaded,
     exhibitionsLoaded,
     picturesLoaded,
     toggleHeaderColor,
-    defCurrentCollection,
     setCurrentPicture,
     collectionsError,
     picturesError,
@@ -99,4 +104,5 @@ export {
     exhibitionsRequsted,
     picturesRequsted,
     setAutorization,
+    setLikesId,
 };
