@@ -78,17 +78,31 @@ const LogInModal = ({isOpen, toggle, setAutorization}) => {
         });
     };
 
-    const handleSubmitReg = () => {
+    const handleSubmitReg = (e) => {
+        const formData1 = new FormData();
 
-        axiosInstance
-            .post('users/register', {
-                email: formDataReg.email,
-                password: formDataReg.password,
-            })
+        formData1.set('email', formDataReg.email);
+        formData1.set('password', formDataReg.password);
+        /* e.preventDefualt(); */
+
+
+        axiosInstance.post('users/register', formData1)
             .then(() => {
-                history.push('/');
-                toggle();
-            });
+                axiosInstance.post('token/', formData1)
+                    .then(res => {
+                        localStorage.setItem('access_token', res.data.access);
+                        localStorage.setItem('refresh_token', res.data.refresh);
+
+                        axiosInstance.defaults.headers['Authorization'] =
+                            'Bearer ' + localStorage.getItem('access_token');
+                        history.push('/');
+
+                        setAutorization(true);
+                        toggle();
+                    })
+                    .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err));
     };
     
     return (
@@ -156,6 +170,7 @@ const LogInModal = ({isOpen, toggle, setAutorization}) => {
                             <FormGroup>
                                 <Label for='registrMail'>Почта</Label>
                                 <Input 
+                                    required
                                     type='email' 
                                     name='email' 
                                     id='registrMail'
@@ -166,6 +181,7 @@ const LogInModal = ({isOpen, toggle, setAutorization}) => {
                             <FormGroup>
                                 <Label for='registrPass'>Пароль</Label>
                                 <Input 
+                                    required
                                     type='password' 
                                     name='password' 
                                     id='registrPass'
@@ -176,6 +192,7 @@ const LogInModal = ({isOpen, toggle, setAutorization}) => {
                         </ModalBody>
                         <ModalFooter>
                             <Button 
+                                /* type='submit' */
                                 color='primary'
                                 onClick={handleSubmitReg}
                             >

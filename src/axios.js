@@ -22,6 +22,7 @@ axiosInstance.interceptors.response.use(
 		const originalRequest = error.config;
 
 		if (typeof error.response === 'undefined') {
+            console.log(error.status);
 			alert(
 				'A server/network error occurred. ' +
 				'Looks like CORS might be the problem. ' +
@@ -82,7 +83,7 @@ axiosInstance.interceptors.response.use(
                             localStorage.removeItem('refresh_token');
         
                             axiosInstance.defaults.headers['Authorization'] = null;
-                            
+
                             window.location.href = '/';
                             window.location.reload();
 						});

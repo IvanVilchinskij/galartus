@@ -24,6 +24,8 @@ const App = ({isAutorization, setAutorization}) => {
         } else {
             setAutorization(false);
         }
+
+        console.log('isAutorization', isAutorization);
     }, [isAutorization]);
     
     return (
