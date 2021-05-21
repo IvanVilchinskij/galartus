@@ -83,6 +83,7 @@ const LogInModal = ({isOpen, toggle, setAutorization}) => {
 
         formData1.set('email', formDataReg.email);
         formData1.set('password', formDataReg.password);
+        formData1.set('is_user', 1);
         /* e.preventDefualt(); */
 
 
