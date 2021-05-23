@@ -39,7 +39,7 @@ const AdminCollections = ({collections, collectionsLoaded, isErrorCollcetions, i
         return function cleanup() {
             collectionsLoaded([]);
         }
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refresh]);
 
     const collectionsList = collections ? collections.map((item) => {

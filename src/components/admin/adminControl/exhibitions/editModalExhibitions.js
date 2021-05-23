@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {/* useEffect, */ useState} from 'react';
 import {
     Button,
     Form,
@@ -32,7 +32,7 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
 
     const handleChange = (e) => {
         const target = e.target;
-
+        // eslint-disable-next-line 
         if([target.name] == 'image') {
             setExhibitionImg({
                 image: target.files
@@ -64,6 +64,7 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
             formData.delete('image');
         }
 
+        // eslint-disable-next-line 
         for (let [name] of formData.keys()) {
             counter++;
         }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, /* useState */ } from 'react';
 import {connect} from 'react-redux';
 import {Card, 
         CardTitle, 
@@ -32,6 +32,7 @@ const Collections = ({
         return function cleanup() {
             collectionsLoaded([]);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const setItemsContent = (items) => {

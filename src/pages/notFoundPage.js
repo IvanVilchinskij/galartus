@@ -6,6 +6,7 @@ import * as actions from '../actions/actions';
 const NotFoundPage = ({toggleHeaderColor}) => {
     useEffect(() => {
         toggleHeaderColor(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

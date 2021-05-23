@@ -23,7 +23,7 @@ const EditModalCollcetions = ({ isOpen, toggle, modalId, toggleRefresh, modalNam
 
     const handleChange = (e) => {
         const target = e.target;
-
+        // eslint-disable-next-line 
         if ([target.name] == 'image') {
             setFormImg({
                 image: target.files,
@@ -55,7 +55,7 @@ const EditModalCollcetions = ({ isOpen, toggle, modalId, toggleRefresh, modalNam
             console.log('EEE');
             formData.append('image', formImg.image[0]);
         }
-
+        // eslint-disable-next-line 
         for (let [name] of formData.keys()) {
             counter++;
         }

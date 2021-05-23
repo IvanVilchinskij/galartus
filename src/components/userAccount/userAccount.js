@@ -18,6 +18,7 @@ import './userAccount.scss';
 import axiosInstance from '../../axios';
 import EditUserModal from './editUserModal/editUserModal';
 import UserLikes from './userLikes/userLikes';
+import UserReccomendation from './userRecommendation/userRecommendation';
 
 const UserAccount = () => {
     const [userInfo, setUserInfo] = useState(null);
@@ -82,11 +83,7 @@ const UserAccount = () => {
                         </Row>
                     </TabPane>
                     <TabPane tabId="2">
-                        <Row>
-                            <Col sm="6">                           
-                                <Button>Подобрать</Button>
-                            </Col>                          
-                        </Row>
+                        <UserReccomendation/>
                     </TabPane>
             </TabContent>
             </Container>

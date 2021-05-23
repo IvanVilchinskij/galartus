@@ -7,6 +7,7 @@ import AdminControl from '../components/admin/admin';
 const AdminPage = ({toggleHeaderColor}) => {
     useEffect(() => {
         toggleHeaderColor(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (      

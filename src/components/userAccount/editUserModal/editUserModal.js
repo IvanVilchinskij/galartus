@@ -25,7 +25,7 @@ const EditUserModal = ({toggle, isOpen, userId, refresh}) => {
 
     const handleChange = (e) => {
         const target = e.target;
-
+        // eslint-disable-next-line 
         if ([target.name] == 'image') {
             setEditImg({
                 image: target.files,

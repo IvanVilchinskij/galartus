@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, /* useEffect */ } from 'react';
 import {connect} from 'react-redux';
 import { Container, Button} from 'reactstrap';
 import {Link} from 'react-router-dom';
@@ -74,7 +74,6 @@ const Header = ({darkHeader, isAutorization}) => {
                     <span className='burger__down-line'></span>
                 </div>
             </Container>
-            <Button><Link style={{color: '#fff'}} to='/cart'>Корзина</Link></Button>
             <LogInModal isOpen={isOpen} toggle={toggle}/> 
             <LogOutModal isOpenExit={isOpenExit} toggleExit={toggleExit}/>      
         </header>

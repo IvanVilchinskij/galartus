@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import * as actions from '../../actions/actions';
@@ -16,21 +16,35 @@ import Header from '../header/header';
 import NotFoundPage from '../../pages/notFoundPage';
 import ExhibitionInfoPage from '../../pages/exhibitionInfoPage';
 import CartPage from '../../pages/cartPage';
+import CartBtn from '../cart/cartBtn/cartBtn';
+import axiosInstance from '../../axios';
 
-const App = ({isAutorization, setAutorization}) => {
+const App = ({isAutorization, setAutorization, setCartCount, cartCount}) => {
     useEffect(() => {
         if (localStorage.getItem('access_token')) {
             setAutorization(true);
+
+            axiosInstance.get('cart/details?is_ordered=0')
+                .then(res => {
+                    if (res.data[0] && res.data[0].items.length > 0) {
+                        setCartCount(cartCount, res.data[0].items.length);
+                    } else {
+                        setCartCount(0, 0);
+                    }
+                })
         } else {
             setAutorization(false);
         }
 
         console.log('isAutorization', isAutorization);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAutorization]);
     
     return (
         <Router>
             <Header/>
+            <CartBtn cartCount={cartCount}/>
             <div className="content">
                 <Switch>
                     <Route exact path='/' component={MainPage}/>
@@ -54,7 +68,8 @@ const App = ({isAutorization, setAutorization}) => {
 
 const mapStateToProps = (state) => {
     return {
-        isAutorization: state.isAutorization
+        isAutorization: state.isAutorization,
+        cartCount: state.cartCount,
     }
 };
 

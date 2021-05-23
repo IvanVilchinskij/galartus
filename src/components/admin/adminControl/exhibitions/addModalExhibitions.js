@@ -32,7 +32,7 @@ const AddModalExhibitions = ({collections, isLoadingCollections, isErrorCollceti
 
     const handleChange = (e) => {
         const target = e.target;
-
+        // eslint-disable-next-line 
         if ([target.name] == 'image') {
             setExhibitionImg({
                 image: target.files,

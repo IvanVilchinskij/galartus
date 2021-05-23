@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import {Button, Container} from 'reactstrap';
+import {connect} from 'react-redux';
 
 import './exhibitionInfo.scss';
 
 import axiosInstance from '../../axios';
+import * as actions from '../../actions/actions';
 
-const ExhibitionInfo = ({exhibitionId, isAutorization}) => {
+const ExhibitionInfo = ({exhibitionId, isAutorization, setCartCount, cartCount}) => {
     const [exhibitionData, setExhibitionData] = useState(null);
 
     const [count, setCount] = useState(0);
@@ -25,6 +27,8 @@ const ExhibitionInfo = ({exhibitionId, isAutorization}) => {
                 setExhibitionData(res.data[0]);
             })
             .catch(err => console.log(err));
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const buyContent = isAutorization ? 
@@ -34,6 +38,8 @@ const ExhibitionInfo = ({exhibitionId, isAutorization}) => {
             decrCount={decrCount}
             incrCount={incrCount}
             id={exhibitionId}
+            cartCount={cartCount}
+            setCartCount={setCartCount}
         /> : 
         <NoAutorization/>;
 
@@ -59,13 +65,17 @@ const ExhibitionInfo = ({exhibitionId, isAutorization}) => {
 
 };
 
-const PurchaseBlock = ({count, decrCount, incrCount, id, resetCount}) => {
+const PurchaseBlock = ({count, decrCount, incrCount, id, resetCount, setCartCount, cartCount}) => {
     const disabled = count > 0 ? false : true;
 
     const handleSubmit = () => {
         if (!disabled) {
             axiosInstance.put(`cart/add/${id}/${count}`)
-                .then(() => resetCount())
+                .then(() => {
+                    setCartCount(cartCount, 1);
+
+                    resetCount();
+                } )
                 .catch(err => console.log(err))
         }
     }
@@ -94,6 +104,12 @@ const NoAutorization = () => {
             Для приобритения билетов необxодимо авторизироваться
         </div>
     )
-}
+};
 
-export default ExhibitionInfo;
+const mapStateToProps = (state) => {
+    return {
+        cartCount: state.cartCount,
+    }
+};
+
+export default connect(mapStateToProps, actions)(ExhibitionInfo);

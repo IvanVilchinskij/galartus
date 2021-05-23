@@ -21,20 +21,21 @@ const AddModalCollcetions = ({isOpen, toggle, toggleRefresh}) => {
     const [collectionData, updateCollcetionData] = useState(initialFormData);
     const [collectionImg, setCollectionImg] = useState(null);
 
+    // eslint-disable-next-line eqeqeq
+
     const handleChange = (e) => {
         const target = e.target;
+        // eslint-disable-next-line 
         if([target.name] == 'image') {
             setCollectionImg({
                 image: target.files,
             });
         }
 
-        if([target.name] == 'name') {
-            updateCollcetionData({
-                ...collectionData,
-                [target.name]: target.value.trim(),
-            });
-        }
+        updateCollcetionData({
+            ...collectionData,
+            [target.name]: target.value.trim(),
+        });
     };
 
     const handleSubmit = () => {

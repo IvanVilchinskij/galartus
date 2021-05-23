@@ -8,6 +8,7 @@ import * as actions from '../actions/actions';
 const ExhibitionInfoPage = ({toggleHeaderColor, isAutorization}) => {
     useEffect(() => {
         toggleHeaderColor(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const {id} = useParams();

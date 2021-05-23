@@ -29,7 +29,7 @@ const AddModalPictures = ({collections, isLoadingCollections, isErrorCollcetions
 
     const handleChange = (e) => {
         const target = e.target;
-
+        // eslint-disable-next-line 
         if ([target.name] == 'image') {
             setPicturesImg({
                 image: target.files,

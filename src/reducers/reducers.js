@@ -13,6 +13,7 @@ const initialState = {
     currentPicture: [],
     isAutorization: null,
     likesId: null,
+    cartCount: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -96,6 +97,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 likesId: action.payload,
+            }
+        case 'SET_CART_COUNT':
+            return {
+                ...state,
+                cartCount: action.count
             }
         default:
             return state;

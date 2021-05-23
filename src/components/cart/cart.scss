@@ -26,6 +26,18 @@
     }
 }
 
+.cart-btn {
+    position: fixed;
+    top: 10%;
+    right: 50px;
+
+    z-index: 100;
+
+    a {
+        color: #fff;
+    }
+}
+
 .purchase {
     display: flex;
     align-items: center;

@@ -9,7 +9,7 @@ import axiosInstance from '../../axios';
 import * as actions from '../../actions/actions';
 import Spinner from '../spinner/spinner';
 
-const ItemCards = ({pictures, picturesLoaded, collectionId, picturesError, currentCollection, picturesRequsted, isLoadingPictures, isErrorPictures, isAutorization, setLikesId, likesId}) => {
+const ItemCards = ({pictures, picturesLoaded, collectionId, picturesError, picturesRequsted, isLoadingPictures, isErrorPictures, isAutorization, setLikesId, likesId}) => {
 
     useEffect(() => {
         picturesRequsted();
@@ -32,7 +32,7 @@ const ItemCards = ({pictures, picturesLoaded, collectionId, picturesError, curre
         return function cleanup() {
             picturesLoaded([]);
         }
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const HandleLike = (itemId, e) => {
@@ -42,11 +42,7 @@ const ItemCards = ({pictures, picturesLoaded, collectionId, picturesError, curre
             target.classList.remove('active-like');
 
             axiosInstance.delete(`likes/${itemId}/delete`)
-                .then(() => {
-                    console.log('delete');
-                })
                 .catch((err) => {
-                    
                     console.log(err);
                     target.classList.add('active-like');
                 });
@@ -60,9 +56,6 @@ const ItemCards = ({pictures, picturesLoaded, collectionId, picturesError, curre
             target.classList.add('active-like');
 
             axiosInstance.post('likes/create', formData)
-                .then(() => {
-                    console.log('add');
-                })
                 .catch(() =>{
                     console.log('Error');
                     target.classList.remove('active-like');

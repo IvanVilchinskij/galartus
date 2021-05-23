@@ -11,6 +11,7 @@ import '../styles/pages/collectionPage.scss';
 const CollectionPage = ({toggleHeaderColor}) => {
     useEffect(() => {
         toggleHeaderColor(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const {id} = useParams();

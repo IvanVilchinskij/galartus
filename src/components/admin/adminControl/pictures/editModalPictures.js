@@ -28,7 +28,7 @@ const EditModalPictures = ({ collections, isLoadingCollections, isErrorCollcetio
 
     const handleChange = (e) => {
         const target = e.target;
-
+        // eslint-disable-next-line 
         if([target.name] == 'image') {
             setPictureImg({
                 image: target.files
@@ -58,7 +58,7 @@ const EditModalPictures = ({ collections, isLoadingCollections, isErrorCollcetio
         if (!pictureImg || !imageLength) {
             formData.delete('image');
         }
-
+        // eslint-disable-next-line 
         for (let [name] of formData.keys()) {
             counter++;
         }

@@ -35,7 +35,7 @@ const AdminPictures = ({pictures, picturesLoaded, isLoadingPictures, isErrorPict
             .catch(() => {
                 picturesError();
             });
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refresh]);
 
     const picturesList = pictures ? pictures.map(item => {

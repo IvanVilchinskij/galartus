@@ -89,7 +89,16 @@ const setLikesId = (newLikes) => {
         type: 'SET_LIKES_ID',
         payload: newLikesId,
     }
-}
+};
+
+const setCartCount = (oldCount, newCount) => {
+    const count = oldCount + newCount;
+    
+    return {
+        type: 'SET_CART_COUNT',
+        count: count
+    }
+};
 
 export {
     collectionsLoaded,
@@ -105,4 +114,5 @@ export {
     picturesRequsted,
     setAutorization,
     setLikesId,
+    setCartCount,
 };

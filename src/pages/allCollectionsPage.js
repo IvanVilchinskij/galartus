@@ -8,6 +8,7 @@ import Collcetions from '../components/collections/collections';
 const AllCollectionsPage = ({toggleHeaderColor}) => {
     useEffect(() => {
         toggleHeaderColor(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

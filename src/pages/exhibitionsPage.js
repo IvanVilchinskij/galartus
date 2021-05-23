@@ -8,6 +8,7 @@ import ExhibitionsList from '../components/exhibitionsList/exhibitionsList';
 const ExhibitionsPage = ({toggleHeaderColor}) => {
     useEffect(() => {
         toggleHeaderColor(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (      

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Container } from 'reactstrap';
+import {connect} from 'react-redux';
 
 import './cart.scss';
 
 import axiosInstance from '../../axios';
+import * as actions from '../../actions/actions';
 
-const Cart = () => {
+const Cart = ({setCartCount, cartCount}) => {
     const [buyList, setBuyList] = useState([]);
     const [order, setOrder] =useState([]);
 
@@ -34,7 +36,11 @@ const Cart = () => {
 
     const handleDelete = (id) => {
         axiosInstance.delete(`cart/${id}/remove`)
-            .then(() => toggleRefresh())
+            .then(() => {
+                setCartCount(cartCount, -1);
+
+                toggleRefresh();
+            })
             .catch(err => console.log(err));
     };
 
@@ -81,4 +87,10 @@ const Cart = () => {
     )
 };
 
-export default Cart;
+const mapStateToProps = (state) => {
+    return {
+        cartCount: state.cartCount,
+    }
+};
+
+export default connect(mapStateToProps, actions)(Cart);

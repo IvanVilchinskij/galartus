@@ -32,7 +32,7 @@ const UserLikes = () => {
         return (
             <div key={item.id} className="like-card">
                 <div className="like-card__img">
-                    <img src={`http://217.66.18.54:8000${item.picture.image}`} alt={item.picture.name}/>
+                    <img src={item.picture.image} alt={item.picture.name}/>
                 </div>
                 <div className="like-card__name">{item.picture.name}</div>
                 <Button><Link to={`/pictures/${item.picture.id}`}>Открыть</Link></Button>
