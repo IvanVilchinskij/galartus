@@ -11,6 +11,9 @@ const Cart = ({setCartCount, cartCount}) => {
     const [buyList, setBuyList] = useState([]);
     const [order, setOrder] =useState([]);
 
+    const [loadingPayment, setLoadingPayment] = useState(false);
+    const [errorPayment, setErrorPayment] = useState(false);
+
     const [refresh, setRefresh] = useState(false);
     
     const toggleRefresh = () => setRefresh(!refresh);
@@ -35,24 +38,44 @@ const Cart = ({setCartCount, cartCount}) => {
     }, [refresh]);
 
     const handleDelete = (id) => {
+        
+
         axiosInstance.delete(`cart/${id}/remove`)
             .then(() => {
+                setLoadingPayment(false);
                 setCartCount(cartCount, -1);
 
                 toggleRefresh();
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log(err);
+            } );
     };
 
     const handlePayment = () => {
+        setErrorPayment(false);
+        setLoadingPayment(true);
+
         axiosInstance.put('cart/payment')
             .then(() => {
+                setLoadingPayment(false);
+
+                setCartCount(0, 0);
+
                 setBuyList([]);
                 setOrder([]);
                 toggleRefresh();
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log(err);
+
+                setLoadingPayment(false);
+                setErrorPayment(true);
+            } );
     };
+
+    const loadingPaymentText = loadingPayment ? 'Подождите...' : null;
+    const errorPaymentText = errorPayment ? 'Ошибка' : null;
 
     const purchaseCards = buyList.length > 0 ? buyList.map(item => {
         const {name, date, time} = item.exhibition;
@@ -78,7 +101,14 @@ const Cart = ({setCartCount, cartCount}) => {
                     </div>
                     <div className="purchase__payment">
                         <div className="purchase__amount">К оплате {order.amount}р</div>
-                        <Button onClick={handlePayment}>Оплатить</Button>
+                        <Button 
+                            onClick={handlePayment}
+                            disabled={buyList.length === 0}
+                        >
+                            Оплатить
+                        </Button>
+                        {loadingPaymentText}
+                        {errorPaymentText}
                     </div>
                     
                 </div>  

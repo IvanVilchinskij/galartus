@@ -15,17 +15,17 @@ import * as transformDate from '../../dateTransform/dateTransform';
 const ExhibitionsList = ({exhibitionsLoaded, exhibitionsError, exhibitions, isLoadingExhibitions, isErrorExhibitions, exhibitionsRequsted}) => {
 
     useEffect(() => {
-        exhibitionsRequsted();
-        
-        axiosInstance.get('exhibitions')
-            .then(res => {
-                exhibitionsLoaded(res.data);
-            })
-            .catch(() => exhibitionsError());
 
-        return function cleanup() {
-            exhibitionsLoaded([]);
+        if (exhibitions.length === 0) {
+            exhibitionsRequsted();
+        
+            axiosInstance.get('exhibitions')
+                .then(res => {
+                    exhibitionsLoaded(res.data);
+                })
+                .catch(() => exhibitionsError());
         }
+        
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -139,16 +139,3 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, actions)(ExhibitionsList);
-
-/* <Card key={item.id} className='exhibitions-card'>
-                            <div className="exhibitions-card__img">
-                                <CardImg top width="100%" src={item.image} alt={item.title} />
-                            </div>
-                            <CardBody>
-                                <CardTitle tag="h5">{item.title}</CardTitle>
-                                <CardSubtitle tag="h6" className="mb-2 text-muted">{item.date}</CardSubtitle>
-                                <CardText>
-                                    <small className="text-muted">{item.address}</small>
-                                </CardText>
-                            </CardBody>
-                        </Card> */

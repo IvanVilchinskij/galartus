@@ -66,19 +66,43 @@ const ExhibitionInfo = ({exhibitionId, isAutorization, setCartCount, cartCount})
 };
 
 const PurchaseBlock = ({count, decrCount, incrCount, id, resetCount, setCartCount, cartCount}) => {
-    const disabled = count > 0 ? false : true;
+
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+    const [success, setSuccess] = useState(false);
+
+    const disabled = !(count > 0);
 
     const handleSubmit = () => {
+
         if (!disabled) {
+            setSuccess(false);
+            setError(false);
+            setLoading(true);
+
             axiosInstance.put(`cart/add/${id}/${count}`)
                 .then(() => {
+                    setLoading(false);
+                    setSuccess(true);
                     setCartCount(cartCount, 1);
 
                     resetCount();
-                } )
-                .catch(err => console.log(err))
+
+                    setTimeout(() => setSuccess(false), 2000);
+                })
+                .catch(err => {
+                    setLoading(false);
+                    setError(true);
+
+                    console.log('Add caert err', err);
+                })
         }
     }
+
+    const loadingText = loading ? 'Подождите...' : null;
+    const errorText = error ? 'Произошла ошибка...' : null;
+
+    const successText = success ? 'Добавили в корзину!' : null;
 
     return (
         <div className="purchase">
@@ -94,6 +118,9 @@ const PurchaseBlock = ({count, decrCount, incrCount, id, resetCount, setCartCoun
                 <div className="purchase__count">{count}</div>
                 <Button onClick={incrCount} className="purchase__incr">+</Button>
             </div>
+            {loadingText}
+            {errorText}
+            {successText}
         </div>
     )
 };

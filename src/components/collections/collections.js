@@ -20,18 +20,23 @@ const Collections = ({
     isErrorCollcetions, 
     collectionsError
 }) => {
+
     useEffect(() => {
-        collectionsRequsted();
 
-        axiosInstance.get('categories')
-            .then(res => {
-                collectionsLoaded(res.data);
-            })
-            .catch(() => collectionsError() );
+        if (collections.length === 0) {
+            collectionsRequsted();
 
-        return function cleanup() {
-            collectionsLoaded([]);
+            axiosInstance.get('categories')
+                .then(res => {
+                    collectionsLoaded(res.data);
+                })
+                .catch(() => collectionsError() );
         }
+        
+
+        /* return function cleanup() {
+            collectionsLoaded([]);
+        } */
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

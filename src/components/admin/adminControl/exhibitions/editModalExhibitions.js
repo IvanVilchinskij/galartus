@@ -15,7 +15,7 @@ import {connect} from 'react-redux';
 import axiosInstance from '../../../../axios';
 import * as actions from '../../../../actions/actions';
 
-const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollcetions, isOpen, toggle, modalId, toggleRefresh, modalName}) => {
+const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollcetions, isOpen, toggle, modalId,  modalName, setUpdate}) => {
     const initialFormData = Object.freeze({
         name: '',
         description: '',
@@ -30,14 +30,30 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
     const [exhibitionData, updateExhibitionData] = useState(initialFormData);
     const [exhibitionImg, setExhibitionImg] = useState(null);
 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+
     const handleChange = (e) => {
         const target = e.target;
+
+        
+        
         // eslint-disable-next-line 
         if([target.name] == 'image') {
             setExhibitionImg({
                 image: target.files
             });
         }
+
+        if ([target.value] == 'weekday') {
+            updateExhibitionData({
+                ...exhibitionData,
+                [target.name]: +target.value.trim()
+            })
+        }
+
+        console.log(target.value);
+        console.log(typeof target.value);
 
         updateExhibitionData({
             ...exhibitionData,
@@ -46,6 +62,9 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
     };
 
     const handleSubmit = (formId) => {
+        setError(false);
+        setLoading(true);
+
         const form = document.querySelector(formId);
         const formData = new FormData(form);
 
@@ -70,12 +89,22 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
         }
 
         if (counter === 0) {
+            setLoading(false);
+
             toggle();
         } else {
             axiosInstance.put(`exhibitions/${modalId}`, formData)
                 .then(() => {
-                    toggleRefresh();
+                    setUpdate();
+                    setLoading(false);
+
                     toggle();
+                })
+                .catch(err => {
+                    setLoading(false);
+                    setError(true);
+
+                    console.log(err);
                 });
         }
     };
@@ -85,6 +114,9 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
             <option label={item.name} key={item.id}>{item.id}</option>
         );
     }) : null;
+
+    const loadingText = loading ? 'Загрузка...' : null;
+    const errorText = error ? 'Ошибка' : null;
 
     const loadingContent = isLoadingCollections ? 'Loading' : null;
 
@@ -118,11 +150,11 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
                     <FormGroup>
                         <Label for="exhEditImage">File</Label>
                         <Input 
+                            accept='image/*'
                             type="file" 
                             name="image" 
                             id="exhEditImage" 
                             onChange={handleChange}
-                            autoComplete='image'
                         />
                     </FormGroup>
                     <FormGroup>
@@ -169,12 +201,20 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
                     <FormGroup>
                         <Label for="exhEditWeekday">weekday</Label>
                         <Input 
-                            type="text" 
+                            type="select" 
                             name="weekday" 
                             id="exhEditWeekday"
                             onChange={handleChange}
                             autoComplete='weekday'
-                        />
+                        >
+                            <option label='Понедельник' >1</option>
+                            <option label='Вторник' >2</option>
+                            <option label='Среда' >3</option>
+                            <option label='Четверг' >4</option>
+                            <option label='Пятница' >5</option>
+                            <option label='Суббота' >6</option>
+                            <option label='Воскресенье'>0</option>
+                        </Input>
                     </FormGroup>
                     <FormGroup>
                         <Label for='exhEditCategories'>Categories</Label>
@@ -194,7 +234,14 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
                     <Button color="primary" onClick={() => {
                         handleSubmit('#editExhibitionsForm');
                     }}>Изменить</Button>
-                    <Button color="secondary" onClick={toggle}>Cancel</Button>
+                    <Button 
+                        color="secondary" 
+                        onClick={toggle}
+                    >
+                        Cancel
+                    </Button>
+                    {loadingText}
+                    {errorText}
                 </ModalFooter>
             </Form>
         </Modal>

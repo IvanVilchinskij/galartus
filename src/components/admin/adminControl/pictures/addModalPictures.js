@@ -27,6 +27,11 @@ const AddModalPictures = ({collections, isLoadingCollections, isErrorCollcetions
     const [picturesData, updatePicturesData] = useState(initialFormData);
     const [picturesImg, setPicturesImg] = useState(null);
 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+
+    const [validForm, setValidForm] = useState(true);
+
     const handleChange = (e) => {
         const target = e.target;
         // eslint-disable-next-line 
@@ -43,20 +48,68 @@ const AddModalPictures = ({collections, isLoadingCollections, isErrorCollcetions
         
     };
 
+    const checkValidation = (fieldName, value) => {
+
+        switch (fieldName){
+            case 'image': 
+                if (!value) {
+                    setValidForm(false);
+                }
+                break;
+            default:
+                if (value.trim().length === 0) {
+                    setValidForm(false);
+                }
+                break;
+        }
+
+    };
+
     const handleSubmit = (formId) => {
+        setError(false);
+        setLoading(true);
+
         const form = document.querySelector(formId);
         const formData = new FormData(form);
 
-        formData.set('name', picturesData.name);
-        formData.set('author', picturesData.author);
-        formData.set('description', picturesData.description);
-        formData.set('image', picturesImg.image[0]);
+        setValidForm(true);
 
-        axiosInstance.post('pictures/create', formData)
-            .then(() => {
-                toggleRefresh();
-                toggle();
-            });
+        const picturesImgLength = picturesImg ? picturesImg.image.length : null;
+
+        if (!picturesImg || !picturesImgLength || !formData.has('categories')) {
+            setLoading(false);
+            setValidForm(false); 
+    
+            setTimeout(() => setValidForm(true), 5000);
+        } else {
+            formData.set('name', picturesData.name);
+            formData.set('author', picturesData.author);
+            formData.set('description', picturesData.description);
+            formData.set('image', picturesImg.image[0]);
+
+            for (let pair of formData.entries()) {
+                checkValidation(pair[0], pair[1]);
+            }
+
+            if (validForm) {
+                axiosInstance.post('pictures/create', formData)
+                .then(() => {
+                    setLoading(false);
+                    toggleRefresh();
+                    toggle();
+                })
+                .catch(err => {
+                    setLoading(false);
+                        setError(true);
+
+                        console.log(err);
+                });
+            } else {
+                setLoading(false);
+
+                setTimeout(() => setValidForm(true), 5000);
+            }
+        }
     };
 
     const collectionsOptions = collections ? collections.map((item) => {
@@ -68,6 +121,10 @@ const AddModalPictures = ({collections, isLoadingCollections, isErrorCollcetions
     const loadingContent = isLoadingCollections ? 'Loading' : null;
 
     const errorContent = isErrorCollcetions ? 'Error' : null;
+
+    const loadingText = loading ? 'Загрузка...' : null;
+    const errorText = error ? 'Ошибка' : null;
+    const formErrorText = !validForm ? 'Необходимо заполнить все поля' : null;
 
     return (
         <Modal isOpen={isOpen} toggle={toggle}>
@@ -131,7 +188,15 @@ const AddModalPictures = ({collections, isLoadingCollections, isErrorCollcetions
                 </ModalBody>
                 <ModalFooter>
                     <Button color="primary" onClick={() => handleSubmit('#addPictureForm')}>Добавить</Button>
-                    <Button color="secondary" onClick={toggle}>Cancel</Button>
+                    <Button 
+                        color="secondary" 
+                        onClick={toggle}
+                    >
+                        Cancel
+                    </Button>
+                    {loadingText}
+                    {errorText}
+                    {formErrorText}
                 </ModalFooter>
             </Form>
         </Modal>

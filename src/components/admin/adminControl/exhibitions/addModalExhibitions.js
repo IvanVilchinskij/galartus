@@ -15,7 +15,7 @@ import {connect} from 'react-redux';
 import axiosInstance from '../../../../axios';
 import * as actions from '../../../../actions/actions';
 
-const AddModalExhibitions = ({collections, isLoadingCollections, isErrorCollcetions, isOpen, toggle, toggleRefresh}) => {
+const AddModalExhibitions = ({collections, isLoadingCollections, isErrorCollcetions, isOpen, toggle,  setUpdate}) => {
     const initialFormData = Object.freeze({
         name: '',
         description: '',
@@ -30,6 +30,11 @@ const AddModalExhibitions = ({collections, isLoadingCollections, isErrorCollceti
     const [exhibitionData, updateExhibitionData] = useState(initialFormData);
     const [exhibitionImg, setExhibitionImg] = useState(null);
 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+
+    const [validForm, setValidForm] = useState(true);
+
     const handleChange = (e) => {
         const target = e.target;
         // eslint-disable-next-line 
@@ -43,31 +48,76 @@ const AddModalExhibitions = ({collections, isLoadingCollections, isErrorCollceti
             ...exhibitionData,
             [target.name]: target.value.trim(),
         });
-        
-   
+    };
+
+    const checkValidation = (fieldName, value) => {
+
+        switch (fieldName){
+            case 'image': 
+                if (!value) {
+                    setValidForm(false);
+                }
+                break;
+            default:
+                if (value.trim().length === 0) {
+                    setValidForm(false);
+                }
+                break;
+        }
+
     };
 
     const handleSubmit = (formId) => {
+        setError(false);
+        setLoading(true);
+
         const form = document.querySelector(formId)
         const formData = new FormData(form);
 
-        formData.set('name', exhibitionData.name);
-        formData.set('description', exhibitionData.description);
-        formData.set('image', exhibitionImg.image[0]);
-        formData.set('date', exhibitionData.date);
-        formData.set('time', exhibitionData.time);
-        formData.set('price', exhibitionData.price);
-        formData.set('address', exhibitionData.address);
-        formData.set('weekday', exhibitionData.weekday);
+        setValidForm(true);
 
-        axiosInstance.post('exhibitions/create', formData)
-            .then(() => {
-                toggleRefresh();
-                toggle();
-            });
+        const exhibitionImgLength = exhibitionImg ? exhibitionImg.image.length : null;
+
+        if (!exhibitionImg  || !exhibitionImgLength || !formData.has('categories')) {
+            setLoading(false);
+            setValidForm(false); 
+    
+            setTimeout(() => setValidForm(true), 5000);
+        } else {
+            formData.set('name', exhibitionData.name);
+            formData.set('description', exhibitionData.description);
+            formData.set('image', exhibitionImg.image[0]);
+            formData.set('date', exhibitionData.date);
+            formData.set('time', exhibitionData.time);
+            formData.set('price', exhibitionData.price);
+            formData.set('address', exhibitionData.address);
+            formData.set('weekday', exhibitionData.weekday);
+
+            for (let pair of formData.entries()) {
+                checkValidation(pair[0], pair[1]);
+            } 
+
+            if (validForm) {
+                axiosInstance.post('exhibitions/create', formData)
+                    .then(() => {
+                        setLoading(false);
+                        setUpdate();
+                        toggle();
+                    })
+                    .catch(err => {
+                        setLoading(false);
+                        setError(true);
+
+                        console.log(err);
+                    });
+            } else {
+                setLoading(false);
+                setTimeout(() => setValidForm(true), 5000);
+            }
+        }        
     };
 
-    const collectionsOptions = collections ?  collections.map((item) => {
+    const collectionsOptions = collections.length !== 0 ?  collections.map((item) => {
         return (
             <option label={item.name} key={item.id}>{item.id}</option>
         );
@@ -76,6 +126,10 @@ const AddModalExhibitions = ({collections, isLoadingCollections, isErrorCollceti
     const loadingContent = isLoadingCollections ? 'Loading' : null;
 
     const errorContent = isErrorCollcetions ? 'Error' : null;
+
+    const loadingText = loading ? 'Загрузка...' : null;
+    const errorText = error ? 'Ошибка' : null;
+    const formErrorText = !validForm ? 'Необходимо заполнить все поля' : null;
 
     return (
         <Modal isOpen={isOpen} toggle={toggle}>
@@ -155,12 +209,20 @@ const AddModalExhibitions = ({collections, isLoadingCollections, isErrorCollceti
                     <FormGroup>
                         <Label for="exhWeekday">weekday</Label>
                         <Input 
-                            type="text" 
+                            type="select" 
                             name="weekday" 
                             id="exhWeekday"
                             onChange={handleChange}
                             autoComplete='weekday'
-                        />
+                        >
+                            <option label='Понедельник'>1</option>
+                            <option label='Вторник'>2</option>
+                            <option label='Среда'>3</option>
+                            <option label='Четверг'>4</option>
+                            <option label='Пятница'>5</option>
+                            <option label='Суббота'>6</option>
+                            <option label='Воскресенье'>0</option>
+                        </Input>
                     </FormGroup>
                     <FormGroup>
                         <Label for="exhCateg">categories</Label>
@@ -180,7 +242,15 @@ const AddModalExhibitions = ({collections, isLoadingCollections, isErrorCollceti
                     <Button color="primary" onClick={() => {
                         handleSubmit('#addExhibitionsForm');
                     }}>Добавить</Button>
-                    <Button color="secondary" onClick={toggle}>Cancel</Button>
+                    <Button 
+                        color="secondary" 
+                        onClick={toggle}
+                    >
+                        Cancel
+                    </Button>
+                    {loadingText}
+                    {errorText}
+                    {formErrorText}
                 </ModalFooter>
             </Form>
         </Modal>

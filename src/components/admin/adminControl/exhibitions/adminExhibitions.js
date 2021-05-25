@@ -17,9 +17,9 @@ const AdminExhibitions = ({exhibitions, exhibitionsLoaded, exhibitionsRequsted, 
     const [modalId, setModalId] = useState();
     const [modalName, setModalName] = useState();
 
-    const [refresh, setRefresh] = useState(false);
+    const [isUpdate, setIsUpdate] = useState(false);
 
-    const toggleRefresh = () => setRefresh(!refresh);
+    const setUpdate = () => setIsUpdate(true);
 
     const toggleAddModal = () => setAddModal(!addModal);
     const toggleEditModal = () => setEditModal(!editModal);
@@ -28,21 +28,24 @@ const AdminExhibitions = ({exhibitions, exhibitionsLoaded, exhibitionsRequsted, 
     // eslint-disable-next-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        exhibitionsRequsted();
+        if (exhibitions.length === 0 || isUpdate) {
+            exhibitionsRequsted();
 
-        axiosInstance.get('exhibitions')
-            .then(res => {
-                exhibitionsLoaded(res.data);
-            })
-            .catch(() => exhibitionsError());
-
-        return function cleanup() {
-            exhibitionsLoaded([]);
+            axiosInstance.get('exhibitions')
+                .then(res => { 
+                    exhibitionsLoaded(res.data);
+                    setIsUpdate(false);
+                })
+                .catch(() => {
+                    exhibitionsError();
+                    setIsUpdate(false);
+                });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [refresh]);
 
-    const exhibitionsList = exhibitions ? exhibitions.map((item) => {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isUpdate]);
+
+    const exhibitionsList = exhibitions.length !== 0 ? exhibitions.map((item) => {
         return (
             <div key={item.id} className="admin-card">
                 <div className="admin-card__id">{item.id}</div>
@@ -96,19 +99,19 @@ const AdminExhibitions = ({exhibitions, exhibitionsLoaded, exhibitionsRequsted, 
             <AddModalExhibitions 
                 isOpen={addModal} 
                 toggle={toggleAddModal} 
-                toggleRefresh={toggleRefresh}
+                setUpdate={setUpdate}
             />
             <EditModalExhibitions 
                 isOpen={editModal} 
                 toggle={toggleEditModal} 
-                toggleRefresh={toggleRefresh} 
+                setUpdate={setUpdate} 
                 modalId={modalId}
                 modalName={modalName}
             />
             <DeleteModal
                 isOpen={deleteModal} 
                 toggle={toggleDeleteModal} 
-                toggleRefresh={toggleRefresh}
+                setUpdate={setUpdate}
                 modalId={modalId}
                 modalName={modalName}
                 url={`exhibitions/`}

@@ -26,6 +26,9 @@ const EditModalPictures = ({ collections, isLoadingCollections, isErrorCollcetio
     const [pictureData, updatePictureData] = useState(initialFormData);
     const [pictureImg, setPictureImg] = useState(null);
 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+
     const handleChange = (e) => {
         const target = e.target;
         // eslint-disable-next-line 
@@ -42,6 +45,9 @@ const EditModalPictures = ({ collections, isLoadingCollections, isErrorCollcetio
     };
 
     const handleSubmit = (formId) => {
+        setError(false);
+        setLoading(true);
+
         const form = document.querySelector(formId);
         const formData = new FormData(form);
 
@@ -64,25 +70,24 @@ const EditModalPictures = ({ collections, isLoadingCollections, isErrorCollcetio
         }
 
         if (counter === 0) {
+            setLoading(false);
+
             toggle();
         } else {
             axiosInstance.put(`pictures/${modalId}`, formData)
                 .then(() => {
+                    setLoading(false);
+
                     toggleRefresh();
                     toggle();
+                })
+                .catch((err) => {
+                    setLoading(false);
+                    setError(true);
+
+                    console.log(err);
                 });
         }
-
-       /*  formData.set('name', pictureData.name);
-        formData.set('author', pictureData.author);
-        formData.set('description', pictureData.description);
-        formData.set('image', pictureImg.image[0]); */
-
-        /* axiosInstance.put(`pictures/${modalId}`, formData)
-            .then(() => {
-                toggleRefresh();
-                toggle();
-            }); */
     };
 
     const collectionsOptions = collections ? collections.map((item) => {
@@ -90,6 +95,9 @@ const EditModalPictures = ({ collections, isLoadingCollections, isErrorCollcetio
             <option label={item.name} key={item.id}>{item.id}</option>
         );
     }) : null;
+
+    const loadingText = loading ? 'Загрузка...' : null;
+    const errorText = error ? 'Ошибка' : null;
 
     const loadingContent = isLoadingCollections ? 'Loading' : null;
 
@@ -159,7 +167,14 @@ const EditModalPictures = ({ collections, isLoadingCollections, isErrorCollcetio
                     <Button color="primary" onClick={() => {
                         handleSubmit('#editPictureForm');
                     }}>Изменить</Button>
-                    <Button color="secondary" onClick={toggle}>Cancel</Button>
+                    <Button 
+                        color="secondary" 
+                        onClick={toggle}
+                    >
+                        Cancel
+                    </Button>
+                    {loadingText}
+                    {errorText}
                 </ModalFooter>
             </Form>
         </Modal>

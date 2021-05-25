@@ -29,7 +29,10 @@ const ItemPage = ({toggleHeaderColor, setCurrentPicture, currentPicture}) => {
             .catch(err => {
                 console.log(err);
             });
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+        
+        return function cleanup() {
+            setCurrentPicture([]);
+        }    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const currentItem = currentPicture.map(item => {

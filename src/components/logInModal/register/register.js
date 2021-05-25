@@ -14,6 +14,9 @@ import axiosInstance from '../../../axios';
 import FormErrors from '../formErrors/formErrors';
 
 const Register = ({toggle, setAutorization}) => {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+
     const [isValidPass, setIsValidPass] = useState(null);
 
     const history = useHistory();
@@ -84,6 +87,9 @@ const Register = ({toggle, setAutorization}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        setError(false);
+        setLoading(true);
+
         const formData1 = new FormData();
 
         if (isValidPass && formValid) {
@@ -102,16 +108,28 @@ const Register = ({toggle, setAutorization}) => {
                                 'Bearer ' + localStorage.getItem('access_token');
                             history.push('/');
 
+                            setLoading(false);
                             setAutorization(true);
                             toggle();
                         })
-                        .catch(err => console.log(err));
+                        .catch(err => {
+                            console.log(err);
+                            setLoading(false);
+                            setError(true);
+                        });
                 })
-                .catch(err => console.log(err));
+                .catch(err => {
+                    console.log(err);
+                    setLoading(false);
+                    setError(true);
+                });
         }
     };
 
     const validText = isValidPass === null ? null : isValidPass ? null : <h3>Пароли не совпадают</h3>;
+
+    const loadingText = loading ? 'Подождите...' : null;
+    const errorText = error ? 'произошла ошибка' : null;
 
     return (
         <Form>
@@ -160,6 +178,8 @@ const Register = ({toggle, setAutorization}) => {
                     Зарегистрироваться
                 </Button>
                 <Button onClick={toggle} color='secondary'>Отмена</Button>
+                {errorText}
+                {loadingText}
             </ModalFooter>
         </Form>
     );

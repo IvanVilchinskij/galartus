@@ -1,5 +1,5 @@
 const initialState = {
-    collections: null,
+    collections: [],
     exhibitions: [],
     pictures: [],
     isLoadingCollections: true,
@@ -9,7 +9,6 @@ const initialState = {
     isLoadingExhibitions: true,
     isErrorExhibitions: false,
     darkHeader: false,
-    currentCollection: null,
     currentPicture: [],
     isAutorization: null,
     likesId: null,

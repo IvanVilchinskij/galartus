@@ -14,6 +14,9 @@ import axiosInstance from '../../../axios';
 import FormErrors from '../formErrors/formErrors';
 
 const LogIn = ({toggle, setAutorization}) => {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+
     const initialFormData = Object.freeze({
         email: '',
         password: '',
@@ -51,7 +54,7 @@ const LogIn = ({toggle, setAutorization}) => {
                 setFormErrors({
                     ...formErrors,
                     password:  passwordValidate ? ' ' : ' короткий пароль',
-                })
+                });
                 break;
             default: 
                 break;
@@ -74,6 +77,9 @@ const LogIn = ({toggle, setAutorization}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        setError(false);
+        setLoading(true);
+
         if (formValid) {
             axiosInstance
                 .post('token/', {
@@ -88,12 +94,20 @@ const LogIn = ({toggle, setAutorization}) => {
                         'Bearer ' + localStorage.getItem('access_token');
                     history.push('/');
 
+                    setLoading(false);
                     setAutorization(true);
                     toggle();
+                })
+                .catch((err) => {
+                    setLoading(false);
+                    setError(true);
                 });
         }
         
     };
+
+    const loadingText = loading ? 'Подождите...' : null;
+    const errorText = error ? 'произошла ошибка' : null;
 
     return (
         <Form>
@@ -106,7 +120,7 @@ const LogIn = ({toggle, setAutorization}) => {
                         id='loginInput'
                         onInput={handleChange}
                         autoFocus
-                        /* autoComplete='email' */
+                        autoComplete='email'
                     />
                 </FormGroup>
                 <FormErrors typeFor={'email'} formErrors={formErrors}/>
@@ -116,8 +130,7 @@ const LogIn = ({toggle, setAutorization}) => {
                         type='password' 
                         name='password' 
                         id='passwordInput'
-                        /*  */
-                        /* autoComplete="current-password" */
+                        autoComplete="current-password"
                         onChange={handleChange}
                     />
                 </FormGroup>
@@ -125,14 +138,16 @@ const LogIn = ({toggle, setAutorization}) => {
             </ModalBody>
             <ModalFooter>
                 <Button 
-                    type='submit'
-                    color='primary'
-                    onClick={handleSubmit}
-                    disabled={!formValid}
-                >
-                    Войти
-                </Button>
+                        type='submit'
+                        color='primary'
+                        onClick={handleSubmit}
+                        disabled={!formValid}
+                    >
+                        Войти
+                    </Button>
                 <Button onClick={toggle} color='secondary'>Отмена</Button>
+                {errorText}
+                {loadingText}
             </ModalFooter>
         </Form>
     );

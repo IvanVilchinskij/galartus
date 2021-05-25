@@ -13,13 +13,16 @@ import {
 
 import axiosInstance from '../../../../axios';
 
-const EditModalCollcetions = ({ isOpen, toggle, modalId, toggleRefresh, modalName}) => {
+const EditModalCollcetions = ({ isOpen, toggle, modalId, modalName, setUpdate}) => {
     const initialFormData = Object.freeze({
         name: '',
     });
 
     const [collectionData, updateCollectionData] = useState(initialFormData);
     const [formImg, setFormImg] = useState(null);
+
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
 
     const handleChange = (e) => {
         const target = e.target;
@@ -37,6 +40,9 @@ const EditModalCollcetions = ({ isOpen, toggle, modalId, toggleRefresh, modalNam
     };
 
     const handleSubmit = () => {
+        setError(false);
+        setLoading(true);
+
         const formData = new FormData();
         
         const isImage = formImg ? formImg.image : null;
@@ -49,10 +55,7 @@ const EditModalCollcetions = ({ isOpen, toggle, modalId, toggleRefresh, modalNam
             }
         }
 
-        console.log(imageLength);
-
         if (formImg && imageLength) {
-            console.log('EEE');
             formData.append('image', formImg.image[0]);
         }
         // eslint-disable-next-line 
@@ -61,15 +64,28 @@ const EditModalCollcetions = ({ isOpen, toggle, modalId, toggleRefresh, modalNam
         }
 
         if (counter === 0) {
+            setLoading(false);
+
             toggle();
         } else {
             axiosInstance.put(`categories/${modalId}`, formData)
                 .then(() => {
-                    toggleRefresh();
+                    setLoading(false);
+
+                    setUpdate();
                     toggle();
+                })
+                .catch((err) => {
+                    setLoading(false);
+                    setError(true);
+
+                    console.log(err);
                 });
         }     
     };
+
+    const loadingText = loading ? 'Загрузка...' : null;
+    const errorText = error ? 'Ошибка' : null;
 
     return (
         <Modal isOpen={isOpen} toggle={toggle}>
@@ -100,6 +116,8 @@ const EditModalCollcetions = ({ isOpen, toggle, modalId, toggleRefresh, modalNam
                 <ModalFooter>
                     <Button color="primary" onClick={handleSubmit}>Изменить</Button>
                     <Button color="secondary" onClick={toggle}>Cancel</Button>
+                    {loadingText}
+                    {errorText}
                 </ModalFooter>
             </Form>
         </Modal>

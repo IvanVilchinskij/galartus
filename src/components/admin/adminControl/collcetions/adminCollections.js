@@ -17,32 +17,32 @@ const AdminCollections = ({collections, collectionsLoaded, isErrorCollcetions, i
     const [modalId, setModalId] = useState();
     const [modalName, setModalName] = useState();
 
-    const [refresh, setRefresh] = useState(false);
+    const [isUpdate, setIsUpdate] = useState(false);
 
-    const toggleRefresh = () => setRefresh(!refresh);
+    const setUpdate = () => setIsUpdate(true);
 
     const toggleAddModal = () => setAddModal(!addModal);
     const toggleEditModal = () => setEditModal(!editModal);
     const toggleDeleteModal = () => setDeleteModal(!deleteModal);
 
     useEffect(() => {
-        collectionsRequsted();
+        if (collections.length === 0 || isUpdate) {
+            collectionsRequsted();
 
-        axiosInstance.get('categories')
-            .then(res => {
-                collectionsLoaded(res.data);
-            })
-            .catch(() => {
-                collectionsError();
-            });
-
-        return function cleanup() {
-            collectionsLoaded([]);
+            axiosInstance.get('categories')
+                .then(res => {
+                    collectionsLoaded(res.data);
+                    setIsUpdate(false);
+                })
+                .catch(() => {
+                    collectionsError();
+                    setIsUpdate(false);
+                });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [refresh]);
+    }, [isUpdate]);
 
-    const collectionsList = collections ? collections.map((item) => {
+    const collectionsList = collections.length !== 0 ? collections.map((item) => {
         return (
             <div key={item.id} className="admin-card">
                 <div className="admin-card__id">{item.id}</div>
@@ -86,19 +86,19 @@ const AdminCollections = ({collections, collectionsLoaded, isErrorCollcetions, i
             <AddModalCollcetions 
                 isOpen={addModal} 
                 toggle={toggleAddModal} 
-                toggleRefresh={toggleRefresh}
+                setUpdate={setUpdate}
             />
             <EditModalCollcetions 
                 isOpen={editModal}
                 toggle={toggleEditModal} 
-                toggleRefresh={toggleRefresh} 
+                setUpdate={setUpdate}
                 modalId={modalId}
                 modalName={modalName}
             />
             <DeleteModal
                 isOpen={deleteModal} 
-                toggle={toggleDeleteModal} 
-                toggleRefresh={toggleRefresh}
+                toggle={toggleDeleteModal}
+                setUpdate={setUpdate} 
                 modalId={modalId}
                 modalName={modalName}
                 url={`categories/`}

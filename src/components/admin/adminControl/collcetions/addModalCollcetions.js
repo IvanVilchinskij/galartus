@@ -13,13 +13,18 @@ import {
 
 import axiosInstance from '../../../../axios';
 
-const AddModalCollcetions = ({isOpen, toggle, toggleRefresh}) => {
+const AddModalCollcetions = ({isOpen, toggle, setUpdate}) => {
     const initialFormData = Object.freeze({
         name: '',
     });
 
     const [collectionData, updateCollcetionData] = useState(initialFormData);
     const [collectionImg, setCollectionImg] = useState(null);
+
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+
+    const [formValid, setFormValid] = useState(true);
 
     // eslint-disable-next-line eqeqeq
 
@@ -38,19 +43,51 @@ const AddModalCollcetions = ({isOpen, toggle, toggleRefresh}) => {
         });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        setError(false);
+        setLoading(true);
 
         let formData = new FormData();
-        
-        formData.append('name', collectionData.name);
-        formData.append('image', collectionImg.image[0]);
 
-        axiosInstance.post(`categories/create`, formData)
-            .then(() => {
-                toggleRefresh();
-                toggle();
-            });
+        if (!collectionImg) {
+            setLoading(false);
+            setFormValid(false);
+
+            setTimeout(() => setFormValid(true), 5000);
+        } else {
+            if ((collectionData.name.trim().length !== 0) && (collectionImg.image.length !== 0)) {
+                setFormValid(true);
+
+                formData.append('name', collectionData.name);
+                formData.append('image', collectionImg.image[0]);
+
+                axiosInstance.post(`categories/create`, formData)
+                    .then(() => {
+                        setLoading(false);
+
+                        setUpdate();
+                        toggle();
+                    })
+                    .catch(err => {
+                        setLoading(false);
+                        setError(true);
+
+                        console.log(err);
+                    });
+            } else {
+                setLoading(false);
+                setFormValid(false);
+
+                setTimeout(() => setFormValid(true), 5000);
+            }    
+        }
     };
+
+    const loadingText = loading ? 'Загрузка...' : null;
+    const errorText = error ? 'Ошибка' : null;
+    const formErrorText = !formValid ? 'Необходимо заполнить все поля' : null;
 
     return (
         <Modal isOpen={isOpen} toggle={toggle}>
@@ -86,6 +123,9 @@ const AddModalCollcetions = ({isOpen, toggle, toggleRefresh}) => {
                         Добавить
                     </Button>
                     <Button color="secondary" onClick={toggle}>Отмена</Button>
+                    {loadingText}
+                    {errorText}
+                    {formErrorText}
                 </ModalFooter>
             </Form>
         </Modal>
