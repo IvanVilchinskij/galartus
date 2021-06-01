@@ -25,8 +25,6 @@ const AdminExhibitions = ({exhibitions, exhibitionsLoaded, exhibitionsRequsted, 
     const toggleEditModal = () => setEditModal(!editModal);
     const toggleDeleteModal = () => setDeleteModal(!deleteModal);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-
     useEffect(() => {
         if (exhibitions.length === 0 || isUpdate) {
             exhibitionsRequsted();

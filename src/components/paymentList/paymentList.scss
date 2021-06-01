@@ -1,0 +1,56 @@
+.payment-list {
+    &__title {
+        display: flex;
+
+        margin-bottom: 30px;
+    }
+
+    &__id {
+        width: 10%;
+    }
+
+    &__email {
+        width: 22.5%;
+    }
+
+    &__name {
+        width: 22.5%;
+    }
+
+    &__quantity {
+        width: 22.5%;
+    }
+
+    &__amount {
+        width: 22.5%;
+    }
+}
+
+.user-card {
+    display: flex;
+    margin-bottom: 20px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    &__id {
+        width: 10%;
+    }
+
+    &__email {
+        width: 22.5%;
+    }
+
+    &__name {
+        width: 22.5%;
+    }
+
+    &__quantity {
+        width: 22.5%;
+    }
+
+    &__amount {
+        width: 22.5%;
+    }
+}

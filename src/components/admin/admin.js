@@ -11,11 +11,10 @@ import classnames from 'classnames';
 
 import './admin.scss';
 
-import AdminCollections from './adminControl/collcetions/adminCollections';
-import AdminPictures from './adminControl/pictures/adminPictures';
-import AdminExhibitions from './adminControl/exhibitions/adminExhibitions';
+import AdminPayment from './adminPayment/adminPayment';
+import AdminControl from './adminControl/adminControl';
 
-const AdminControl = () => {
+const Admin = () => {
     const [activeTab, setActiveTab] = useState('1');
 
     const toggle = tab => {
@@ -25,14 +24,13 @@ const AdminControl = () => {
     return (
         <div className="admin">
             <Container>
-                <h3 className="admin__title">Управление контентом</h3>
                 <Nav tabs>
                     <NavItem>
                         <NavLink
                             className={classnames({ active: activeTab === '1' })}
                             onClick={() => { toggle('1'); }}
                         >
-                            Collection
+                            Управление контентом
                         </NavLink>
                     </NavItem>
                     <NavItem>
@@ -40,27 +38,16 @@ const AdminControl = () => {
                             className={classnames({ active: activeTab === '2' })}
                             onClick={() => { toggle('2'); }}
                         >
-                            Exhibition
-                        </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: activeTab === '3' })}
-                            onClick={() => { toggle('3'); }}
-                        >
-                            Pictures
+                            Билеты на выставки
                         </NavLink>
                     </NavItem>
                 </Nav>
                 <TabContent activeTab={activeTab}>
                     <TabPane tabId="1">
-                        <AdminCollections/>
+                        <AdminControl/>
                     </TabPane>
                     <TabPane tabId="2">
-                        <AdminExhibitions/>
-                    </TabPane>
-                    <TabPane tabId="3">
-                        <AdminPictures/>
+                        <AdminPayment/>
                     </TabPane>
                 </TabContent>
             </Container>
@@ -68,4 +55,4 @@ const AdminControl = () => {
     );
 };
 
-export default AdminControl;
+export default Admin;

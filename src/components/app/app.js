@@ -18,6 +18,7 @@ import ExhibitionInfoPage from '../../pages/exhibitionInfoPage';
 import CartPage from '../../pages/cartPage';
 import CartBtn from '../cart/cartBtn/cartBtn';
 import axiosInstance from '../../axios';
+import PaymentListPage from '../../pages/paymentListPage';
 
 const App = ({isAutorization, setAutorization, setCartCount, cartCount}) => {
     useEffect(() => {
@@ -57,6 +58,7 @@ const App = ({isAutorization, setAutorization, setCartCount, cartCount}) => {
                     <Route exact path='/exhibitions/:id' component={ExhibitionInfoPage}/>
                     <Route exact path='/admin' component={AdminPage}/>
                     <Route exact path='/cart' component={CartPage} />
+                    <Route exact path='/payment-list/:id' component={PaymentListPage}/>
                     <Route component={NotFoundPage}/>
                 </Switch>
             </div>  

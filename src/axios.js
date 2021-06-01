@@ -4,7 +4,7 @@ const baseURL = 'http://217.66.18.54:8000/';
 
 const axiosInstance = axios.create({
 	baseURL: baseURL,
-	timeout: 5000,
+	timeout: 30000,
 	headers: {
 		Authorization: localStorage.getItem('access_token') ?
 			'Bearer ' + localStorage.getItem('access_token') :
@@ -28,6 +28,7 @@ axiosInstance.interceptors.response.use(
 				'Looks like CORS might be the problem. ' +
 				'Sorry about this - we will get it fixed shortly.'
 			);
+
 			return Promise.reject(error);
 		}
 
