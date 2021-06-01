@@ -18,6 +18,9 @@ const ItemCards = ({pictures, picturesLoaded, collectionId, picturesError, pictu
             axiosInstance.get('likes')
                 .then((res) => {
                     setLikesId(res.data);
+                })
+                .catch(err => {
+                    console.log(err);
                 });
         } 
 
@@ -26,7 +29,7 @@ const ItemCards = ({pictures, picturesLoaded, collectionId, picturesError, pictu
                 picturesLoaded(res.data);
             })
             .catch(() => {
-                picturesError();
+                picturesError();    
             });
 
         return function cleanup() {
