@@ -20,6 +20,7 @@ const Header = ({darkHeader, isAutorization}) => {
     const [isOpenBurger, setIsOpenBurger] = useState(false);
 
     const darkClass = darkHeader ? 'dark-color' : '';
+    const noTransparentBG = darkHeader ? 'header-bg' : '';
 
     const smallArrow = darkHeader ? smallBlackArrow : smallWhiteArrow;
 
@@ -37,7 +38,7 @@ const Header = ({darkHeader, isAutorization}) => {
     const activeBurger = isOpenBurger ? 'active' : '';
 
     return (
-        <header className='header'>
+        <header className={`header ${noTransparentBG}`}>
             <Container className='header__flex-wrapper'>
                 <div className="header__logo">
                     <Link className={darkClass} to='/'>Galartus</Link>

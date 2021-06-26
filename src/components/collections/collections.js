@@ -32,11 +32,7 @@ const Collections = ({
                 })
                 .catch(() => collectionsError() );
         }
-        
 
-        /* return function cleanup() {
-            collectionsLoaded([]);
-        } */
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -66,6 +62,7 @@ const Collections = ({
             
         }
     };
+    
 
     const collectionsCards = collections ? setItemsContent(collections) : null;
     

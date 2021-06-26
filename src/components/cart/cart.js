@@ -71,7 +71,7 @@ const Cart = ({setCartCount, cartCount}) => {
 
                 setLoadingPayment(false);
                 setErrorPayment(true);
-            } );
+            });
     };
 
     const loadingPaymentText = loadingPayment ? 'Подождите...' : null;

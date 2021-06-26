@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Container} from 'reactstrap'
 import SwiperCore, { Autoplay, Keyboard, Navigation, Pagination} from 'swiper';
 import {Swiper, SwiperSlide} from 'swiper/react';
@@ -40,6 +40,15 @@ const items = [
 ];
 
 const Slider = () => {
+    useEffect(() => {
+        const slider = document.querySelector('.slider');
+        const pagination = slider.querySelector('.swiper-pagination');
+        const paginationBullet = slider.querySelectorAll('.swiper-pagination-bullet');
+
+        pagination.classList.add('slider__pagination');
+        paginationBullet.forEach(bullet => bullet.classList.add('slider__pagination-bullet'));
+        
+    }, []);
 
     const slides = items.map((item) => {
         const titleWords = item.title.split(' ');

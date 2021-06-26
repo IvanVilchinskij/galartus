@@ -1,5 +1,7 @@
 @import './default.scss';
 
+$text-color: #060606;
+
 @font-face {
     font-family: 'CatLinz';
     font-display: swap;
@@ -22,4 +24,9 @@ body {
 .content {
     flex: 1 0 auto;
     position: relative;
+}
+
+.title {
+    font-family: 'CatLinz', serif;
+    color: $text-color;
 }

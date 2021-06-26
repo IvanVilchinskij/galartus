@@ -11,20 +11,12 @@ const AllCollectionsPage = ({toggleHeaderColor}) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return (
-        <>
-            <div className='collection'>
+    return (    
+        <div className='collection'>
             <Container>
-                {/* <div className="collection__filter-btns">
-                    <ButtonGroup>
-                        <Button>Коллекции музия</Button>
-                        <Button>Личные коллекции</Button>
-                    </ButtonGroup>
-                </div> */}
                 <Collcetions/>
             </Container>
         </div>
-        </>
     );
 };
 

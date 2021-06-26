@@ -1,0 +1,15 @@
+.about-text {
+    width: 325/1110 *100%;
+
+    &__title {
+        font-size: 3.125rem;
+        line-height: 100%;
+
+        margin-bottom: .7em;
+    }
+
+    &__text {
+        font-size: 1.125rem;
+        line-height: 145%;
+    }
+}
