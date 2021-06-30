@@ -1,66 +1,110 @@
 .collection {
-    margin-top: 113px;
-    padding: 50px 0;
+    margin-top: 129px;
+    padding: 90px 0 100px;
 
-    &__filter-btns {
+    &__grid {
         display: flex;
-        justify-content: flex-end;
-        margin-bottom: 30px;
+        margin-left: -30px; /* gutter size offset */
+        width: auto;
     }
 
-    &__flex-wrapper {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
+    &__grid_column {
+        padding-left: 30px; /* gutter size */
+        background-clip: padding-box;
+    }
+
+    &__title {
+        font-size: 3.125rem;
+        line-height: 98%;
+
+        margin-bottom: 1em;
     }
 }
 
 .collection-card {
-    width: 30%;
-    max-width: 30%;
-    justify-content: space-between;
+    display: block;
+    position: relative;
+    width: 100%;
+    height: auto;
 
-    &__edit {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background-color: green;
-        position: absolute;
-        top: 0;
-        right: 0;
-        cursor: pointer;
-    }
+    margin-bottom: 40px;
+    border-radius: 15px;
+    
+    overflow: hidden;
 
-    &__delete {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background-color: red;
+    transition: box-shadow .3s ease-out;
+
+    &::before {
+        content: '';
         position: absolute;
         top: 0;
         left: 0;
-        cursor: pointer;
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 15px;
+        background: #424242;
+        opacity: .6;
+        transition: opacity .3s ease-in;
+        z-index: 10;
+    }
+
+    &:hover {
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+
+        &::before {
+            opacity: 0;
+        }
+
+        .collection-card__img {
+            img {
+                transform: scale(1.1);
+            } 
+        }
+
+        .collection-card__arrow {
+            right: 0;
+        }
     }
 
     &__img {
-        position: relative;
-        width: 100%;
-        height: 200px;
-        margin-bottom: 10px;
-
         img {
-            position: absolute;
-            top: 0;
-            left: 0;
             display: block;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            object-fit: contain;
+
+            transform: scale(1);
+            transition: transform .3s ease-out;
         }
     }
 
     &__title {
-        text-align: center;
-        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        z-index: 12;
+
+        color: #FFFFFF;
+        font-size: 2.25rem;
+        line-height: 98%;
+        padding: 0 0.83em 0.7em;
+    }
+
+    &__arrow {  
+        position: relative;
+        right: -100px;
+        width: 24px;
+        height: 25px;
+        fill: none;
+        stroke: white;
+        display: flex;
+        align-items: center;
+        
+        transition: right .3s ease-out;
     }
 }

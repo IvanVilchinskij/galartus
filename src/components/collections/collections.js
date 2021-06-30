@@ -1,16 +1,14 @@
-import React, { useEffect, /* useState */ } from 'react';
+import React, { useEffect } from 'react';
 import {connect} from 'react-redux';
-import {Card, 
-        CardTitle, 
-        Button,
-} from 'reactstrap';
 import {Link} from 'react-router-dom';
+import Masonry from 'react-masonry-css';
+
+import './collections.scss';
 
 import * as actions from '../../actions/actions';
 import axiosInstance from '../../axios';
 import Spinner from '../spinner/spinner';
-
-import './collections.scss';
+import icons from '../../icons/icons.svg';
 
 const Collections = ({ 
     collectionsLoaded, 
@@ -45,17 +43,18 @@ const Collections = ({
             return (
                 items.map((item) => {
                     return (
-                        <Card className='collection-card' key={item.id} body>
-                            <div className="collection-card__content-wrapper">
-                                <div className="collection-card__img">
-                                    <img src={item.image} alt={item.name}/>                       
-                                </div>     
-                                <CardTitle className='collection-card__title'>{item.name}</CardTitle>
-                            </div>       
-                            <Button>
-                                <Link to={`/collections/${item.id}`}>Подробнее</Link>
-                            </Button>
-                        </Card>
+                        <Link to={`/collections/${item.id}`} className='collection-card' key={item.id}>   
+                            <div className="collection-card__img">
+                                <img src={item.image} alt={item.name}/>                       
+                            </div> 
+                            <div className="collection-card__title title">
+                                {item.name}
+                                <svg className="collection-card__arrow">
+                                    <use href={`${icons}#arrow`}></use>
+                                </svg>
+                            </div>
+                            
+                        </Link>
                     );
                 })
             );
@@ -72,12 +71,22 @@ const Collections = ({
 
     const content = !isLoadingCollections && !isErrorCollcetions ? collectionsCards : null;
 
+    const breakpoints ={
+        default: 3,
+        1100: 2,
+        700: 1,
+    }
+
     return (
-        <div className="collection__flex-wrapper">
+        <Masonry 
+            breakpointCols={breakpoints}
+            className="collection__grid"
+            columnClassName="collection__grid_column"
+        >
             {loadingContent}
             {content}
             {errorContent}
-        </div>
+        </Masonry>
     );
 };
 

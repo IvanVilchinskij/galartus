@@ -14,6 +14,7 @@ const AllCollectionsPage = ({toggleHeaderColor}) => {
     return (    
         <div className='collection'>
             <Container>
+                <h2 className="collection__title title">Коллекции</h2>
                 <Collcetions/>
             </Container>
         </div>
