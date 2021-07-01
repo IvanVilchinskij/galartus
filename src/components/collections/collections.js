@@ -52,8 +52,7 @@ const Collections = ({
                                 <svg className="collection-card__arrow">
                                     <use href={`${icons}#arrow`}></use>
                                 </svg>
-                            </div>
-                            
+                            </div>                      
                         </Link>
                     );
                 })
@@ -75,7 +74,7 @@ const Collections = ({
         default: 3,
         1100: 2,
         700: 1,
-    }
+    };
 
     return (
         <Masonry 

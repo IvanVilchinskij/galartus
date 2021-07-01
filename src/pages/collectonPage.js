@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {useParams} from 'react-router-dom';
 
 import * as actions from '../actions/actions';
-import ItemCards from '../components/itemCards/itemCards';
+import CollectionsPictures from '../components/collectionsPictures/collectionsPictures';
 
 import '../styles/pages/collectionPage.scss';
 
@@ -19,7 +19,8 @@ const CollectionPage = ({toggleHeaderColor}) => {
     return (
         <div className="collection-page">
             <Container>
-                <ItemCards collectionId={+id}/>            
+                <h2 className="pictures__title title"></h2>
+                <CollectionsPictures collectionId={+id}/>            
             </Container>        
         </div>      
     );

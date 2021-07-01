@@ -2,14 +2,16 @@ import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {Card, CardImg, CardBody, CardTitle, CardText, Button} from 'reactstrap';
 import {Link} from 'react-router-dom';
+import Masonry from 'react-masonry-css';
 
-import './itemCards.scss';
+import './collectionsPictures.scss';
 
 import axiosInstance from '../../axios';
 import * as actions from '../../actions/actions';
 import Spinner from '../spinner/spinner';
+import icons from '../../icons/icons.svg';
 
-const ItemCards = ({pictures, picturesLoaded, collectionId, picturesError, picturesRequsted, isLoadingPictures, isErrorPictures, isAutorization, setLikesId, likesId}) => {
+const CollectionsPictures = ({pictures, picturesLoaded, collectionId, picturesError, picturesRequsted, isLoadingPictures, isErrorPictures, isAutorization, setLikesId, likesId}) => {
 
     useEffect(() => {
         picturesRequsted();
@@ -64,8 +66,6 @@ const ItemCards = ({pictures, picturesLoaded, collectionId, picturesError, pictu
                     target.classList.remove('active-like');
                 });
         }
-        
-        
     };
 
     const picturesCards = pictures ?  pictures.map((item) => {
@@ -85,24 +85,19 @@ const ItemCards = ({pictures, picturesLoaded, collectionId, picturesError, pictu
                                         </Button> : null;
 
         return (
-            <Card key={item.id} className='item-card'>
-                <div className="item-card__img">
-                    <CardImg 
-                        top 
-                        width="100%" 
-                        src={item.image} 
-                        alt={item.name} 
-                    />
-                </div>     
-                <CardBody className='item-card__body'>
-                    <CardTitle className='item-card__title' tag="h5">{item.name}</CardTitle>
-                    <CardText className='item-card__text'>
-                        <small className="text-muted">Last updated 3 mins ago</small>
-                    </CardText>
-                    <Button><Link to={`/pictures/${item.id}`}>Подробнее</Link></Button>
-                    {likeBtn}
-                </CardBody>
-            </Card>
+            <Link to={`/pictures/${item.id}`} key={item.id} className='picture-card'>
+                <div className="picture-card__img">
+                    <img src={item.image} alt={item.name} />
+                </div>
+                <div className="picture-card__title title">
+                    <div className="picture-card__name">
+                        {item.author} "{item.name}"
+                    </div>
+                    <svg className="picture-card__arrow">
+                        <use href={`${icons}#arrow`}></use>
+                    </svg>
+                </div>
+            </Link>
         );
     }) : null;
 
@@ -113,12 +108,22 @@ const ItemCards = ({pictures, picturesLoaded, collectionId, picturesError, pictu
 
     const content = !isLoadingPictures && !isErrorPictures ? picturesCards : null;
 
+    const breakpoints ={
+        default: 3,
+        1100: 2,
+        700: 1,
+    };
+
     return (
-        <div className="collection-page__wrapper">  
+        <Masonry
+            breakpointCols={breakpoints}
+            className="pictures__grid"
+            columnClassName="pictures__grid_column"
+        > 
             {loadingContent}
             {content}
             {errorContent}
-        </div>
+        </Masonry>
     );
 };
 
@@ -149,4 +154,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, actions)(ItemCards);
+export default connect(mapStateToProps, actions)(CollectionsPictures);
