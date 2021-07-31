@@ -5,11 +5,14 @@ import {connect} from 'react-redux';
 
 import axiosInstance from '../../axios';
 import * as actions from '../../actions/actions';
+import icons from '../../icons/icons.svg';
 
 const LogOutModal = ({isOpenExit, toggleExit, setAutorization}) => {
     const history = useHistory();
 
     const [loading, setLoading] = useState(false);
+
+    const closeBtn = <svg className='close' onClick={toggleExit}><use href={`${icons}#close`}></use></svg>;
 
     const handleSubmit = () => {
         const refreshToken = localStorage.getItem('refresh_token');
@@ -53,22 +56,26 @@ const LogOutModal = ({isOpenExit, toggleExit, setAutorization}) => {
         }
     };
 
-    const loadingText = loading ? 'Выходим...' : null;
+    const loadingText = loading ? 'Загрузка...' : null;
 
     return (
-        <Modal isOpen={isOpenExit} toggle={toggleExit}>
-            <ModalHeader toggle={toggleExit}>
+        <Modal 
+            isOpen={isOpenExit} 
+            toggle={toggleExit} 
+            className='custom-modal'
+
+        >
+            <ModalHeader toggle={toggleExit} close={closeBtn}>
                 Выход
             </ModalHeader>
             <ModalBody>
                 Вы уверены?
             </ModalBody>
             <ModalFooter>
-                <Button onClick={handleSubmit} color='primary'>
+                <button onClick={handleSubmit}>
                     Да, выйти.
-                </Button>
-                <Button onClick={toggleExit} color='secondary'>Отмена</Button>
-                {loadingText}
+                </button>
+                <span className="loading-text" style={{display: `${loadingText ? '' : 'none'}`}}>{loadingText}</span>
             </ModalFooter>
         </Modal>
     );

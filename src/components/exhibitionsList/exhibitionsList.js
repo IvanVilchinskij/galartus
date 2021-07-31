@@ -1,8 +1,5 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {
-    Container
-  } from 'reactstrap';
 import {Link} from 'react-router-dom';
 
 import './exhibitionsList.scss';
@@ -11,12 +8,13 @@ import * as actions from '../../actions/actions';
 import axiosInstance from '../../axios';
 import Spinner from '../spinner/spinner';
 import * as transformDate from '../../dateTransform/dateTransform';
+import db from '../../db';
 
 const ExhibitionsList = ({exhibitionsLoaded, exhibitionsError, exhibitions, isLoadingExhibitions, isErrorExhibitions, exhibitionsRequsted}) => {
 
     useEffect(() => {
 
-        if (exhibitions.length === 0) {
+        /* if (exhibitions.length === 0) {
             exhibitionsRequsted();
         
             axiosInstance.get('exhibitions')
@@ -24,7 +22,9 @@ const ExhibitionsList = ({exhibitionsLoaded, exhibitionsError, exhibitions, isLo
                     exhibitionsLoaded(res.data);
                 })
                 .catch(() => exhibitionsError());
-        }
+        } */
+
+        exhibitionsLoaded(db.exhibitions);
         
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -53,7 +53,7 @@ const ExhibitionsList = ({exhibitionsLoaded, exhibitionsError, exhibitions, isLo
                                 src={item.image} 
                                 alt={item.name} 
                                 className='exhibition-card__img'
-                            />
+                            />    
                             <div className="exhibition-card__rectangle"></div>
                             <div className="exhibition-card__header">
                                 <div className="exhibition-card__date-block">
@@ -100,8 +100,8 @@ const ExhibitionsList = ({exhibitionsLoaded, exhibitionsError, exhibitions, isLo
 
     return (
         <div className="exhibitions">
-            <Container>
-                <div className="exhibitions__title title">
+            <div className='container'>
+                <div className="exhibitions__title title page-title">
                     Выставки музея
                 </div>
                 <div className="exhibitions__flex-wrapper">
@@ -109,7 +109,7 @@ const ExhibitionsList = ({exhibitionsLoaded, exhibitionsError, exhibitions, isLo
                     {content}
                     {errorContent}
                 </div>    
-            </Container>
+            </div>
         </div>
     );
 };

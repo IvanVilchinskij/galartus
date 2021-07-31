@@ -14,8 +14,10 @@ const ExhibitionInfoPage = ({toggleHeaderColor, isAutorization}) => {
     const {id} = useParams();
 
     return (
-        <ExhibitionInfo isAutorization={isAutorization} exhibitionId={id}/>
-    );
+        <div className="exhibition-info">
+            <ExhibitionInfo isAutorization={isAutorization} exhibitionId={id}/>
+        </div>        
+    )
 };
 
 const mapStateToProps = (state) => {

@@ -14,6 +14,7 @@ import {connect} from 'react-redux';
 
 import axiosInstance from '../../../../axios';
 import * as actions from '../../../../actions/actions';
+import icons from '../../../../icons/icons.svg';
 
 const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollcetions, isOpen, toggle, modalId,  modalName, setUpdate}) => {
     const initialFormData = Object.freeze({
@@ -35,8 +36,6 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
 
     const handleChange = (e) => {
         const target = e.target;
-
-        
         
         // eslint-disable-next-line 
         if([target.name] == 'image') {
@@ -122,13 +121,15 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
 
     const errorContent = isErrorCollcetions ? 'Error' : null;
 
+    const closeBtn = <svg className='close' onClick={toggle}><use href={`${icons}#close`}></use></svg>;
+
     return (
-        <Modal isOpen={isOpen} toggle={toggle}>
+        <Modal isOpen={isOpen} toggle={toggle} className='custom-modal'>
             <Form id='editExhibitionsForm'>
-                <ModalHeader toggle={toggle}>Изменеие {modalName}</ModalHeader>
+                <ModalHeader toggle={toggle} close={closeBtn}>Изменеие "{modalName}"</ModalHeader>
                 <ModalBody>
                     <FormGroup>
-                        <Label for="exhEditName">Name</Label>
+                        <Label for="exhEditName">Название</Label>
                         <Input 
                             type="text" 
                             name="name" 
@@ -138,7 +139,7 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exhEditDescription">description</Label>
+                        <Label for="exhEditDescription">Описание</Label>
                         <Input 
                             type="text" 
                             name="description" 
@@ -148,7 +149,7 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exhEditImage">File</Label>
+                        <Label for="exhEditImage">Изображение</Label>
                         <Input 
                             accept='image/*'
                             type="file" 
@@ -158,7 +159,7 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exhEditDate">Date</Label>
+                        <Label for="exhEditDate">Дата</Label>
                         <Input 
                             accept='image/*'
                             type="date" 
@@ -169,7 +170,7 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exhEditTime">Time</Label>
+                        <Label for="exhEditTime">Время</Label>
                         <Input 
                             type="time" 
                             name="time" 
@@ -179,7 +180,7 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exhEditPrice">Price</Label>
+                        <Label for="exhEditPrice">Цена</Label>
                         <Input 
                             type="number" 
                             name="price" 
@@ -189,7 +190,7 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exhEditAddr">Address</Label>
+                        <Label for="exhEditAddr">Адрес</Label>
                         <Input 
                             type="text" 
                             name="address" 
@@ -199,25 +200,7 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exhEditWeekday">weekday</Label>
-                        <Input 
-                            type="select" 
-                            name="weekday" 
-                            id="exhEditWeekday"
-                            onChange={handleChange}
-                            autoComplete='weekday'
-                        >
-                            <option label='Понедельник' >1</option>
-                            <option label='Вторник' >2</option>
-                            <option label='Среда' >3</option>
-                            <option label='Четверг' >4</option>
-                            <option label='Пятница' >5</option>
-                            <option label='Суббота' >6</option>
-                            <option label='Воскресенье'>0</option>
-                        </Input>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for='exhEditCategories'>Categories</Label>
+                        <Label for='exhEditCategories'>Категории</Label>
                         <Input 
                             type="select" 
                             name="categories" 
@@ -231,15 +214,9 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={() => {
+                    <button disabled onClick={() => {
                         handleSubmit('#editExhibitionsForm');
-                    }}>Изменить</Button>
-                    <Button 
-                        color="secondary" 
-                        onClick={toggle}
-                    >
-                        Cancel
-                    </Button>
+                    }}>Изменить</button>
                     {loadingText}
                     {errorText}
                 </ModalFooter>

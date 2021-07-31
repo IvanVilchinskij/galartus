@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import {Container} from 'reactstrap'
 import SwiperCore, { Autoplay, Keyboard, Navigation, Pagination} from 'swiper';
 import {Swiper, SwiperSlide} from 'swiper/react';
 
@@ -58,14 +57,14 @@ const Slider = () => {
         return (
             <SwiperSlide className='slider__item' key={item.id}>
                 <img src={item.src} alt={item.altText}/>
-                <Container className='slider__flex-wrapper'>
+                <div className='slider__flex-wrapper container'>
                     <div className="slider__title">
                         {firstWords.join(' ')}
                         <br/>
                         {lastWords.join(' ')}
                     </div>
                     <div className="slider__text">{item.text}</div>
-                </Container>
+                </div>
             </SwiperSlide>
         );
     });
@@ -90,14 +89,14 @@ const Slider = () => {
             speed={500}
         >
             {slides}
-            <Container className='slider__control-wrapper'>
+            <div className='slider__control-wrapper container'>
                 <div className="slider__next">
 
                 </div>
                 <div className="slider__prev">
                     
                 </div>
-            </Container>
+            </div>
         </Swiper>
     );
 };

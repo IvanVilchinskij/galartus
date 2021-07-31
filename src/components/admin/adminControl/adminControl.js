@@ -23,13 +23,13 @@ const AdminControl = () => {
 
     return (
         <div className='admin-control'>
-            <Nav tabs>
+            <Nav className='second-tabs' tabs>
                 <NavItem>
                     <NavLink
                         className={classnames({ active: activeTab === '1' })}
                         onClick={() => { toggle('1'); }}
                     >
-                        Collections
+                        Коллекции
                     </NavLink>
                 </NavItem>
                 <NavItem>
@@ -37,7 +37,7 @@ const AdminControl = () => {
                         className={classnames({ active: activeTab === '2' })}
                         onClick={() => { toggle('2'); }}
                     >
-                        Exhibitions
+                        Выставки
                     </NavLink>
                 </NavItem>
                 <NavItem>
@@ -45,7 +45,7 @@ const AdminControl = () => {
                         className={classnames({ active: activeTab === '3' })}
                         onClick={() => { toggle('3'); }}
                     >
-                        Pictures
+                        Картины
                     </NavLink>
                 </NavItem>
             </Nav>

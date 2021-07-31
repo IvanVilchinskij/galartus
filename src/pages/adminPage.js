@@ -10,8 +10,10 @@ const AdminPage = ({toggleHeaderColor}) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return (      
-        <Admin/>           
+    return ( 
+        <div className="admin-page">
+            <Admin/>
+        </div>               
     );
 };
 

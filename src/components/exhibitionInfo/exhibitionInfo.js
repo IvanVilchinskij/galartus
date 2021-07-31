@@ -6,6 +6,9 @@ import './exhibitionInfo.scss';
 
 import axiosInstance from '../../axios';
 import * as actions from '../../actions/actions';
+import {setShortWeekdayName, setMonthName} from '../../dateTransform/dateTransform';
+
+import db from '../../db';
 
 const ExhibitionInfo = ({exhibitionId, isAutorization, setCartCount, cartCount}) => {
     const [exhibitionData, setExhibitionData] = useState(null);
@@ -22,11 +25,16 @@ const ExhibitionInfo = ({exhibitionId, isAutorization, setCartCount, cartCount})
     const incrCount = () => setCount(count + 1); 
 
     useEffect(() => {
-        axiosInstance.get(`exhibitions?id=${exhibitionId}`)
+        db.exhibitions.forEach(item => {
+            if (item.id === +exhibitionId) {
+                setExhibitionData(item);
+            }
+        });
+        /* axiosInstance.get(`exhibitions?id=${exhibitionId}`)
             .then(res => {
                 setExhibitionData(res.data[0]);
             })
-            .catch(err => console.log(err));
+            .catch(err => console.log(err)); */
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -43,9 +51,10 @@ const ExhibitionInfo = ({exhibitionId, isAutorization, setCartCount, cartCount})
         /> : 
         <NoAutorization/>;
 
-    if (exhibitionData) {
+    const exhibition = exhibitionData ? <Exhibition isAutorization={isAutorization} buyContent={buyContent} data={exhibitionData}/> : null;
+
+    /* if (exhibitionData) {
         return (        
-            <div className="exhibition-info">
                 <Container>
                     <div className="exhibition-info__img">
                         <img src={exhibitionData.image} alt={exhibitionData.name} />
@@ -54,15 +63,57 @@ const ExhibitionInfo = ({exhibitionId, isAutorization, setCartCount, cartCount})
                     <div className="exhibition-info__description">{exhibitionData.description}</div>
                     <div className="exhibition-info__prise">{exhibitionData.price}р.</div>
                     {buyContent}
-                </Container>                    
-            </div>        
+                </Container>                           
         );
     } else {
         return (
             <p>Wait data...</p>
         );
-    }
+    } */
 
+    return (
+        <div className="container">
+            {exhibition}
+        </div>
+    )
+
+};
+
+const Exhibition = ({buyContent, data, isAutorization}) => {
+    const date = new Date(data.date);
+
+    const dateData = {
+        day: date.getDate(),
+        weekday: setShortWeekdayName(date.getDay()),
+        month: setMonthName(date.getMonth()),
+    };
+
+    return (
+        <>
+            <div className="exhibition">
+                <div className="exhibition__img">
+                    <img src={data.image} alt={data.name} />
+                </div>
+                <div className="exhibition__purchase-info">
+                    <h2 className="exhibition__title title">{data.name}</h2>
+                    <div className="exhibition__time">{dateData.day} {dateData.month} ({dateData.weekday}), {data.time}</div>
+                    <div className="exhibition__address">{data.address}</div>
+                    <div className="exhibition__prise title">{data.price}₽</div>
+                    <button disabled={!isAutorization} className="exhibition__add-to-cart">Купить билет</button>
+                    {buyContent}
+                </div>
+            </div>
+            <div className="details">
+                <div className="details__title title">
+                    Подробнее о выставке:
+                </div>
+                <div className="details__text">
+                    {data.description}
+                </div>
+            </div>
+        </>
+        
+    )
 };
 
 const PurchaseBlock = ({count, decrCount, incrCount, id, resetCount, setCartCount, cartCount}) => {

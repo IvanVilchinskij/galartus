@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {Link} from 'react-router-dom';
-import { Container } from 'reactstrap';
 
 import axiosInstance from '../../../axios';
 import * as transformDate from '../../../dateTransform/dateTransform';
@@ -9,9 +8,9 @@ const UserReccomendation = () => {
     const [recommendations, setRecommendations] = useState([]);
 
     useEffect(() => {
-        axiosInstance.get('users/recommendation')
+        /* axiosInstance.get('users/recommendation')
             .then(res => setRecommendations(res.data))
-            .catch(err => console.log(err));
+            .catch(err => console.log(err)); */
     }, []);
 
     const recommendationsCards = recommendations.length > 0 ? recommendations.map(item => {
@@ -25,7 +24,7 @@ const UserReccomendation = () => {
         };
 
         return (
-            <Link to={`/exhibitions/${item.id}`} key={item.id} className="exhibition-card">
+            <Link to={`/exhibitions/${item.id}`} key={item.id} className="exhibition-card exhibition-card--xs">
                 <img 
                     src={item.image} 
                     alt={item.name} 
@@ -65,11 +64,9 @@ const UserReccomendation = () => {
     }) : <h3>Пусто</h3>
 
     return (
-        <Container>
-            <div className="exhibitions__flex-wrapper">
-                {recommendationsCards}
-            </div>  
-        </Container>
+        <div className="exhibitions__flex-wrapper">
+            {recommendationsCards}
+        </div>        
     );
 };
 

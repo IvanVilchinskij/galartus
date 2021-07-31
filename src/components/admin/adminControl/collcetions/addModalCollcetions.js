@@ -12,6 +12,7 @@ import {
 } from 'reactstrap';
 
 import axiosInstance from '../../../../axios';
+import icons from '../../../../icons/icons.svg';
 
 const AddModalCollcetions = ({isOpen, toggle, setUpdate}) => {
     const initialFormData = Object.freeze({
@@ -89,13 +90,15 @@ const AddModalCollcetions = ({isOpen, toggle, setUpdate}) => {
     const errorText = error ? 'Ошибка' : null;
     const formErrorText = !formValid ? 'Необходимо заполнить все поля' : null;
 
+    const closeBtn = <svg className='close' onClick={toggle}><use href={`${icons}#close`}></use></svg>;
+
     return (
-        <Modal isOpen={isOpen} toggle={toggle}>
+        <Modal isOpen={isOpen} toggle={toggle} className='custom-modal'>
             <Form id='addCollcetionForm'>
-                <ModalHeader toggle={toggle}>Добавление коллекции</ModalHeader>
+                <ModalHeader toggle={toggle} close={closeBtn}>Добавление коллекции</ModalHeader>
                 <ModalBody>
                     <FormGroup>
-                        <Label for="addName">Name</Label>
+                        <Label for="addName">Название</Label>
                         <Input 
                             type="text" 
                             name="name" 
@@ -105,7 +108,7 @@ const AddModalCollcetions = ({isOpen, toggle, setUpdate}) => {
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exampleImage">File</Label>
+                        <Label for="exampleImage">Изображение</Label>
                         <Input 
                             accept='image/*'
                             type="file" 
@@ -116,13 +119,12 @@ const AddModalCollcetions = ({isOpen, toggle, setUpdate}) => {
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>
-                    <Button 
-                        color="primary" 
+                    <button 
                         onClick={handleSubmit}
+                        disabled
                     >
                         Добавить
-                    </Button>
-                    <Button color="secondary" onClick={toggle}>Отмена</Button>
+                    </button>
                     {loadingText}
                     {errorText}
                     {formErrorText}

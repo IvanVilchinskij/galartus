@@ -1,6 +1,5 @@
-import React, { useState, /* useEffect */ } from 'react';
+import React, { useState } from 'react';
 import {connect} from 'react-redux';
-import { Container, Button} from 'reactstrap';
 import {Link} from 'react-router-dom';
 
 import LogInModal from '../logInModal/logInModal';
@@ -9,6 +8,7 @@ import * as actions from '../../actions/actions';
 
 import smallWhiteArrow from './img/smalWhiteArrow.svg';
 import smallBlackArrow from './img/smalBlackArrow.svg';
+import icons from '../../icons/icons.svg';
 
 import './header.scss';
 
@@ -33,14 +33,14 @@ const Header = ({darkHeader, isAutorization}) => {
         <LogInBtn toggle={toggle} darkClass={darkClass} smallArrow={smallArrow}/> : 
         <LogOutBtn toggleExit={toggleExit} darkClass={darkClass}/>;
 
-    const headerUserBtns = isAutorization ? <><AdminBtn darkClass={darkClass}/><UserPA darkClass={darkClass}/></> : null;
+    const headerUserBtns = /* isAutorization */ true ? <><AdminBtn darkClass={darkClass}/><UserPA darkClass={darkClass}/></> : null;
 
     const activeBurger = isOpenBurger ? 'active' : '';
 
     return (
         <header className={`header ${noTransparentBG}`}>
-            <Container className='header__flex-wrapper'>
-                <div className="header__logo">
+            <div className='header__flex-wrapper container'>
+                <div className="header__logo title">
                     <Link className={darkClass} to='/'>Galartus</Link>
                 </div>
                 <div className="header__control">
@@ -74,9 +74,9 @@ const Header = ({darkHeader, isAutorization}) => {
                     <span className='burger__middle-line burger__middle-line--down'></span>
                     <span className='burger__down-line'></span>
                 </div>
-            </Container>
+            </div>
             <LogInModal isOpen={isOpen} toggle={toggle}/> 
-            <LogOutModal isOpenExit={isOpenExit} toggleExit={toggleExit}/>      
+            <LogOutModal isOpenExit={isOpenExit} toggleExit={toggleExit}/>    
         </header>
     );
 };
@@ -91,10 +91,12 @@ const LogInBtn = ({toggle, darkClass, smallArrow}) => {
 };
 
 const LogOutBtn = ({toggleExit, darkClass}) => {
+    const color = darkClass ? 'black-' : 'white-';
+
     return (
-        <button  onClick={toggleExit}  className={`btns-group__btn ${darkClass}`}>
-            Выйти
-        </button> 
+        <svg  onClick={toggleExit}  className={`logout-icon`}>
+            <use href={`${icons}#${color}exit`}></use>
+        </svg> 
     );
 };
 

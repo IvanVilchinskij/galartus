@@ -1,119 +1,52 @@
-.admin {
-    padding: 50px 0;
-    margin-top: 113px;
+.admin-page {
+    padding: 3.125rem 0;
+    margin-top: 7.0625rem;
 
-    &__add-btn {
-        margin-bottom: 40px;
+    @media (min-width: 1921px) {
+        padding: calc(3.125*16*100vw/1920) 0;
+        margin-top: calc(7.0625*16*100vw/1920);
     }
-}
 
-.admin-cards {
-    &__title {
+    .tabs-wrapper {
         display: flex;
         justify-content: space-between;
 
-        margin-bottom: 30px;
+        .first-tabs {
+            display: block;
+            border: none;
 
-        
-    }
+            .nav-item {
 
-    &__id {
-        width: 10%;
+                a {
+                    font-size: 1rem;
+                    line-height: 119%;
+                    color: #000000;
 
-    }
+                    padding: 1em 1.875em;
+                    cursor: pointer;
+                    border: 1px solid transparent;
+                    border-radius: .625em;
 
-    &__name {
-        width: 60%;
+                    @media (min-width: 1921px) {
+                        font-size: calc(16*100vw/1920);
+                    }
 
-        &--three {
-            width: 40%; 
+                    &.active {
+                        background: #F4F4F4;
+                        border-radius: .625em;
+                    }
+
+                    &:hover {
+                        border: 1px solid #e9ecef;
+                    }
+
+                    
+                }
+            }
+
+            &-content {
+                width: 860/1160*100%;
+            }
         }
-
-        &--five {
-            width: 20%;
-        }
-    }
-
-    &__price {
-        width: 15%;
-    }
-
-    &__date {
-        width: 20%;
-    }
-
-    &__categories {
-        width: 20%;
-
-        &--five {
-            width: 15%;
-        }
-    }
-
-    &__control {
-        width: 30%;
-        display: flex;
-        justify-content: flex-end;
-    }
-}
-
-.admin-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    margin-bottom: 20px;
-
-    &:last-child {
-        margin-bottom: 0;
-    }
-
-    &__id {
-        width: 10%;
-    }
-
-    &__name {
-        width: 60%;
-
-        &--three {
-            width: 40%; 
-        }
-
-        &--five {
-            width: 20%;
-        }
-    }
-
-    &__price {
-        width: 15%;
-    }
-
-    &__date {
-        width: 20%;
-    }
-
-    &__categories {
-        width: 20%;
-
-        &--five {
-            width: 15%;
-        }
-    }
-
-    &__control {
-        width: 30%;
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    &__edit, &__delete {
-        padding: 5px;
-        border-radius: 4px;
-        border: 1px solid #060606;
-        background-color: transparent;
-    }
-
-    &__edit {
-        margin-right: 20px;
     }
 }

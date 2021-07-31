@@ -1,9 +1,10 @@
 .collection-page {
-    padding: 50px 0;
-    margin-top: 113px;
+    padding: 5.5625rem 0 6.25rem;
+    margin-top: 7.0625rem;
 
-    &__wrapper {
-        display: flex;
-        flex-wrap: wrap;
+    @media (min-width: 1921px) {
+        padding: calc( 5.5625*16*100vw/1920) 0 calc( 6.25*16*100vw/1920);
+        margin-top: calc( 7.0625*16*100vw/1920);
     }
+
 }

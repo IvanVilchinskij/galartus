@@ -1,32 +1,15 @@
-/* .navbar {
-    &__logo {
-        a {
-            color: #fff;
-        }  
-    }
-
-    &__item {
-        a {
-            color: #fff;
-            padding: 0 1rem;
-        }
-        
-    }
-}
-
-.lc-btn {
-    a {
-        color: #fff;
-    }
-} */
-
 .header {
     position: absolute;
     top: 0;
     left: 0;
+    right: 0;
     z-index: 4;
     width: 100%;
-    padding: 40px 0;
+    padding: 2.5rem 0;
+
+    @media (min-width: 1921px) {
+        padding: calc(40*100vw/1920) 0;
+    }
 
     &__flex-wrapper {
         display: flex;
@@ -35,20 +18,23 @@
         @media screen and (max-width: 991px) {
             justify-content: space-between;
         }
-    }
+    }   
 
     &__logo {
-        margin-right: 125/1110 *100%;
+        margin-right: 125/1160 *100%;
+
         a {
-            font-family: "CatLinz", serif;
             font-size: 1.875rem;
             line-height: 97%;
             letter-spacing: 0.03em;
             text-transform: uppercase;
 
             color: #FFFFFF;
-            /* margin-right: 4.16em; */
             cursor: pointer;
+
+            @media (min-width: 1921px) {
+                font-size: calc(1.875*16*100vw/1920);
+            }
         }
     }
 
@@ -64,7 +50,7 @@
     }
 
     &__nav {
-        width: 423/844*100%;
+        width: 423/888*100%;
         display: block;
     }
 }
@@ -90,6 +76,10 @@
             line-height: 119%;
             padding: .9375em;
             color: #FFFFFF;
+
+            @media (min-width: 1921px) {
+                font-size: calc(16*100vw/1920);
+            }
         }
 
         span {
@@ -123,6 +113,10 @@
         padding: .9375em;
 
         color: #FFFFFF;
+
+        @media (min-width: 1921px) {
+            font-size: calc(16*100vw/1920);
+        }
         
         a {
             color: #FFFFFF;
@@ -204,4 +198,11 @@
     @media screen and (max-width: 991px) {
         display: block;
     }
+}
+
+.logout-icon {
+    width: 1.5625rem;
+    height: 1.5625rem;
+
+    cursor: pointer;
 }

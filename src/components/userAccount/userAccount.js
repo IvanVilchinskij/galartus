@@ -19,6 +19,9 @@ import axiosInstance from '../../axios';
 import EditUserModal from './editUserModal/editUserModal';
 import UserLikes from './userLikes/userLikes';
 import UserReccomendation from './userRecommendation/userRecommendation';
+import { transformDate } from '../../dateTransform/dateTransform';
+import db from '../../db';
+import avatar from '../../images/user/no-avatar.jpg';
 
 const UserAccount = () => {
     const [userInfo, setUserInfo] = useState(null);
@@ -37,10 +40,11 @@ const UserAccount = () => {
     const toggleEditModal = () => setIsOpen(!isOpen);
 
     useEffect(() => {
-        axiosInstance.get(`users/`)
+        /* axiosInstance.get(`users/`)
             .then(res => {
                 setUserInfo(res.data[0]);
-            });
+            }); */
+        setUserInfo(db.user[0]);
     }, [refresh]);
 
     const content = userInfo ? 
@@ -54,69 +58,63 @@ const UserAccount = () => {
     
     return (
         <div className="user-account">
-            <Container>
-                {content}
-                <Nav tabs>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: activeTab === '1' })}
-                            onClick={() => { toggle('1'); }}
-                        >
-                            Мои лайки
-                        </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: activeTab === '2' })}
-                            onClick={() => { toggle('2'); }}
-                        >
-                            Подборка
-                        </NavLink>
-                    </NavItem>
-                </Nav>
-                <TabContent activeTab={activeTab}>
-                    <TabPane tabId="1">
-                        <Row>
-                            <Col sm="12">
+            <div className='container'>
+                <div className="user-account__wrapper">
+                    {content}
+                    <div className="tabs-wrapper">
+                        <Nav tabs className='custom-tabs'>
+                            <NavItem>
+                                <NavLink
+                                    className={classnames({ active: activeTab === '1' })}
+                                    onClick={() => { toggle('1'); }}
+                                >
+                                    Мне понравилось
+                                </NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink
+                                    className={classnames({ active: activeTab === '2' })}
+                                    onClick={() => { toggle('2'); }}
+                                >
+                                    Подборка выставок
+                                </NavLink>
+                            </NavItem>
+                        </Nav>
+                        <TabContent activeTab={activeTab}>
+                            <TabPane tabId="1">
                                 <UserLikes/>
-                            </Col>
-                        </Row>
-                    </TabPane>
-                    <TabPane tabId="2">
-                        <UserReccomendation/>
-                    </TabPane>
-            </TabContent>
-            </Container>
+                            </TabPane>
+                            <TabPane tabId="2">
+                                <UserReccomendation/>
+                            </TabPane>
+                        </TabContent>
+                    </div>    
+                </div>
+                
+            </div>
             
         </div>
     );   
 };
 
 const UserCard = ({user, toggle, isOpen, toggleRefresh}) => {
+    const birthday = transformDate(user.birthday)
+
     return (
-        <Card className='user'>
-            <h2 className="user__title">Информация о пользователе</h2>
-            <ul className="user__info-list">
-                <li className="user__list-item">
-                    <div className="user__item-name">Имя</div>
-                    <div className="user__item-value">{user.first_name}</div>     
-                </li>
-                <li className="user__list-item">
-                    <div className="user__item-name">Фамилия</div>
-                    <div className="user__item-value">{user.last_name}</div>
-                </li>
-                <li className="user__list-item">
-                    <div className="user__item-name">Почта</div>
-                    <div className="user__item-value">{user.email}</div>
-                </li>
-                <li className="user__list-item">
-                    <div className="user__item-name">День рождения</div>
-                    <div className="user__item-value">{user.birthday}</div>
-                </li>
-            </ul>
-            <Button onClick={toggle}>Редактировать профиль</Button>
+        <div className='user'>
+            <div className="user__header">
+                <img src={user.image ? user.image : avatar} alt={user.first_name} />
+            </div>
+            <div className="user__body">
+                <h2 className="user__name title">{user.first_name} {user.last_name}</h2>
+                <h3 className="user__birthday">{birthday}</h3>
+                <div className="user__mail">{user.email}</div>
+            </div>
+            <div className="user__footer">
+                <button onClick={toggle} className="user__edit">Редактировать</button>
+            </div>
             <EditUserModal refresh={toggleRefresh} userId={user.id} isOpen={isOpen} toggle={toggle}/>
-        </Card>
+        </div>
     );
     
 };

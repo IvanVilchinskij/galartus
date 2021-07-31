@@ -1,13 +1,10 @@
 .exhibitions {
-    padding: 92px 0 25px;
-    margin-top: 113px;
+    padding: 5.75rem 0 1.5625rem;
+    margin-top: 8.0625rem;
 
-    &__title {
-        font-family: 'CatLinz', serif;
-        font-size: 50px;
-        line-height: 49px;
-        margin-bottom: 70px;
-        color: #060606;
+    @media (min-width: 1921px) {
+        padding: calc( 5.75*16*100vw/1920) 0 calc( 1.5625*16*100vw/1920);
+        margin-top: calc( 8.0625*16*100vw/1920);
     }
 
     &__flex-wrapper {
@@ -18,23 +15,57 @@
 }
 
 .exhibition-card {
-    width: 530/1100 * 100%;
+    font-size: 1rem;
+    width: 530/1160 * 100%;
     position: relative;
-    border-radius: 15px;
-    padding: 30px;
-    min-height: 350px;
+    border-radius: 0.9375em;
+    padding: 1.875em;
+    min-height: 21.875rem;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 
-    margin-bottom: 60px;
+    margin-bottom: 3.75em;
 
     color: #fff;
 
-    /* &:last-child {
-        margin-bottom: 0;
-    } */
+    @media (min-width: 1921px) {
+        font-size: calc( 16*100vw/1920);
+        min-height: calc( 21.875*16*100vw/1920);
+    }
+
+    &--xs {
+        width: 360/760*100%;
+        font-size: 0.889rem;
+
+        min-height: 17.5rem;
+
+        margin-bottom: 2.109em;
+
+        @media (min-width: 1921px) {
+            font-size: calc( 0.889*16*100vw/1920);
+            min-height: calc( 17.5*16*100vw/1920);
+        }
+    }
+
+    &--xl {
+        width: 100%;
+        font-size: 1.25rem;
+        padding: 2.5em;
+        min-height: 25rem;
+
+        margin-bottom: 3em;
+
+        @media (min-width: 1921px) {
+            font-size: calc( 1.25*16*100vw/1920);
+            min-height: calc( 25*16*100vw/1920);
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
 
     &:hover {
         .exhibition-card__img {
@@ -43,7 +74,6 @@
 
         .exhibition-card__title {
             color: #fff;
-            /* opacity: 0.8; */
         }
     }
     
@@ -52,10 +82,9 @@
         top: 0;
         left: 0;
         display: block;
-        object-fit: contain;
+        object-fit: cover;
+        width: 100%;
         height: 100%;
-        /* min-width: 100%; */
-        /* width: 100%; */
         z-index: 1;
 
         transition: transform .6s ease-in-out;
@@ -91,41 +120,41 @@
         font-family: 'CatLinz', serif;
         font-style: normal;
         font-weight: normal;
-        font-size: 54px;
+        font-size: 3.375em;
         line-height: 98%;
-        margin-right: 15px;
+        margin-right: 0.278em;
 
         color: #FFFFFF;
     }
 
     &__month {
-        font-size: 18px;
+        font-size: 1.125em;
         line-height: 21/18*100%;
 
         color: #FFFFFF;
-        margin-top: 3px;
-        margin-bottom: 2px;
+        margin-top: 0.167em;
+        margin-bottom: 0.111em;
     }
 
     &__weekday {
-        font-size: 16px;
+        font-size: 1em;
         line-height: 19/16*100%;
 
         color: #AFAFAF;
     }
 
     &__address {
-        font-size: 16px;
+        font-size: 1em;
         line-height: 19/16*100%;
 
         color: #FFFFFF;
 
-        margin-bottom: 8px;
-        margin-top: 3px;
+        margin-bottom: .5em;
+        margin-top: 0.1875em;
     }
 
     &__time {
-        font-size: 28px;
+        font-size: 1.75em;
         line-height: 33/28*100%;
         text-align: right;
 
@@ -139,12 +168,9 @@
 
     &__title {
         font-family: 'CatLinz', serif;
-        font-size: 40px;
+        font-size: 2.5em;
         line-height: 39/40*100%;
         opacity: 1;
-
-        /* transition: opacity .2s linear; */
-        /* width: 90%; */
 
         a {
             color: #FFFFFF;

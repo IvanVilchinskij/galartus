@@ -1,0 +1,50 @@
+.picture-info {
+    display: flex;
+    justify-content: space-between;
+
+    &__img {
+        min-width: 660/1160*100%;
+        max-width: 660/1160*100%;
+        border-radius: .9375rem;
+        overflow: hidden;
+
+        @media (min-width: 1921px) {
+            border-radius: calc(0.9375 *16*100vw/1920);
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            object-fit: contain;
+        }
+    }
+
+    &__info {
+        width: 430/1160*100%;
+    }
+
+    &__title {
+        font-size: 2.625rem;
+        line-height: 90%;
+
+        margin-bottom: 2.0625rem;
+
+        @media (min-width: 1921px) {
+            font-size: calc(2.625* 16 *100vw/1920);
+            margin-bottom: calc(2.0625* 16 *100vw/1920);
+        } 
+    }
+
+    &__name, &__author {
+        margin: 0;
+    }
+
+    &__descr {
+        font-size: 1.125rem;
+        line-height: 145%;
+
+        @media (min-width: 1921px) {
+            font-size: calc(1.125 *16*100vw/1920);
+        }
+    }
+}

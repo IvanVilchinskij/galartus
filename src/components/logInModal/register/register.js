@@ -35,29 +35,49 @@ const Register = ({toggle, setAutorization}) => {
 
     const [formData, updateFormData] = useState(initialFormData);
 
-    const validateField = (fieldName, value) => {
-        let emailValidate = emailValid;
-        let passwordValidate = passValid;
+    const validateField = (field, input=false) => {
+        let fieldName = field.name,
+            value = field.value;
+
+        let emailValidate = emailValid,
+            passwordValidate = passValid;
 
         switch (fieldName) {
             case 'email':
                 emailValidate = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
                 setEmailValid(emailValidate);
 
-                setFormErrors({
-                    ...formErrors,
-                    email: emailValidate ? ' ' : 'не корректная почта',
-                });
+                if(!input) {
+                    setFormErrors({
+                        ...formErrors,
+                        email: emailValidate ? '' : 'Некорректный адрес',
+                    });
+                    
+                    if (emailValidate) {
+                        field.classList.remove('attention');
+                    } else {
+                        field.classList.add('attention');
+                    }
+                }
                 
                 break;
             case 'password': 
                 passwordValidate = value.length >= 4;
                 setPassValid(passwordValidate);
 
-                setFormErrors({
-                    ...formErrors,
-                    password:  passwordValidate ? ' ' : ' короткий пароль',
-                })
+                if(!input) {
+                    setFormErrors({
+                        ...formErrors,
+                        password:  passwordValidate ? '' : 'Слишком короткий пароль',
+                    });
+
+                    if (passValid) {
+                        field.classList.remove('attention');
+                    } else {
+                        field.classList.add('attention');
+                    }
+                }
+
                 break;
             default: 
                 break;
@@ -66,16 +86,38 @@ const Register = ({toggle, setAutorization}) => {
         setFormValid(passwordValidate && emailValidate);
     };
 
-    const handleChange = (e) => {
+    const handleInput = (e) => {
         const target = e.target;
 
-        validateField(target.name, target.value);
+        validateField(target, true);
         // eslint-disable-next-line
         if (target.name == 'checkPassword' && target.value === formData.password) {
             setIsValidPass(true);
+            target.classList.remove('attention');
             // eslint-disable-next-line
         } else if (target.name == 'checkPassword') {
             setIsValidPass(false);
+            target.classList.add('attention');
+        }
+
+        updateFormData({
+            ...formData,
+            [target.name]: target.value.trim(),
+        });
+    };
+
+    const handleBlur = (e) => {
+        const target = e.target;
+
+        validateField(target);
+        // eslint-disable-next-line
+        if (target.name == 'checkPassword' && target.value === formData.password) {
+            setIsValidPass(true);
+            
+            // eslint-disable-next-line
+        } else if (target.name == 'checkPassword') {
+            setIsValidPass(false);
+            
         }
 
         updateFormData({
@@ -122,14 +164,18 @@ const Register = ({toggle, setAutorization}) => {
                     console.log(err);
                     setLoading(false);
                     setError(true);
+
+                    setTimeout(() => {
+                        setError(false);
+                    }, 5000);
                 });
         }
     };
 
-    const validText = isValidPass === null ? null : isValidPass ? null : <h3>Пароли не совпадают</h3>;
+    const validText = isValidPass === null ? null : isValidPass ? null : <div className='form-errors'>Пароли не совпадают</div>;
 
-    const loadingText = loading ? 'Подождите...' : null;
-    const errorText = error ? 'произошла ошибка' : null;
+    const loadingText = loading ? 'Загрузка...' : null;
+    const errorText = error ? 'Ошибка' : null;
 
     return (
         <Form>
@@ -141,10 +187,11 @@ const Register = ({toggle, setAutorization}) => {
                         name='email' 
                         id='registrMail'
                         autoComplete='email'
-                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        onInput={handleInput}
                     />
-                </FormGroup>
-                <FormErrors typeFor={'email'} formErrors={formErrors}/>
+                    <FormErrors typeFor={'email'} formErrors={formErrors}/>
+                </FormGroup>  
                 <FormGroup>
                     <Label for='registrPass'>Пароль</Label>
                     <Input 
@@ -152,10 +199,11 @@ const Register = ({toggle, setAutorization}) => {
                         name='password' 
                         id='registrPass'
                         autoComplete="current-password"
-                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        onInput={handleInput}
                     />
-                </FormGroup>
-                <FormErrors typeFor={'password'} formErrors={formErrors}/>
+                    <FormErrors typeFor={'password'} formErrors={formErrors}/>
+                </FormGroup>          
                 <FormGroup>
                     <Label for='checkPassword'>Подтвердите пароль</Label>
                     <Input 
@@ -163,23 +211,22 @@ const Register = ({toggle, setAutorization}) => {
                         name='checkPassword' 
                         id='checkPassword'
                         autoComplete="current-password"
-                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        onInput={handleInput}
                     />
-                </FormGroup>
-                {validText}
+                    {validText}
+                </FormGroup>    
             </ModalBody>
             <ModalFooter>
-                <Button 
+                <button 
                     type='submit'
-                    color='primary'
                     onClick={handleSubmit}
                     disabled={!formValid || !isValidPass}
                 >
                     Зарегистрироваться
-                </Button>
-                <Button onClick={toggle} color='secondary'>Отмена</Button>
-                {errorText}
-                {loadingText}
+                </button>
+                <span className="error-text" style={{display: `${errorText ? '' : 'none'}`}}>{errorText}</span>
+                <span className="loading-text" style={{display: `${loadingText ? '' : 'none'}`}}>{loadingText}</span>
             </ModalFooter>
         </Form>
     );

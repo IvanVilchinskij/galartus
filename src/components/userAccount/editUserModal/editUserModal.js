@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-    Button, 
     Modal, 
     ModalHeader, 
     ModalBody, 
@@ -12,6 +11,7 @@ import {
 } from 'reactstrap';
 
 import axiosInstance from '../../../axios';
+import icons from '../../../icons/icons.svg';
 
 const EditUserModal = ({toggle, isOpen, userId, refresh}) => {
     const initialFormData = Object.freeze({
@@ -38,7 +38,9 @@ const EditUserModal = ({toggle, isOpen, userId, refresh}) => {
         });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
         const formData = new FormData();
         let counter = 0;
 
@@ -48,7 +50,7 @@ const EditUserModal = ({toggle, isOpen, userId, refresh}) => {
             }
         }
 
-        if (editImg &&!(editImg.image.length === 0)) {
+        if (editImg && !(editImg.image.length === 0)) {
             formData.append('image', editImg.image[0]);
         }
 
@@ -69,10 +71,12 @@ const EditUserModal = ({toggle, isOpen, userId, refresh}) => {
         
     };
 
+    const closeBtn = <svg className='close' onClick={toggle}><use href={`${icons}#close`}></use></svg>;
+
     return (
-        <Modal toggle={toggle} isOpen={isOpen}>
-            <ModalHeader toggle={toggle}>
-                Редактирование личных данных
+        <Modal toggle={toggle} isOpen={isOpen} className='custom-modal'>
+            <ModalHeader toggle={toggle} close={closeBtn}>
+                Редактирование
             </ModalHeader>
             <Form>
                 <ModalBody>
@@ -82,7 +86,6 @@ const EditUserModal = ({toggle, isOpen, userId, refresh}) => {
                             type='text'
                             name='first_name'
                             id='firstNameEdit'
-                            autoComplete='first_name'
                             onChange={handleChange}
                         />
                     </FormGroup>
@@ -92,7 +95,6 @@ const EditUserModal = ({toggle, isOpen, userId, refresh}) => {
                             type='text'
                             name='last_name'
                             id='lastNameEdit'
-                            autoComplete='last_name'
                             onChange={handleChange}
                         />
                     </FormGroup>
@@ -102,7 +104,6 @@ const EditUserModal = ({toggle, isOpen, userId, refresh}) => {
                             type='date'
                             name='birthday'
                             id='birthdayEdit'
-                            autoComplete='birthday'
                             onChange={handleChange}
                         />
                     </FormGroup>
@@ -118,18 +119,12 @@ const EditUserModal = ({toggle, isOpen, userId, refresh}) => {
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>
-                    <Button
-                        color='primary'
+                    <button
+                        disabled
                         onClick={handleSubmit}
                     >
-                        Сохранить изменеия
-                    </Button>
-                    <Button
-                        color='secondary'
-                        onClick={toggle}
-                    >
-                        Отмена
-                    </Button>
+                        Сохранить
+                    </button>
                 </ModalFooter>
             </Form>
         </Modal>

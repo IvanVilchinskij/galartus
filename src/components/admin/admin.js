@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import { 
-    Container, 
     TabContent, 
     TabPane, 
     Nav, 
@@ -22,35 +21,33 @@ const Admin = () => {
     };
 
     return (
-        <div className="admin">
-            <Container>
-                <Nav tabs>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: activeTab === '1' })}
-                            onClick={() => { toggle('1'); }}
-                        >
-                            Управление контентом
-                        </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: activeTab === '2' })}
-                            onClick={() => { toggle('2'); }}
-                        >
-                            Билеты на выставки
-                        </NavLink>
-                    </NavItem>
-                </Nav>
-                <TabContent activeTab={activeTab}>
-                    <TabPane tabId="1">
-                        <AdminControl/>
-                    </TabPane>
-                    <TabPane tabId="2">
-                        <AdminPayment/>
-                    </TabPane>
-                </TabContent>
-            </Container>
+        <div className='container tabs-wrapper'>
+            <Nav className='first-tabs' tabs>
+                <NavItem>
+                    <NavLink
+                        className={classnames({ active: activeTab === '1' })}
+                        onClick={() => { toggle('1'); }}
+                    >
+                        Управление контентом
+                    </NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink
+                        className={classnames({ active: activeTab === '2' })}
+                        onClick={() => { toggle('2'); }}
+                    >
+                        Билеты на выставки
+                    </NavLink>
+                </NavItem>
+            </Nav>
+            <TabContent className='first-tabs-content' activeTab={activeTab}>
+                <TabPane tabId="1">
+                    <AdminControl/>
+                </TabPane>
+                <TabPane tabId="2">
+                    <AdminPayment/>
+                </TabPane>
+            </TabContent>
         </div>
     );
 };

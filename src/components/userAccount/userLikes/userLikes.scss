@@ -1,8 +1,14 @@
 .likes {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+    &__grid {
+        display: flex;
+        margin-left: -1.875rem; /* gutter size offset */
+        width: auto;
+    }
+
+    &__grid_column {
+        padding-left: 1.875rem; /* gutter size */
+        background-clip: padding-box;
+    }
 }
 
 .like-card {

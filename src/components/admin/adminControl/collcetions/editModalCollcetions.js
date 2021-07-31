@@ -12,6 +12,7 @@ import {
 } from 'reactstrap';
 
 import axiosInstance from '../../../../axios';
+import icons from '../../../../icons/icons.svg';
 
 const EditModalCollcetions = ({ isOpen, toggle, modalId, modalName, setUpdate}) => {
     const initialFormData = Object.freeze({
@@ -87,13 +88,15 @@ const EditModalCollcetions = ({ isOpen, toggle, modalId, modalName, setUpdate}) 
     const loadingText = loading ? 'Загрузка...' : null;
     const errorText = error ? 'Ошибка' : null;
 
+    const closeBtn = <svg className='close' onClick={toggle}><use href={`${icons}#close`}></use></svg>;
+
     return (
-        <Modal isOpen={isOpen} toggle={toggle}>
+        <Modal isOpen={isOpen} toggle={toggle} className='custom-modal'>
             <Form id='editCollcetionForm'>
-                <ModalHeader toggle={toggle}>Изменеие {modalName}</ModalHeader>
+                <ModalHeader toggle={toggle} close={closeBtn}>Изменеие "{modalName}"</ModalHeader>
                 <ModalBody>
                     <FormGroup>
-                        <Label for="addName">Name</Label>
+                        <Label for="addName">Название</Label>
                         <Input 
                             type="text" 
                             name="name" 
@@ -103,7 +106,7 @@ const EditModalCollcetions = ({ isOpen, toggle, modalId, modalName, setUpdate}) 
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exampleImage">File</Label>
+                        <Label for="exampleImage">Изображение</Label>
                         <Input 
                             accept='image/*'
                             type="file" 
@@ -114,8 +117,7 @@ const EditModalCollcetions = ({ isOpen, toggle, modalId, modalName, setUpdate}) 
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={handleSubmit}>Изменить</Button>
-                    <Button color="secondary" onClick={toggle}>Cancel</Button>
+                    <button disabled onClick={handleSubmit}>Изменить</button>
                     {loadingText}
                     {errorText}
                 </ModalFooter>

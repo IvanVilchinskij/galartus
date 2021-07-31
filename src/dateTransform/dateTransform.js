@@ -50,7 +50,42 @@ const setWeekdayName = (weekday) => {
     }
 };
 
+const setShortWeekdayName = (weekday) => {
+    switch (weekday) {
+        case 0:
+            return 'вс';
+        case 1:
+            return 'пн';
+        case 2:
+            return 'вт';
+        case 3:
+            return 'ср';
+        case 4:
+            return 'чт';
+        case 5:
+            return 'пт';
+        case 6:
+            return 'сб';
+        default:
+            return 'не корректный день недели';
+    }
+};
+
+const transformDate = (date) => {
+    if (date) {
+        const dateArr = date.split('-'),
+              newStr = `${dateArr[2]}.${dateArr[1]}.${dateArr[0]}`;
+
+        return newStr;
+    } else {
+        return;
+    }
+    
+};
+
 export {
     setMonthName,
     setWeekdayName,
+    setShortWeekdayName,
+    transformDate,
 };

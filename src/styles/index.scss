@@ -14,6 +14,16 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+.container {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 0 15px;
+
+    @media (min-width: 1921px) {
+        max-width: 62.5%;
+    }
+}
+
 .content-wrapper {
     position: relative;
     display: flex;
@@ -30,3 +40,12 @@ body {
     font-family: 'CatLinz', serif;
     color: $text-color;
 }
+
+.page-title {
+    font-size: 3.125rem;
+    line-height: 98%;
+
+    margin-bottom: 1em;
+}
+
+@import './modal.scss';

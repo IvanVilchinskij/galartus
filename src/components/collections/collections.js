@@ -10,6 +10,8 @@ import axiosInstance from '../../axios';
 import Spinner from '../spinner/spinner';
 import icons from '../../icons/icons.svg';
 
+import db from '../../db';
+
 const Collections = ({ 
     collectionsLoaded, 
     collections, 
@@ -21,7 +23,7 @@ const Collections = ({
 
     useEffect(() => {
 
-        if (collections.length === 0) {
+        /* if (collections.length === 0) {
             collectionsRequsted();
 
             axiosInstance.get('categories')
@@ -29,7 +31,9 @@ const Collections = ({
                     collectionsLoaded(res.data);
                 })
                 .catch(() => collectionsError() );
-        }
+        } */
+
+        collectionsLoaded(db.collections);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

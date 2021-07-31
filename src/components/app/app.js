@@ -37,7 +37,19 @@ const App = ({isAutorization, setAutorization, setCartCount, cartCount}) => {
             setAutorization(false);
         }
 
-        console.log('isAutorization', isAutorization);
+        const htmlEl = document.querySelector('html');
+        const initialFZ = getComputedStyle(htmlEl).fontSize;
+        const initilaWidth = document.documentElement.clientWidth;
+        
+
+        if (initilaWidth > 1920) {
+            const adaptiveCoef = initilaWidth/1920;
+            htmlEl.style.fontSize = `${adaptiveCoef*initialFZ}px`;
+
+            console.log(adaptiveCoef);
+        }
+        
+        
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAutorization]);

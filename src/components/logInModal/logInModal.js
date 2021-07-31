@@ -14,6 +14,7 @@ import {connect} from 'react-redux';
 import * as actions from '../../actions/actions';
 import LogIn from './logIn/logIn';
 import Register from './register/register';
+import icons from '../../icons/icons.svg';
 
 const LogInModal = ({isOpen, toggle, setAutorization}) => {
     const [activeTab, setActiveTab] = useState('1');
@@ -21,10 +22,12 @@ const LogInModal = ({isOpen, toggle, setAutorization}) => {
     const toggleTab = tab => {
         if(activeTab !== tab) setActiveTab(tab);
     };
+
+    const closeBtn = <svg className='close' onClick={toggle}><use href={`${icons}#close`}></use></svg>;
     
     return (
-        <Modal isOpen={isOpen} toggle={toggle}>
-            <ModalHeader toggle={toggle}>
+        <Modal isOpen={isOpen} toggle={toggle} className='custom-modal'>
+            <ModalHeader toggle={toggle} close={closeBtn}>
                 <Nav tabs>
                     <NavItem>
                         <NavLink

@@ -1,0 +1,204 @@
+.custom-modal {
+    width: 35rem;
+
+    @media (min-width: 1921px) {
+        width: calc( 35*16*100vw/1920) !important;
+    }
+    
+    .modal-content {
+        padding: 1.875rem;
+        border-radius: 0;
+        width: 35rem;
+
+        @media (min-width: 1921px) {
+            width: calc( 35*16*100vw/1920) !important;
+        }
+
+        @media (min-width: 1921px) {
+            padding: calc( 1.875*16*100vw/1920);
+        }
+    }
+
+    .modal-header {
+        font-size: 1.125rem;
+        padding: 0 0 1.25rem;
+
+        border-bottom: 1px solid #ECECEC;
+
+        @media (min-width: 1921px) {
+            font-size: calc( 1.125*16*100vw/1920);
+            padding: 0 0 calc( 1.25*16*100vw/1920);
+        }
+
+        .nav-tabs {
+            border: none;
+        }
+
+        .nav-link {
+            font-size: 1rem;
+            line-height: 175%;
+            opacity: .4;
+            color: #000;
+
+            cursor: pointer;
+            border-radius: .4375rem;
+            border: 1px solid transparent;
+
+            @media (min-width: 1921px) {
+                font-size: calc( 1*16*100vw/1920);
+                border-radius: calc( 0.4375*16*100vw/1920);
+            }
+
+            &.active {
+                opacity: 1;
+                background: #ECECEC;   
+            }
+
+            &:hover {
+                border: 1px solid #e9ecef;
+            }
+        }
+
+        .close {
+            width: 1.1875rem;
+            height: 1.1875rem;
+
+            margin: 0;
+            padding: 0;
+            cursor: pointer;
+
+            @media (min-width: 1921px) {
+                width: calc( 1.1875*16*100vw/1920);
+                height: calc( 1.1875*16*100vw/1920);
+            }
+        }
+    }
+
+    .modal-body {
+        padding: 1.25rem 0 0;
+        margin-bottom: 1.25rem;
+
+        @media (min-width: 1921px) {
+            padding: calc( 1.25*16*100vw/1920);
+            margin-bottom: calc( 1.25*16*100vw/1920);
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+
+            @media (min-width: 1921px) {
+                margin-bottom: calc( 1.25*16*100vw/1920);
+            }
+
+            .attention {
+                border: 1px solid #D34C4C;
+            }
+            
+            .form-errors {
+                font-size: 1rem;
+                line-height: 100%;
+
+                margin-top: .3125rem;
+
+                color: #D34C4C;
+
+                @media (min-width: 1921px) {
+                    font-size: calc( 16*100vw/1920);
+                    margin-top: calc( 0.3125*16*100vw/1920);
+                }
+
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+            
+        }
+
+        label {
+            font-size: 1.125rem;
+            line-height: 145%;
+
+            margin-bottom: .652rem;
+
+            @media (min-width: 1921px) {
+                font-size: calc( 1.125*16*100vw/1920);
+                margin-bottom: calc( 0.652*16*100vw/1920);
+            }
+
+        }
+
+        input {
+            border: 1px solid #C4C4C4;
+            border-radius: .4375rem;
+
+            font-size: 1.125rem;
+            line-height: 145%;
+
+            height: auto;
+
+            padding: 0.778em 1.111em;
+
+            @media (min-width: 1921px) {
+                border-radius: calc( 0.4375*16*100vw/1920);
+                font-size: calc( 1.125*16*100vw/1920);
+            }
+
+            &:focus {
+                box-shadow: none;
+            }
+
+            &[accept='image/*'] {
+                padding: 0;
+                border: none;
+                border-radius: 0;
+
+                height: 3.11em;
+            }
+        }
+    }
+
+    .modal-footer {
+        padding: 0;
+        border: none;
+
+        justify-content: flex-start;
+
+        button {
+            background: linear-gradient(93.58deg, #DD7FFE 0%, #F5D37B 100%);
+
+            font-size: 1.125rem;
+            line-height: 117%;
+            color: #000;
+            padding: 0.834em 3.611em;
+            border-radius: 2.778em;
+            margin: 0;
+
+            @media (min-width: 1921px) {
+                font-size: calc( 1.125*16*100vw/1920);
+            }
+
+            &:disabled {
+                border: none;
+                opacity: 0.4;
+                cursor: default;
+            }
+        }
+    }
+
+    .error-text, .loading-text {
+        font-size: 1rem;
+        line-height: 175%;
+
+        margin-left: 2.25rem;
+
+        @media (min-width: 1921px) {
+            font-size: calc( 16*100vw/1920);
+            margin-left: calc( 2.25*16*100vw/1920);
+        }
+    }
+
+    .error-text {
+        color: #D34C4C;
+    }
+}

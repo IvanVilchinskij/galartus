@@ -1,28 +1,145 @@
 .user-account {
-    padding: 50px 0;
-    margin-top: 113px;
+    padding: 4.375rem 0 5rem;
+    margin-top: 8.0625rem;
+
+    @media (min-width: 1921px) {
+        padding: calc( 4.375*16*100vw/1920) 0 calc( 5*16*100vw/1920);
+        margin-top: calc( 8.0625*16*100vw/1920);
+    }
+
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .tabs-wrapper {
+        width: 53.75rem;
+
+        @media (min-width: 1921px) {
+            width: calc( 53.75*16*100vw/1920);
+        }
+    }
 }
 
 .user {
-    width: 60%;
-    margin: 0 auto 30px;
-    padding: 20px;
+    width: 12.5rem;
 
-    &__title {
-        text-align: center;
-        font-size: 24px;
-        font-weight: 600;
-        margin-bottom: 15px;
+    @media (min-width: 1921px) {
+        width: calc( 12.5*16*100vw/1920);
     }
 
-    &__list-item {
+    &__header {
+        border-radius: 100%;
+        overflow: hidden;
+        width: 100%;
+        height: 12.5rem;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
+        align-items: center;
 
-        margin-bottom: 10px;
+        margin-bottom: 1.75rem;
 
-        &:last-child {
-            margin-bottom: 0;
+        @media (min-width: 1921px) {
+            height: calc( 12.5*16*100vw/1920);
+            margin-bottom: calc( 1.75*16*100vw/1920);
+        }
+
+        img {
+            display: block;
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    &__body {
+        margin-bottom: 1.5625rem;
+
+        @media (min-width: 1921px) {
+            margin-bottom: calc( 1.5625*16*100vw/1920);
+        }
+    }
+
+    &__name {
+        font-size: 2rem;
+        line-height: 115%;
+        color: #000000;
+        margin-bottom: .4375rem;
+
+        @media (min-width: 1921px) {
+            font-size: calc( 2*16*100vw/1920);
+            margin-bottom: calc( 0.4375*16*100vw/1920);
+        }
+    }
+
+    &__birthday, &__mail {
+        font-size: 1rem;
+        line-height: 145%;
+        color: #000;
+
+        @media (min-width: 1921px) {
+            font-size: calc( 16*100vw/1920);
+        }
+    }
+
+    &__birthday {
+        margin-bottom: .0625rem;
+
+        @media (min-width: 1921px) {
+            margin-bottom: calc( 0.0625*16*100vw/1920);
+        }
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__edit {
+        font-size: 1rem;
+        line-height: 130%;
+        border-radius: 3.125em;
+        border: 1px solid #DADADA;
+        background-color: transparent;
+        padding: .875em 2.6875em;
+        color: #999999; 
+
+        cursor: pointer;
+
+        @media (min-width: 1921px) {
+            font-size: calc( 16*100vw/1920);
+        }
+    }
+}
+
+.custom-tabs {
+    border-bottom: none;
+    margin-bottom: 2.1875rem;
+
+    @media (min-width: 1921px) {
+        margin-bottom: calc( 2.1875*16*100vw/1920);
+    }
+
+    .nav-link {
+        font-size: 1rem;
+        line-height: 110%;
+
+        color: #000000;
+        cursor: pointer;
+        padding: 1em 1.875em;
+
+        @media (min-width: 1921px) {
+            font-size: calc( 16*100vw/1920);
+        }
+
+        &.active {
+            background: #F4F4F4;
+            border-radius: .625em .625em 0px 0px;
+            border: none;
+        }
+
+        &:hover {
+            border-radius: .625em .625em 0px 0px;
         }
     }
 }

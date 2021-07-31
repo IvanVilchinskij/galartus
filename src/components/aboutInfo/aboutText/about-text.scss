@@ -6,10 +6,18 @@
         line-height: 100%;
 
         margin-bottom: .7em;
+
+        @media (min-width: 1921px) {
+            font-size: calc( 3.125*16*100vw/1920);
+        }
     }
 
     &__text {
         font-size: 1.125rem;
         line-height: 145%;
+
+        @media (min-width: 1921px) {
+            font-size: calc( 1.125*16*100vw/1920);
+        }
     }
 }

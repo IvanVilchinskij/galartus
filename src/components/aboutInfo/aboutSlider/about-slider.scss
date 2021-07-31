@@ -1,16 +1,20 @@
 .about-slider {
-    width: 735/1110 * 100%;
-    height: 413px;
+    width: 735/1160 * 100%;
+    height: 25.8125rem;
     margin: 0;
-    border-radius: 15px;
+    border-radius: .9375rem;
+
+    @media (min-width: 1921px) {
+        height: calc( 25.8125*16*100vw/1920);
+    }
     
     &__item {
-        border-radius: 15px;
+        border-radius: .9375rem;
         overflow: hidden;
 
         img {
             display: block;
-            min-height:  100%;
+            height:  100%;
             width: 100%;
             object-fit: cover;
         }
@@ -22,19 +26,24 @@
         left: 30/735*100% !important;
 
         &-bullet {
-            margin: 0 5px !important;
-            width: 10px !important;
-            height: 10px !important;
+            margin: 0 .3125rem !important;
+            width: .625rem !important;
+            height: .625rem !important;
             border: 1px solid #FFFFFF;
             background: none !important;
             opacity: 1 !important;
+
+            @media (min-width: 1921px) {
+                width: calc( 0.625*16*100vw/1920);
+                height: calc( 0.625*16*100vw/1920);
+            }
             
             &:first-child {
-                margin: 0 5px 0 0 !important;
+                margin: 0 .3125rem 0 0 !important;
             }
 
             &:last-child {
-                margin: 0 0 0 5px !important;
+                margin: 0 0 0 .3125rem !important;
             }
 
             &.swiper-pagination-bullet-active {
@@ -49,12 +58,17 @@
         fill: none;
         stroke: white;
 
-        height: 20px;
-        width: 23px;
+        height: 1.25rem;
+        width: 1.4375rem;
         display: flex;
         align-items: center;
 
         cursor: pointer;
+
+        @media (min-width: 1921px) {
+            width: calc( 1.25*16*100vw/1920);
+            height: calc( 1.4375 *16 *100vw/1920);
+        }
 
         &.swiper-button-disabled {
             opacity: 0.4;
@@ -62,13 +76,13 @@
     }
 
     &__next {
-        right: 28px;
-        bottom: 20px;
+        right: 1.75rem;
+        bottom: 1.25rem;
     }
 
     &__prev {
-        right: 65px;
-        bottom: 20px;
+        right: 4.0625rem;
+        bottom: 1.25rem;
         transform: rotateY(180deg);
     }
 }

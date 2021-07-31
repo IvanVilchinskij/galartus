@@ -14,6 +14,7 @@ import {connect} from 'react-redux';
 
 import axiosInstance from '../../../../axios';
 import * as actions from '../../../../actions/actions';
+import icons from '../../../../icons/icons.svg';
 
 const AddModalPictures = ({collections, isLoadingCollections, isErrorCollcetions, isOpen, toggle, toggleRefresh}) => {
 
@@ -126,13 +127,15 @@ const AddModalPictures = ({collections, isLoadingCollections, isErrorCollcetions
     const errorText = error ? 'Ошибка' : null;
     const formErrorText = !validForm ? 'Необходимо заполнить все поля' : null;
 
+    const closeBtn = <svg className='close' onClick={toggle}><use href={`${icons}#close`}></use></svg>;
+
     return (
-        <Modal isOpen={isOpen} toggle={toggle}>
+        <Modal isOpen={isOpen} toggle={toggle} className='custom-modal'>
             <Form id='addPictureForm'>
-                <ModalHeader toggle={toggle}>Добавление картинки</ModalHeader>
+                <ModalHeader toggle={toggle} close={closeBtn}>Добавление картины</ModalHeader>
                 <ModalBody>
                 <FormGroup>
-                    <Label for="picName">Name</Label>
+                    <Label for="picName">Название</Label>
                     <Input 
                         type="text" 
                         name="name" 
@@ -142,7 +145,7 @@ const AddModalPictures = ({collections, isLoadingCollections, isErrorCollcetions
                     />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="picAuthor">author</Label>
+                    <Label for="picAuthor">Автор</Label>
                     <Input 
                         type="text" 
                         name="author" 
@@ -152,7 +155,7 @@ const AddModalPictures = ({collections, isLoadingCollections, isErrorCollcetions
                     />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="picDescription">description</Label>
+                    <Label for="picDescription">Описание</Label>
                     <Input 
                         type="text" 
                         name="description" 
@@ -162,7 +165,7 @@ const AddModalPictures = ({collections, isLoadingCollections, isErrorCollcetions
                     />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="picImage">image</Label>
+                    <Label for="picImage">Изображение</Label>
                     <Input 
                         accept='image/*'
                         type="file" 
@@ -172,7 +175,7 @@ const AddModalPictures = ({collections, isLoadingCollections, isErrorCollcetions
                     />
                 </FormGroup>
                 <FormGroup>
-                    <Label for='picCategories'>Categories</Label>
+                    <Label for='picCategories'>Категории</Label>
                     <Input 
                         type="select" 
                         name="categories" 
@@ -187,13 +190,7 @@ const AddModalPictures = ({collections, isLoadingCollections, isErrorCollcetions
                 </FormGroup>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={() => handleSubmit('#addPictureForm')}>Добавить</Button>
-                    <Button 
-                        color="secondary" 
-                        onClick={toggle}
-                    >
-                        Cancel
-                    </Button>
+                    <button disabled onClick={() => handleSubmit('#addPictureForm')}>Добавить</button>
                     {loadingText}
                     {errorText}
                     {formErrorText}

@@ -14,6 +14,7 @@ import {connect} from 'react-redux';
 
 import axiosInstance from '../../../../axios';
 import * as actions from '../../../../actions/actions';
+import icons from '../../../../icons/icons.svg';
 
 const AddModalExhibitions = ({collections, isLoadingCollections, isErrorCollcetions, isOpen, toggle,  setUpdate}) => {
     const initialFormData = Object.freeze({
@@ -131,13 +132,15 @@ const AddModalExhibitions = ({collections, isLoadingCollections, isErrorCollceti
     const errorText = error ? 'Ошибка' : null;
     const formErrorText = !validForm ? 'Необходимо заполнить все поля' : null;
 
+    const closeBtn = <svg className='close' onClick={toggle}><use href={`${icons}#close`}></use></svg>;
+
     return (
-        <Modal isOpen={isOpen} toggle={toggle}>
+        <Modal isOpen={isOpen} toggle={toggle} className='custom-modal'>
             <Form id='addExhibitionsForm'>
-                <ModalHeader toggle={toggle}>Добавление выставки</ModalHeader>
+                <ModalHeader toggle={toggle} close={closeBtn}>Добавление выставки</ModalHeader>
                 <ModalBody>
                     <FormGroup>
-                        <Label for="exhName">Name</Label>
+                        <Label for="exhName">Название</Label>
                         <Input 
                             type="text" 
                             name="name" 
@@ -147,7 +150,7 @@ const AddModalExhibitions = ({collections, isLoadingCollections, isErrorCollceti
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exhDescription">description</Label>
+                        <Label for="exhDescription">Описание</Label>
                         <Input 
                             type="text" 
                             name="description" 
@@ -157,7 +160,7 @@ const AddModalExhibitions = ({collections, isLoadingCollections, isErrorCollceti
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exhImage">File</Label>
+                        <Label for="exhImage">Изображение</Label>
                         <Input 
                             accept='image/*'
                             type="file" 
@@ -167,7 +170,7 @@ const AddModalExhibitions = ({collections, isLoadingCollections, isErrorCollceti
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exhDate">Date</Label>
+                        <Label for="exhDate">Дата</Label>
                         <Input 
                             type="date" 
                             name="date" 
@@ -177,7 +180,7 @@ const AddModalExhibitions = ({collections, isLoadingCollections, isErrorCollceti
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exhTime">Time</Label>
+                        <Label for="exhTime">Время</Label>
                         <Input 
                             type="time" 
                             name="time" 
@@ -187,7 +190,7 @@ const AddModalExhibitions = ({collections, isLoadingCollections, isErrorCollceti
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exhPrice">Price</Label>
+                        <Label for="exhPrice">Цена</Label>
                         <Input 
                             type="number" 
                             name="price" 
@@ -197,7 +200,7 @@ const AddModalExhibitions = ({collections, isLoadingCollections, isErrorCollceti
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exhAddr">Address</Label>
+                        <Label for="exhAddr">Адрес</Label>
                         <Input 
                             type="text" 
                             name="address" 
@@ -207,25 +210,7 @@ const AddModalExhibitions = ({collections, isLoadingCollections, isErrorCollceti
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exhWeekday">weekday</Label>
-                        <Input 
-                            type="select" 
-                            name="weekday" 
-                            id="exhWeekday"
-                            onChange={handleChange}
-                            autoComplete='weekday'
-                        >
-                            <option label='Понедельник'>1</option>
-                            <option label='Вторник'>2</option>
-                            <option label='Среда'>3</option>
-                            <option label='Четверг'>4</option>
-                            <option label='Пятница'>5</option>
-                            <option label='Суббота'>6</option>
-                            <option label='Воскресенье'>0</option>
-                        </Input>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="exhCateg">categories</Label>
+                        <Label for="exhCateg">Категории</Label>
                         <Input 
                             type="select" 
                             name="categories" 
@@ -239,15 +224,9 @@ const AddModalExhibitions = ({collections, isLoadingCollections, isErrorCollceti
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={() => {
+                    <button disabled onClick={() => {
                         handleSubmit('#addExhibitionsForm');
-                    }}>Добавить</Button>
-                    <Button 
-                        color="secondary" 
-                        onClick={toggle}
-                    >
-                        Cancel
-                    </Button>
+                    }}>Добавить</button>
                     {loadingText}
                     {errorText}
                     {formErrorText}

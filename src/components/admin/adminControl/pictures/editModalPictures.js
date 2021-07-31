@@ -14,6 +14,7 @@ import {connect} from 'react-redux';
 
 import axiosInstance from '../../../../axios';
 import * as actions from '../../../../actions/actions';
+import icons from '../../../../icons/icons.svg';
 
 const EditModalPictures = ({ collections, isLoadingCollections, isErrorCollcetions, isOpen, toggle, modalId, toggleRefresh, modalName}) => {
 
@@ -103,13 +104,15 @@ const EditModalPictures = ({ collections, isLoadingCollections, isErrorCollcetio
 
     const errorContent = isErrorCollcetions ? 'Error' : null;
 
+    const closeBtn = <svg className='close' onClick={toggle}><use href={`${icons}#close`}></use></svg>;
+
     return (
-        <Modal isOpen={isOpen} toggle={toggle}>
+        <Modal isOpen={isOpen} toggle={toggle} className='custom-modal'>
             <Form id='editPictureForm'>
-                <ModalHeader toggle={toggle}>Изменеие {modalName}</ModalHeader>
+                <ModalHeader toggle={toggle} close={closeBtn}>Изменеие "{modalName}"</ModalHeader>
                 <ModalBody>
                     <FormGroup>
-                        <Label for="picEditName">Name</Label>
+                        <Label for="picEditName">Название</Label>
                         <Input 
                             type="text" 
                             name="name" 
@@ -119,7 +122,7 @@ const EditModalPictures = ({ collections, isLoadingCollections, isErrorCollcetio
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="picEditAuthor">author</Label>
+                        <Label for="picEditAuthor">Автор</Label>
                         <Input 
                             type="text" 
                             name="author" 
@@ -129,7 +132,7 @@ const EditModalPictures = ({ collections, isLoadingCollections, isErrorCollcetio
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="picEditDescription">description</Label>
+                        <Label for="picEditDescription">Описание</Label>
                         <Input 
                             type="text" 
                             name="description" 
@@ -139,7 +142,7 @@ const EditModalPictures = ({ collections, isLoadingCollections, isErrorCollcetio
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="picEditImage">image</Label>
+                        <Label for="picEditImage">Изображение</Label>
                         <Input 
                             accept='image/*'
                             type="file" 
@@ -149,7 +152,7 @@ const EditModalPictures = ({ collections, isLoadingCollections, isErrorCollcetio
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for='picEditCategories'>Categories</Label>
+                        <Label for='picEditCategories'>Категории</Label>
                         <Input 
                             type="select" 
                             name="categories" 
@@ -164,15 +167,9 @@ const EditModalPictures = ({ collections, isLoadingCollections, isErrorCollcetio
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={() => {
+                    <button disabled onClick={() => {
                         handleSubmit('#editPictureForm');
-                    }}>Изменить</Button>
-                    <Button 
-                        color="secondary" 
-                        onClick={toggle}
-                    >
-                        Cancel
-                    </Button>
+                    }}>Изменить</button>
                     {loadingText}
                     {errorText}
                 </ModalFooter>

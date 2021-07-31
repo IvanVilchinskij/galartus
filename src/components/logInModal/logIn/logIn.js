@@ -6,7 +6,6 @@ import {
     Label,
     Input,
     ModalFooter,
-    Button,
 } from 'reactstrap';
 import {useHistory} from 'react-router-dom';
 
@@ -32,29 +31,49 @@ const LogIn = ({toggle, setAutorization}) => {
     const [passValid, setPassValid] = useState(false);
     const [formValid, setFormValid] = useState(false);
 
-    const validateField = (fieldName, value) => {
-        let emailValidate = emailValid;
-        let passwordValidate = passValid;
+    const validateField = (field, input=false) => {
+        let fieldName = field.name,
+            value = field.value;
+
+        let emailValidate = emailValid,
+            passwordValidate = passValid;
 
         switch (fieldName) {
             case 'email':
                 emailValidate = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
                 setEmailValid(emailValidate);
 
-                setFormErrors({
-                    ...formErrors,
-                    email: emailValidate ? ' ' : 'не корректная почта',
-                });
+                if(!input) {
+                    setFormErrors({
+                        ...formErrors,
+                        email: emailValidate ? '' : 'Некорректный адрес',
+                    });
+                    
+                    if (emailValidate) {
+                        field.classList.remove('attention');
+                    } else {
+                        field.classList.add('attention');
+                    }
+                }
                 
                 break;
             case 'password': 
                 passwordValidate = value.length >= 4;
                 setPassValid(passwordValidate);
 
-                setFormErrors({
-                    ...formErrors,
-                    password:  passwordValidate ? ' ' : ' короткий пароль',
-                });
+                if(!input) {
+                    setFormErrors({
+                        ...formErrors,
+                        password:  passwordValidate ? '' : 'Слишком короткий пароль',
+                    });
+
+                    if (passValid) {
+                        field.classList.remove('attention');
+                    } else {
+                        field.classList.add('attention');
+                    }
+                }
+                
                 break;
             default: 
                 break;
@@ -62,11 +81,22 @@ const LogIn = ({toggle, setAutorization}) => {
 
         setFormValid(emailValidate && passwordValidate);
     };
-
-    const handleChange = (e) => {
+    
+    const handleInput = (e) => {
         const target = e.target;
 
-        validateField(target.name, target.value);
+        validateField(target, true);
+
+        updateFormData({
+            ...formData,
+            [target.name]: target.value.trim(),
+        });
+    }
+
+    const handleBlur = (e) => {
+        const target = e.target;
+
+        validateField(target);
 
         updateFormData({
             ...formData,
@@ -99,15 +129,21 @@ const LogIn = ({toggle, setAutorization}) => {
                     toggle();
                 })
                 .catch((err) => {
+                    console.log(err);
+
                     setLoading(false);
                     setError(true);
+
+                    setTimeout(() => {
+                        setError(false);
+                    }, 5000);
                 });
         }
         
     };
 
-    const loadingText = loading ? 'Подождите...' : null;
-    const errorText = error ? 'произошла ошибка' : null;
+    const loadingText = loading ? 'Загрузка...' : null;
+    const errorText = error ? 'Ошибка' : null;
 
     return (
         <Form>
@@ -118,12 +154,12 @@ const LogIn = ({toggle, setAutorization}) => {
                         type='email' 
                         name='email' 
                         id='loginInput'
-                        onInput={handleChange}
-                        autoFocus
+                        onBlur={handleBlur}
+                        onInput={handleInput}
                         autoComplete='email'
                     />
+                    <FormErrors typeFor={'email'} formErrors={formErrors}/>
                 </FormGroup>
-                <FormErrors typeFor={'email'} formErrors={formErrors}/>
                 <FormGroup>
                     <Label for='passwordInput'>Пароль</Label>
                     <Input 
@@ -131,23 +167,23 @@ const LogIn = ({toggle, setAutorization}) => {
                         name='password' 
                         id='passwordInput'
                         autoComplete="current-password"
-                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        onInput={handleInput}
                     />
+                    <FormErrors typeFor={'password'} formErrors={formErrors}/>
                 </FormGroup>
-                <FormErrors typeFor={'password'} formErrors={formErrors}/>
+                
             </ModalBody>
             <ModalFooter>
-                <Button 
+                <button 
                         type='submit'
-                        color='primary'
                         onClick={handleSubmit}
                         disabled={!formValid}
                     >
                         Войти
-                    </Button>
-                <Button onClick={toggle} color='secondary'>Отмена</Button>
-                {errorText}
-                {loadingText}
+                    </button>
+                <span className="error-text" style={{display: `${errorText ? '' : 'none'}`}}>{errorText}</span>
+                <span className="loading-text" style={{display: `${loadingText ? '' : 'none'}`}}>{loadingText}</span>
             </ModalFooter>
         </Form>
     );

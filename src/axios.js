@@ -23,6 +23,7 @@ axiosInstance.interceptors.response.use(
 
 		if (typeof error.response === 'undefined') {
             console.log(error.status);
+            console.log(error.response.status);
 			alert(
 				'Ошибка сервера/сети. Приносим свои извинения, мы исправим это в ближайшее время'
 			);

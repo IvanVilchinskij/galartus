@@ -1,6 +1,10 @@
 .about-info {
-    padding: 90px 0 85px;
+    padding: 5.625rem 0 5.3125rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @media (min-width: 1921px) {
+        padding: calc( 5.625*16*100vw/1920) 0 calc( 5.3125*16*100vw/1920);
+    }
 }

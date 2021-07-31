@@ -1,23 +1,31 @@
 .footer {
     background: #424242;
-    padding: 45px 0 72px;
+    padding: 3.125rem 0;
+
+    @media (min-width: 1921px) {
+        padding: calc( 3.125*16*100vw/1920) 0;
+    }
 
     &__flex-wrapper {
         display: flex;
     }
 
     &__logo {
-        width: 300/1100*100%;
+        width: 248/1160*100%;
 
         &-name {
             font-family: "CatLinz", serif;
-            font-size: 2.625rem;
+            font-size: 2.125rem;
             line-height: 98%;
 
             letter-spacing: 0.05em;
             text-transform: uppercase;
 
-            margin-bottom: 10px;
+            margin-bottom: .294em;
+
+            @media (min-width: 1921px) {
+                font-size: calc( 2.125*16*100vw/1920);
+            }
 
             a {
                 color: #FFFFFF;
@@ -25,25 +33,46 @@
         }
 
         &-year {
-            font-size: .875rem;
+            font-size: .75rem;
             line-height: 125%;
             color: #FFFFFF;
-            opacity: 0.6;   
+            opacity: 0.6;  
+            
+            @media (min-width: 1921px) {
+                font-size: calc( 0.75*16*100vw/1920);
+            }
         }
     }
 
     &__nav {
-        width: 416/1100*100%;
+        width: 348/1160*100%;
 
         &-link {
-            font-size: 1rem;
+            font-size: .875rem;
             line-height: 125%;
+            
 
-            margin-bottom: 10px;
+            margin-bottom: .4286em;
+
+            @media (min-width: 1921px) {
+                font-size: calc( 0.875*16*100vw/1920);
+            }
 
             a {
+                padding: .2857em;
                 color: #fff;
+                
 
+                span {
+                    border-bottom: 1px solid transparent;
+                    transition: border-bottom .2s ease-in-out;
+                }
+
+                &:hover {
+                    span {
+                        border-bottom: 1px solid #fff;
+                    }     
+                }
             }
 
             &:last-child {
@@ -53,26 +82,48 @@
     }
 
     &__contacts {
-        width: 394/1100*100%;
+        width: 564/1160*100%;
         display: flex;
         justify-content: space-between;
 
         &-title {
-            font-family: "CatLinz", serif;
-            font-size: 2.625rem;
+            font-size: 2.125rem;
             line-height: 98%;
-            color: #CCCCCC;
+            color: #979797;
+
+            @media (min-width: 1921px) {
+                font-size: calc( 2.125*16*100vw/1920);
+            }
+        }
+
+        &-list {
+            font-size: .875rem;
+            columns: 2;
+            column-gap: 3.7857em;
+
+            @media (min-width: 1921px) {
+                font-size: calc( 0.875*16*100vw/1920);
+            }
         }
 
         &-item {
-            font-size: 1rem;
+            font-size: .875rem;
             line-height: 125%;
             color: #fff;
 
-            margin-bottom: 10px;
+            margin-bottom: .625rem;
+
+            @media (min-width: 1921px) {
+                font-size: calc( 0.875*16*100vw/1920);
+                margin-bottom:  calc( 0.625*16*100vw/1920);
+            }
 
             &:last-child {
                 margin-bottom: 0;
+            }
+
+            a {
+                color: #fff;
             }
         }
     }

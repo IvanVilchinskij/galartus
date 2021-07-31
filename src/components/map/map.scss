@@ -1,6 +1,10 @@
 .map {
     background: #F8F8F8;
-    padding: 85px 0;
+    padding: 5.3125rem 0;
+
+    @media (min-width: 1921px) {
+        padding: calc( 5.3125*16*100vw/1920) 0;
+    }
 
     &__flex-wrapper {
         display: flex;
@@ -9,21 +13,31 @@
     }
 
     &__title {
-        font-family: 'CatLinz', serif;
-        font-size: 82px;
+        font-size: 5.125rem;
         line-height: 85%;
-        color: #060606;
 
-        margin-bottom: 48px;
+        margin-bottom: .5854em;
+
+        @media (min-width: 1921px) {
+            font-size: calc( 5.125*16*100vw/1920);
+        }
     }
 
     &__info {
-        font-size: 18px;
+        font-size: 1.125rem;
         line-height: 125%;
         color: #060606;
 
+        @media (min-width: 1921px) {
+            font-size: calc( 1.125*16*100vw/1920);
+        }
+
         &-item {
-            margin-bottom: 10px;
+            margin-bottom: .556em;
+
+            a {
+                color: #060606;
+            }
 
             &:last-child {
                 margin-bottom: 0;
@@ -32,10 +46,16 @@
     }
 
     &__frame {
+        width: 660/1160*100%;
+
         iframe {
-            width: 660px;
-            height: 450px;
+            width: 100%;
+            height: 28.125rem;
             border: none;
+
+            @media (min-width: 1921px) {
+                height: calc( 28.125*16*100vw/1920);
+            }
         }
     }
 }

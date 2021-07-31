@@ -10,7 +10,7 @@ import axiosInstance from '../../../axios';
 const AdminPayment = ({exhibitions, exhibitionsRequsted, exhibitionsLoaded, exhibitionsError}) => {
     
     useEffect(() => {
-        if (exhibitions.length === 0) {
+        /* if (exhibitions.length === 0) {
             exhibitionsRequsted();
 
             axiosInstance.get('exhibitions')
@@ -22,7 +22,7 @@ const AdminPayment = ({exhibitions, exhibitionsRequsted, exhibitionsLoaded, exhi
 
                     exhibitionsError();
                 });
-        }
+        } */
     }, []);
 
     const exhibitionsList = exhibitions.length !== 0 ? exhibitions.map((item) => {
@@ -38,8 +38,7 @@ const AdminPayment = ({exhibitions, exhibitionsRequsted, exhibitionsLoaded, exhi
         )
     }) : null;
 
-    return (
-        <div className="admin-payment">
+    /* <div className="admin-payment">
             <div className="admin-payment__title">
                 <div className="admin-payment__id">ID</div>
                 <div className="admin-payment__name">Name</div>
@@ -47,7 +46,11 @@ const AdminPayment = ({exhibitions, exhibitionsRequsted, exhibitionsLoaded, exhi
                 <div className="admin-payment__date">Date</div>
             </div>
             {exhibitionsList}
-        </div>
+        </div> */
+
+    return (
+        
+        <p>Заглушка</p>
     )
 };
 

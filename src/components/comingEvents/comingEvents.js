@@ -1,111 +1,94 @@
-import React from 'react';
-import {Container} from 'reactstrap';
-
-import img1 from './imgs/1.jpg';
-import img2 from './imgs/2.png';
-import img3 from './imgs/3.jpg';
-import img4 from './imgs/4.jpg';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 
 import './comingEvents.scss';
 
-const events = [
-    {   
-        id: 1,
-        title: '«‎Магические картины»‎ Пабло Пикасcо',
-        date: {
-            day: 10,
-            month: 'апреля',
-            year: 2021,
-            time: 12,
-            weekDay: 'суббота'
-        },
-        street: 'ул. Нижняя Сыромятническая, 10',
-        src: img3
-    },
-    {   
-        id: 2,
-        title: '10 великих художников Эпохи Возрождения',
-        date: {
-            day: 15,
-            month: 'мая',
-            year: 2021,
-            time: 14,
-            weekDay: 'суббота'
-        },
-        street: 'ул. Шейнкмана, 12',
-        src: img1
-    },
-    {   
-        id: 3,
-        title: 'Эпоха модерна',
-        date: {
-            day: 3,
-            month: 'июня',
-            year: 2021,
-            time: 15,
-            weekDay: 'суббота'
-        },
-        street: 'ул. Кремлевская, 2',
-        src: img4
-    },
-    {   
-        id: 4,
-        title: 'Русское искусство второй половины XIX – начала XX века',
-        date: {
-            day: 10,
-            month: 'июня',
-            year: 2021,
-            time: 15,
-            weekDay: 'суббота'
-        },
-        street: 'ул. Кремлевская, 2',
-        src: img2
-    },
-];
+import * as actions from '../../actions/actions';
+import db from '../../db';
+import * as transformDate from '../../dateTransform/dateTransform';
 
-const ComingEvents = () => {
+const ComingEvents = ({exhibitionsLoaded, exhibitions}) => {
 
-    const cards = events.map((item) => {
-        return (
-            <div key={item.id} className="event-card">
-                <img src={item.src} alt={item.title} className="event-card__img"/>
-                <div className="event-card__rectangle"></div>
-                <div className="event-card__header">
-                    <div className="event-card__date-block">
-                        <div className="event-card__date-number">{item.date.day}</div>
-                        <div className="event-card__date">
-                            <div className="event-card__month">{item.date.month}</div>
-                            <div className="event-card__week-day">{item.date.weekDay}</div>
+    useEffect(() => {
+        exhibitionsLoaded(db.exhibitions);
+    });
+
+    const cards = exhibitions.map((item, i) => {
+        const date = new Date(item.date);
+
+        const dateData = {
+            day: date.getDate(),
+            weekday: transformDate.setWeekdayName(date.getDay()),
+            month: transformDate.setMonthName(date.getMonth()),
+            year: date.getFullYear(),
+        };
+
+        if (i < 3) {
+            return (
+                <Link to={`/exhibitions/${item.id}`} key={item.id} className="exhibition-card exhibition-card--xl">
+                    <img 
+                        src={item.image} 
+                        alt={item.name} 
+                        className='exhibition-card__img'
+                    />    
+                    <div className="exhibition-card__rectangle"></div>
+                    <div className="exhibition-card__header">
+                        <div className="exhibition-card__date-block">
+                            <div className="exhibition-card__date-number">
+                                {dateData.day}
+                            </div>
+                            <div className="exhibition-card__date">
+                                <div className="exhibition-card__month">
+                                    {dateData.month}
+                                </div>
+                                <div className="exhibition-card__weekday">
+                                    {dateData.weekday}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="exhibition-card__location">
+                            <div className="exhibition-card__address">
+                                {item.address}
+                            </div>
+                            <div className="exhibition-card__time">
+                                {item.time.slice(0, 5)}
+                            </div>
                         </div>
                     </div>
-                    <div className="event-card__location">
-                        <div className="event-card__street">
-                            {item.street}
-                        </div>
-                        <div className="event-card__time">
-                            {item.date.time}:00
+                    <div className="exhibition-card__footer">
+                        <div className="exhibition-card__title">
+                            {item.name}
                         </div>
                     </div>
-                </div>
-                <div className="event-card__footer">
-                    <div className="event-card__title">{item.title}</div>
-                </div>
-            </div>
-        );
+                </Link>
+            );
+        } else {
+            return null;
+        }
+        
     });
     
     return (
         <div className="coming-events">
-            <Container>
+            <div className='container'>
                 <h2 className="coming-events__title title">
                     Ближайшие мероприятия
                 </h2>
                 <div className="coming-events__grid">
                     {cards}
                 </div>   
-            </Container>
+            </div>
         </div>
     );
 };
 
-export default ComingEvents;
+const mapStateToProps = (state) => {
+    return {
+        exhibitions: state.exhibitions,
+        isLoadingExhibitions: state.isLoadingExhibitions,
+        isErrorExhibitions: state.isErrorExhibitions
+    }
+};
+
+export default connect(mapStateToProps, actions)(ComingEvents);
