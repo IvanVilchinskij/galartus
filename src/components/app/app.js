@@ -53,7 +53,7 @@ const App = ({isAutorization, setAutorization, setCartCount, cartCount}) => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAutorization]);
-    
+
     return (
         <Router>
             <Header/>

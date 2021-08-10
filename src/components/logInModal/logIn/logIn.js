@@ -149,7 +149,6 @@ const LogIn = ({toggle, setAutorization}) => {
         <Form>
             <ModalBody>
                 <FormGroup>
-                    <Label for='loginInput'>Почта</Label>
                     <Input 
                         type='email' 
                         name='email' 
@@ -157,11 +156,11 @@ const LogIn = ({toggle, setAutorization}) => {
                         onBlur={handleBlur}
                         onInput={handleInput}
                         autoComplete='email'
+                        placeholder='Почта'
                     />
                     <FormErrors typeFor={'email'} formErrors={formErrors}/>
                 </FormGroup>
                 <FormGroup>
-                    <Label for='passwordInput'>Пароль</Label>
                     <Input 
                         type='password' 
                         name='password' 
@@ -169,6 +168,7 @@ const LogIn = ({toggle, setAutorization}) => {
                         autoComplete="current-password"
                         onBlur={handleBlur}
                         onInput={handleInput}
+                        placeholder='Пароль'
                     />
                     <FormErrors typeFor={'password'} formErrors={formErrors}/>
                 </FormGroup>

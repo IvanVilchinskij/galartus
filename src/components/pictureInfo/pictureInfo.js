@@ -31,7 +31,7 @@ const Picture = ({item}) => {
                 <img src={item.image} alt={item.name}/>
             </div>
             <div className="picture-info__info">
-                <div className="picture-info__title title">
+                <div className="picture-info__title title page-title">
                     <h2 className="picture-info__name">{item.author.trim()}</h2>
                     <h3 className="picture-info__author">«{item.name.trim()}»</h3>
                 </div>

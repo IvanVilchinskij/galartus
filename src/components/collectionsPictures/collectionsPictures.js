@@ -72,7 +72,11 @@ const CollectionsPictures = ({pictures, picturesLoaded, collectionId, picturesEr
         }
     };
 
-    const picturesCards = pictures ?  pictures.map((item) => {
+    const filterPictures = pictures ? pictures.filter((item) => {
+        return item.categories.includes(collectionId);
+    }) : null;
+
+    const picturesCards = filterPictures && filterPictures.length !== 0 ?  pictures.map((item) => {
         let likeClass = '';
 
         if (likesId && likesId.size !== 0) {
@@ -85,36 +89,34 @@ const CollectionsPictures = ({pictures, picturesLoaded, collectionId, picturesEr
                                             likeClass={likeClass}
                                         /> : null;
 
-        if (item.categories.includes(collectionId)) {
-            return (
-                <div key={item.id} className='picture-card'>
-                    <Link to={`/pictures/${item.id}`} className='picture-card__content'>
-                        <div className="picture-card__img">
-                            <img src={item.image} alt={item.name} />
+        return (
+            <div key={item.id} className='picture-card'>
+                <Link to={`/pictures/${item.id}`} className='picture-card__content'>
+                    <div className="picture-card__img">
+                        <img src={item.image} alt={item.name} />
+                    </div>
+                    
+                    <div className="picture-card__title title">
+                        <div className="picture-card__name">
+                            {item.author} "{item.name}"
                         </div>
-                        
-                        <div className="picture-card__title title">
-                            <div className="picture-card__name">
-                                {item.author} "{item.name}"
-                            </div>
-                            <svg className="picture-card__arrow">
-                                <use href={`${icons}#arrow`}></use>
-                            </svg>
-                        </div>
-                    </Link>
-                    {likeBtn}
-                </div>  
-            );
-        }
+                        <svg className="picture-card__arrow">
+                            <use href={`${icons}#arrow`}></use>
+                        </svg>
+                    </div>
+                </Link>
+                {likeBtn}
+            </div>  
+        );
         
-    }) : null;
-
+    }) : <EmptyData/>;
 
     const loadingContent = isLoadingPictures ? <LoadingCard/> : null;
 
     const errorContent = isErrorPictures ? <ErrorCard/> : null;
 
-    const content = !isLoadingPictures && !isErrorPictures ? picturesCards : null;
+    const content = !isLoadingPictures 
+                    && !isErrorPictures ? picturesCards : null;
 
     const breakpoints ={
         default: 3,
@@ -140,6 +142,14 @@ const LikeIcon = ({likeClass, handleLike, itemId}) => {
         <svg onClick={(e) => handleLike(itemId, e)} className={`picture-card__like-btn ${likeClass}`}>
             <use href={`${icons}#like`}></use>
         </svg>
+    )
+};
+
+const EmptyData = () => {
+    return (
+        <div className="empty-data">
+            Пусто
+        </div>
     )
 };
 

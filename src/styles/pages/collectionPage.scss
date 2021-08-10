@@ -1,10 +1,24 @@
 .collection-page {
     padding: 5.5625rem 0 6.25rem;
-    margin-top: 7.0625rem;
+    margin-top: 8.0625rem;
 
     @media (min-width: 1921px) {
         padding: calc( 5.5625*16*100vw/1920) 0 calc( 6.25*16*100vw/1920);
         margin-top: calc( 7.0625*16*100vw/1920);
     }
 
+    @media (max-width: 1199px) {
+        margin-top: 7.4375rem;
+    }
+
+    @media (max-width: 991px) {
+        margin-top: 5.1875rem;
+
+        padding: 3.875rem 0 1.5625rem;
+    }
+
+    @media (max-width: 575px) {
+        margin-top: 3.4375rem;
+        padding: 1.875rem 0.625rem;
+    }
 }

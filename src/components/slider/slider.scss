@@ -1,6 +1,14 @@
 .slider {
     height: 75vh;
 
+    @media (max-width: 991px) {
+        height: 80vh;
+    }
+
+    @media (max-width: 575px) {
+        height: 100vh;
+    }
+
     &__flex-wrapper {
         position: relative;
         z-index: 3;
@@ -12,6 +20,14 @@
 
         @media (min-width: 1921px) {
             padding-bottom: calc( 7.25*16*100vw/1920);
+        }
+
+        @media (max-width: 1199px) {
+            padding-bottom: 5.625rem;
+        }
+
+        @media (max-width: 575px) {
+            padding-bottom: 4.6875  rem;
         }
     }
 
@@ -53,6 +69,18 @@
             font-size: calc( 3.375*16*100vw/1920);
         }
 
+        @media (max-width: 991px) {
+            font-size: 3.125rem;
+        }
+
+        @media (max-width: 767px) {
+            width: 100%;
+        }
+
+        @media (max-width: 575px) {
+            font-size: 2rem;
+        }
+
     }
 
     &__text {
@@ -64,6 +92,22 @@
 
         @media (min-width: 1921px) {
             font-size: calc( 1.125*16*100vw/1920);
+        }
+
+        @media (max-width: 1199px) {
+            width: 60%;
+        }
+
+        @media (max-width: 991px) {
+            width: 80%;
+        }
+
+        @media (max-width: 767px) {
+            width: 100%;
+        }
+
+        @media (max-width: 575px) {
+            font-size: .75rem;
         }
     }
 
@@ -94,6 +138,14 @@
             bottom: calc( 4.0625*16*100vw/1920);
         }
 
+        @media (max-width: 1199px) {
+            bottom: 3.125rem;
+        }
+
+        @media (max-width: 991px) {
+            display: none;
+        }
+
         &:hover {
             transform: scale(1.075);
         }
@@ -110,6 +162,10 @@
         @media (min-width: 1921px) {
             right: calc( 0.9375*16*100vw/1920);
         }
+
+        @media (max-width: 1199px) {
+            right: 1.875rem;
+        }
     }
 
     &__prev {
@@ -118,6 +174,10 @@
 
         @media (min-width: 1921px) {
             right: calc( 4.5625*16*100vw/1920);
+        }
+
+        @media (max-width: 1199px) {
+            right: 5rem;
         }
     }
 
@@ -135,6 +195,16 @@
             bottom: calc( 4.25*16*100vw/1920) !important;
         }
 
+        @media (max-width: 1199px) {
+            padding: 0 1.875rem;
+
+            bottom: 3.125rem!important;
+        }
+
+        @media (max-width: 575px) {
+            padding: 0 .625rem;
+        }
+
         &-bullet {
             width: 2.5rem !important;
             height: .1875rem !important;
@@ -148,6 +218,11 @@
             @media (min-width: 1921px) {
                 width: calc( 2.5*16*100vw/1920) !important;
                 height: calc( 0.1875*16*100vw/1920) !important;
+            }
+
+            @media (max-width: 575px) {
+                width: 2rem !important;
+                height: 0.125rem !important;
             }
 
             &.swiper-pagination-bullet-active {

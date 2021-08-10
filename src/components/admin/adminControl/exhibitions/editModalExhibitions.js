@@ -161,7 +161,6 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
                     <FormGroup>
                         <Label for="exhEditDate">Дата</Label>
                         <Input 
-                            accept='image/*'
                             type="date" 
                             name="date" 
                             id="exhEditDate"

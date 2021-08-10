@@ -1,8 +1,33 @@
-import React from 'react';
-
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import './map.scss';
 
 const Map = () => {
+    const [isBr, setIsBr] = useState(true);
+    
+    const [size, setSize] = useState([0, 0]);
+    
+    useLayoutEffect(() => {
+        function updateSize() {
+            setSize([window.innerWidth, window.innerHeight]);
+        }
+        
+        window.addEventListener('resize', updateSize);
+        updateSize();
+    
+        return () => window.removeEventListener('resize', updateSize);
+    }, []);
+
+    useEffect(() => {
+        const clientWidth = document.documentElement.clientWidth;
+
+        if (clientWidth < 768) {
+            setIsBr(false);
+        } else {
+            setIsBr(true);
+        }
+    }, [size]);
+    
+
     return (
         <div className="map">
             <div className='container'>
@@ -10,7 +35,7 @@ const Map = () => {
                     <div className="map__contacts">
                         <div className="map__title title">
                             Наши 
-                            <br/>
+                            {isBr ? <br/> : ' '}
                             контакты
                         </div>
                         <div className="map__info">

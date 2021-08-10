@@ -5,9 +5,15 @@
         padding: calc( 5.75*16*100vw/1920) 0 calc( 5.3125*16*100vw/1920);
     }
 
+    @media (max-width: 1199px) {
+        padding: 3.875rem 0 3.4375rem;
+    }
+
+    @media (max-width: 991px) {
+        padding: 3.25rem 0 2.8125rem;
+    }
+
     &__title {
-        font-size: 3.125rem;
-        line-height: 98%;
         margin-bottom: 4.375rem;
         color: #060606;
 
@@ -15,5 +21,17 @@
             font-size: calc( 3.125*16*100vw/1920);
             margin-bottom: calc( 4.375*16*100vw/1920);
         }
+
+        @media (max-width: 1199px) {
+            margin-bottom: 3.4375rem;
+        }
+        
+        @media (max-width: 991px) {
+            margin-bottom: 2.8125rem;
+        }
+
+        @media (max-width: 575px) {
+            margin-bottom: 2rem;
+        }  
     }
 }

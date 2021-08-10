@@ -72,9 +72,15 @@ const ExhibitionInfo = ({exhibitionId, isAutorization, setCartCount, cartCount})
     } */
 
     return (
-        <div className="container">
-            {exhibition}
-        </div>
+        <>  
+            <div className="exhibition-info__img">
+                <img src={exhibitionData ? exhibitionData.image : null} alt={exhibitionData ? exhibitionData.name : null} />
+            </div>
+            <div className="container">
+                {exhibition}
+            </div>
+        </>
+        
     )
 
 };
@@ -105,7 +111,7 @@ const Exhibition = ({buyContent, data, isAutorization}) => {
             </div>
             <div className="details">
                 <div className="details__title title">
-                    Подробнее о выставке:
+                    Подробнее о выставке
                 </div>
                 <div className="details__text">
                     {data.description}
@@ -157,13 +163,13 @@ const PurchaseBlock = ({count, decrCount, incrCount, id, resetCount, setCartCoun
 
     return (
         <div className="purchase">
-            <Button 
+            <button 
                 className='purchase__btn' 
                 disabled={disabled}
                 onClick={handleSubmit}
             >
                 Добавить в корзину
-            </Button>
+            </button>
             <div className="purchase__numbers">
                 <Button onClick={decrCount} disabled={disabled} className="purchase__decr">-</Button>
                 <div className="purchase__count">{count}</div>

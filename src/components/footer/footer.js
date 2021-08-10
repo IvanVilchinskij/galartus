@@ -23,7 +23,7 @@ const Footer = () => {
                             </li>
                             <li className="footer__nav-link">
                                 <Link to='/collections'>
-                                    <span>Коллекция</span> 
+                                    <span>Коллекции</span> 
                                 </Link>
                             </li>
                             <li className="footer__nav-link">

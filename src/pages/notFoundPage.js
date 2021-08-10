@@ -10,7 +10,11 @@ const NotFoundPage = ({toggleHeaderColor}) => {
     }, []);
 
     return (
-        <p>Страница не найдена</p>
+        <div className="not-found-page">
+            <div className="container">
+                
+            </div>
+        </div>
     );
 };
 

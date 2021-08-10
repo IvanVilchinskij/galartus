@@ -1,10 +1,43 @@
 .exhibition-info {
     padding: 5.5625rem 0 6.25rem;
-    margin-top: 7.0625rem;
+    margin-top: 8.0625rem;
 
     @media (min-width: 1921px) {
         padding: calc( 5.5625*16*100vw/1920) 0 calc( 6.25*16*100vw/1920);
-        margin-top: calc( 7.0625*16*100vw/1920);
+        margin-top: calc( 8.0625*16*100vw/1920);
+    }
+
+    @media (max-width: 1199px) {
+        margin-top: 7.4375rem;
+    }
+
+    @media (max-width: 991px) {
+        margin-top: 5.1875rem;
+
+        padding: 3.875rem 0 4.5625rem;
+    }
+
+    @media (max-width: 575px) {
+        margin-top: 3.4375rem;
+        padding: 0 0 3rem;
+    }
+
+    &__img {
+        display: none;
+        width: 100%;
+        height: 11.25rem;
+        overflow: hidden;
+        margin-bottom: 1.3125rem;
+
+        img {
+            display: block;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @media (max-width: 575px) {
+            display: block;
+        }
     }
 }
 
@@ -18,6 +51,16 @@
         margin-bottom: calc( 6.3125*16*100vw/1920);
     }
 
+    @media (max-width: 991px) {
+        flex-direction: column;
+
+        margin-bottom: 3.75rem;
+    }
+
+    @media (max-width: 575px) {
+        margin-bottom: 1.875rem;
+    }
+
     &__img {
         min-width: 660/1160*100%;
         max-width: 660/1160*100%;
@@ -26,6 +69,17 @@
 
         @media (min-width: 1921px) {
             border-radius: calc( 0.9375*16*100vw/1920);
+        }
+
+        @media (max-width: 991px) {
+            min-width: 100%;
+            max-width: 100%;
+
+            margin-bottom: 2.8125rem;
+        }
+
+        @media (max-width: 575px) {
+            display: none;
         }
 
         img {
@@ -46,6 +100,16 @@
             padding: calc( 2.5*16*100vw/1920);
             border-radius: calc( 0.9375*16*100vw/1920);
         }
+
+        @media (max-width: 991px) {
+            width: 100%;
+        }
+
+        @media (max-width: 575px) {
+            width: 100%;
+            padding: 0;
+            background: none;
+        }
     }
 
     &__title {
@@ -58,6 +122,11 @@
             font-size: calc( 2.625*16*100vw/1920);
             margin-bottom: calc( 1.1875*16*100vw/1920);
         }
+
+        @media (max-width: 575px) {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
     }
 
     &__time, &__address {
@@ -67,6 +136,10 @@
         @media (min-width: 1921px) {
             font-size: calc( 1.125*16*100vw/1920);
         }
+
+        @media (max-width: 575px) {
+            font-size: .75rem;
+        }
     }
 
     &__address {
@@ -74,6 +147,10 @@
 
         @media (min-width: 1921px) {
             margin-bottom: calc( 1.3125*16*100vw/1920);
+        }
+
+        @media (max-width: 575px) {
+           margin-bottom: 1.25rem;
         }
     }
 
@@ -86,6 +163,11 @@
         @media (min-width: 1921px) {
             font-size: calc( 2.625*16*100vw/1920);
             margin-bottom: calc(1.25*16*100vw/1920);
+        }
+
+        @media (max-width: 575px) {
+            font-size: 2rem;
+            margin-bottom: 1.25rem;
         }
     }
 
@@ -106,6 +188,13 @@
             margin-bottom: calc(1.25*16*100vw/1920);
         }
 
+        @media (max-width: 575px) {
+            font-size: 0.875rem;
+            width: 100%;
+
+            margin-bottom: 0.75rem;
+        }
+
         &:disabled {
             opacity: .4;
             cursor: auto;
@@ -120,11 +209,19 @@
     @media (min-width: 1921px) {
         font-size: calc( 1.125*16*100vw/1920);
     }
+
+    @media (max-width: 575px) {
+        font-size: .75rem;
+    }
 }
 
 .details {
     display: flex;
     justify-content: space-between;
+
+    @media (max-width: 767px) {
+        flex-direction: column;
+    }
 
     &__title {
         font-size: 2.625rem;
@@ -132,6 +229,14 @@
 
         @media (min-width: 1921px) {
             font-size: calc( 2.625*16*100vw/1920);
+        }
+
+        @media (max-width: 767px) {
+            margin-bottom: 0.9375rem;
+        }
+        
+        @media (max-width: 575px) {
+            font-size: 2rem;
         }
     }
 
@@ -142,6 +247,14 @@
 
         @media (min-width: 1921px) {
             font-size: calc( 1.125*16*100vw/1920);
+        }
+
+        @media (max-width: 767px) {
+            width: 100%;
+        }
+
+        @media (max-width: 575px) {
+            font-size: .75rem;
         }
     }
 }

@@ -181,7 +181,6 @@ const Register = ({toggle, setAutorization}) => {
         <Form>
             <ModalBody>
                 <FormGroup>
-                    <Label for='registrMail'>Почта</Label>
                     <Input 
                         type='email' 
                         name='email' 
@@ -189,11 +188,11 @@ const Register = ({toggle, setAutorization}) => {
                         autoComplete='email'
                         onBlur={handleBlur}
                         onInput={handleInput}
+                        placeholder='Почта'
                     />
                     <FormErrors typeFor={'email'} formErrors={formErrors}/>
                 </FormGroup>  
                 <FormGroup>
-                    <Label for='registrPass'>Пароль</Label>
                     <Input 
                         type='password' 
                         name='password' 
@@ -201,11 +200,11 @@ const Register = ({toggle, setAutorization}) => {
                         autoComplete="current-password"
                         onBlur={handleBlur}
                         onInput={handleInput}
+                        placeholder='Пароль'
                     />
                     <FormErrors typeFor={'password'} formErrors={formErrors}/>
                 </FormGroup>          
                 <FormGroup>
-                    <Label for='checkPassword'>Подтвердите пароль</Label>
                     <Input 
                         type='password' 
                         name='checkPassword' 
@@ -213,6 +212,7 @@ const Register = ({toggle, setAutorization}) => {
                         autoComplete="current-password"
                         onBlur={handleBlur}
                         onInput={handleInput}
+                        placeholder='Подтвердите пароль'
                     />
                     {validText}
                 </FormGroup>    

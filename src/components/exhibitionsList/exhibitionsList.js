@@ -8,6 +8,7 @@ import * as actions from '../../actions/actions';
 import axiosInstance from '../../axios';
 import Spinner from '../spinner/spinner';
 import * as transformDate from '../../dateTransform/dateTransform';
+import icons from '../../icons/icons.svg';
 import db from '../../db';
 
 const ExhibitionsList = ({exhibitionsLoaded, exhibitionsError, exhibitions, isLoadingExhibitions, isErrorExhibitions, exhibitionsRequsted}) => {
@@ -82,6 +83,9 @@ const ExhibitionsList = ({exhibitionsLoaded, exhibitionsError, exhibitions, isLo
                                 <div className="exhibition-card__title">
                                     {item.name}
                                 </div>
+                                <svg className="exhibition-card__arrow">
+                                    <use href={`${icons}#arrow`}></use>
+                                </svg>
                             </div>
                         </Link>
                     );

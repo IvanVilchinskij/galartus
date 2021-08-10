@@ -8,6 +8,8 @@ import * as actions from '../../actions/actions';
 import db from '../../db';
 import * as transformDate from '../../dateTransform/dateTransform';
 
+import icons from '../../icons/icons.svg';
+
 const ComingEvents = ({exhibitionsLoaded, exhibitions}) => {
 
     useEffect(() => {
@@ -60,6 +62,9 @@ const ComingEvents = ({exhibitionsLoaded, exhibitions}) => {
                         <div className="exhibition-card__title">
                             {item.name}
                         </div>
+                        <svg className="exhibition-card__arrow">
+                            <use href={`${icons}#arrow`}></use>
+                        </svg>
                     </div>
                 </Link>
             );
@@ -72,7 +77,7 @@ const ComingEvents = ({exhibitionsLoaded, exhibitions}) => {
     return (
         <div className="coming-events">
             <div className='container'>
-                <h2 className="coming-events__title title">
+                <h2 className="coming-events__title title page-title">
                     Ближайшие мероприятия
                 </h2>
                 <div className="coming-events__grid">
