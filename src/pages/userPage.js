@@ -7,6 +7,8 @@ import UserAccount from '../components/userAccount/userAccount';
 const UserPage = ({toggleHeaderColor}) => {
     useEffect(() => {
         toggleHeaderColor(true);
+
+        window.scroll(0, 0);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

@@ -8,6 +8,8 @@ const CartPage = ({toggleHeaderColor}) => {
 
     useEffect(() => {
         toggleHeaderColor(true);
+
+        window.scroll(0, 0);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

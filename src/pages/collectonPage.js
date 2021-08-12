@@ -18,6 +18,8 @@ const CollectionPage = ({toggleHeaderColor}) => {
     useEffect(() => {
         toggleHeaderColor(true);
 
+        window.scroll(0, 0);
+
         /* axiosInstance.get(`categories?id=${id}`)
             .then(res => {
                 if (res.data[0]) {

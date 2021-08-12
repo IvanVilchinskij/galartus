@@ -14,6 +14,8 @@ const ItemPage = ({toggleHeaderColor, setCurrentPicture, currentPicture}) => {
     useEffect(() => {
         toggleHeaderColor(true);
 
+        window.scroll(0, 0);
+
         /* axiosInstance.get(`pictures?id=${id}`)
             .then(res => {
                 setCurrentPicture(res.data);

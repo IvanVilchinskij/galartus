@@ -10,6 +10,8 @@ import Map from '../components/map/map';
 const AboutPage = ({toggleHeaderColor}) => {
     useEffect(() => {
         toggleHeaderColor(true);
+
+        window.scroll(0, 0);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     
