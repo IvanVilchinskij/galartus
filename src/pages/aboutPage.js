@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import { Container } from 'reactstrap';
 import {connect} from 'react-redux';
 
 import '../styles/pages/aboutPage.scss';
@@ -16,9 +15,9 @@ const AboutPage = ({toggleHeaderColor}) => {
     
     return (    
         <div className="about">
-            <Container>
+            <div className='container'>
                 <AboutInfo/>
-            </Container>
+            </div>
             <Map/>
         </div>     
     );

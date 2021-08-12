@@ -3,10 +3,8 @@ import {
     Form,
     ModalBody,
     FormGroup,
-    Label,
     Input,
     ModalFooter,
-    Button,
 } from 'reactstrap';
 import {useHistory} from 'react-router-dom';
 
@@ -77,7 +75,6 @@ const Register = ({toggle, setAutorization}) => {
                         field.classList.add('attention');
                     }
                 }
-
                 break;
             default: 
                 break;

@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useLayoutEffect} from 'react';
 import {connect} from 'react-redux';
-import {Button} from 'reactstrap';
 
 import * as actions from '../../../../actions/actions';
 import axiosInstance from '../../../../axios';
@@ -13,6 +12,20 @@ import icons from '../../../../icons/icons.svg';
 import {setMonthName} from '../../../../dateTransform/dateTransform';
 
 const AdminExhibitions = ({exhibitions, exhibitionsLoaded, exhibitionsRequsted, exhibitionsError, isLoadingExhibitions, isErrorExhibitions}) => {
+    const [isBr, setIsBr] = useState(true);
+    const [size, setSize] = useState([0, 0]);
+    
+    useLayoutEffect(() => {
+        function updateSize() {
+            setSize([window.innerWidth, window.innerHeight]);
+        }
+        
+        window.addEventListener('resize', updateSize);
+        updateSize();
+    
+        return () => window.removeEventListener('resize', updateSize);
+    }, []);
+
     const [addModal, setAddModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
@@ -45,8 +58,16 @@ const AdminExhibitions = ({exhibitions, exhibitionsLoaded, exhibitionsRequsted, 
             exhibitionsLoaded(db.exhibitions);
         }
 
+        const clientWidth = document.documentElement.clientWidth;
+
+        if (clientWidth < 992) {
+            setIsBr(false);
+        } else {
+            setIsBr(true);
+        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isUpdate]);
+    }, [isUpdate, size]);
 
     const handleClikEdit = (item) => {
         setModalId(item.id);
@@ -83,7 +104,7 @@ const AdminExhibitions = ({exhibitions, exhibitionsLoaded, exhibitionsRequsted, 
                 <div className="admin-list__item-id admin-list__item-id">{item.id}</div>
                 <div className="admin-list__item-name admin-list__item-name--exhibitions">{item.name}</div>
                 <div className="admin-list__item-categories admin-list__item-categories--exhibitions">{itemCategories.join(', ')}</div>
-                <div className="admin-list__item-date admin-list__item-date--exhibitions">{dateData.day} {dateData.month} {dateData.year}<br/>{item.time}</div>
+                <div className="admin-list__item-date admin-list__item-date--exhibitions">{dateData.day} {dateData.month} {dateData.year} {isBr ? <br/> : false}{item.time}</div>
                 <div className="admin-list__item-price admin-list__item-price--exhibitions">{item.price} руб.</div>
                 <div className="admin-list__item-control">
                     <svg 

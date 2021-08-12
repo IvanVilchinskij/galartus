@@ -28,7 +28,7 @@ const ComingEvents = ({exhibitionsLoaded, exhibitions}) => {
 
         if (i < 3) {
             return (
-                <Link to={`/exhibitions/${item.id}`} key={item.id} className="exhibition-card exhibition-card--xl">
+                <Link to={`/galartus_front/exhibitions/${item.id}`} key={item.id} className="exhibition-card exhibition-card--xl">
                     <img 
                         src={item.image} 
                         alt={item.name} 
@@ -85,7 +85,7 @@ const ComingEvents = ({exhibitionsLoaded, exhibitions}) => {
                 </div>   
             </div>
         </div>
-    );
+    )
 };
 
 const mapStateToProps = (state) => {

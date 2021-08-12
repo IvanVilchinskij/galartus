@@ -67,7 +67,7 @@ const setShortWeekdayName = (weekday) => {
         case 6:
             return 'сб';
         default:
-            return 'не корректный день недели';
+            return '??';
     }
 };
 

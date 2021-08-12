@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {Button, Container} from 'reactstrap';
+import {Button} from 'reactstrap';
 import {connect} from 'react-redux';
 
 import './exhibitionInfo.scss';

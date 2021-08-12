@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import Masonry from 'react-masonry-css';
@@ -91,7 +91,7 @@ const CollectionsPictures = ({pictures, picturesLoaded, collectionId, picturesEr
 
         return (
             <div key={item.id} className='picture-card'>
-                <Link to={`/pictures/${item.id}`} className='picture-card__content'>
+                <Link to={`/galartus_front/pictures/${item.id}`} className='picture-card__content'>
                     <div className="picture-card__img">
                         <img src={item.image} alt={item.name} />
                     </div>

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import SwiperCore, { Autoplay, Keyboard, Navigation, Pagination} from 'swiper';
 import {Swiper, SwiperSlide} from 'swiper/react';
+import {Link} from 'react-router-dom';
 
 import './slider.scss';
 import 'swiper/swiper.scss';
@@ -20,21 +21,21 @@ const items = [
       altText: 'Slide 1',
       title: `Легендарная коллекция Сандро Боттичелли`,
       text: 'Метафора дает бессознательный биографический метод. Коллективное бессознательное изящно представляет собой постмодернизм.',
-      id: 1
+      id: 7
     },
     {
         src: image2,
         altText: 'Slide 2',
         title: 'Магическое искусство Сальвадора Дали',
         text: 'Художественная ментальность готично просветляет ритм. Экспрессионизм монотонно аккумулирует ожидания.',
-        id: 2
+        id: 8
     },
     {
         src: image3,
         altText: 'Slide 3',
         title: `Мультимедийная выставка «‎Ожившие полотна Айвазовского»‎`,
         text: 'Метафора дает бессознательный биографический метод. Коллективное бессознательное изящно представляет собой постмодернизм.',
-        id: 3
+        id: 9
     }
 ];
 
@@ -56,12 +57,14 @@ const Slider = () => {
 
         return (
             <SwiperSlide className='slider__item' key={item.id}>
-                <img src={item.src} alt={item.altText}/>
+                <img src={item.src} alt={item.altText} loading='lazy' />
                 <div className='slider__flex-wrapper container'>
                     <div className="slider__title">
-                        {firstWords.join(' ')}
-                        <br/>
-                        {lastWords.join(' ')}
+                        <Link to={`/galartus_front/collections/${item.id}`}>   
+                            {firstWords.join(' ')}
+                            <br/>
+                            {lastWords.join(' ')}
+                        </Link>
                     </div>
                     <div className="slider__text">{item.text}</div>
                 </div>

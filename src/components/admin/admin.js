@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useLayoutEffect} from 'react';
 import { 
     TabContent, 
     TabPane, 
@@ -14,6 +14,31 @@ import AdminPayment from './adminPayment/adminPayment';
 import AdminControl from './adminControl/adminControl';
 
 const Admin = () => {
+    const [isBr, setIsBr] = useState(true);
+    const [size, setSize] = useState([0, 0]);
+    
+    useLayoutEffect(() => {
+        function updateSize() {
+            setSize([window.innerWidth, window.innerHeight]);
+        }
+        
+        window.addEventListener('resize', updateSize);
+        updateSize();
+    
+        return () => window.removeEventListener('resize', updateSize);
+    }, []);
+
+    useEffect(() => {
+        const clientWidth = document.documentElement.clientWidth;
+
+        if (clientWidth < 576) {
+            setIsBr(false);
+        } else {
+            setIsBr(true);
+        }
+
+    }, [size])
+
     const [activeTab, setActiveTab] = useState('1');
 
     const toggle = tab => {
@@ -28,7 +53,7 @@ const Admin = () => {
                         className={classnames({ active: activeTab === '1' })}
                         onClick={() => { toggle('1'); }}
                     >
-                        Управление контентом
+                        Управление {!isBr ? <br/> : null}контентом
                     </NavLink>
                 </NavItem>
                 <NavItem>
@@ -36,7 +61,7 @@ const Admin = () => {
                         className={classnames({ active: activeTab === '2' })}
                         onClick={() => { toggle('2'); }}
                     >
-                        Билеты на выставки
+                        Билеты {!isBr ? <br/> : null}на выставки
                     </NavLink>
                 </NavItem>
             </Nav>

@@ -1,21 +1,55 @@
 .admin-page {
     padding: 3.125rem 0;
-    margin-top: 7.0625rem;
+    margin-top: 8.0625rem;
 
     @media (min-width: 1921px) {
         padding: calc(3.125*16*100vw/1920) 0;
         margin-top: calc(7.0625*16*100vw/1920);
     }
 
+    @media (max-width: 1199px) {
+        margin-top: 7.4375rem;
+    }
+
+    @media (max-width: 991px) {
+        margin-top: 5.1875rem;
+    }
+
+    @media (max-width: 575px) {
+        margin-top: 3.4375rem;
+        padding: 1.5rem 0 2rem;
+    }
+
     .tabs-wrapper {
         display: flex;
         justify-content: space-between;
+
+        @media (max-width: 1199px) {
+            flex-direction: column;
+        }  
 
         .first-tabs {
             display: block;
             border: none;
 
+            @media (max-width: 1199px) {
+                display: flex;
+                margin-bottom: 2rem;
+            } 
+
+            @media (max-width: 991px) {
+                justify-content: space-between;
+            }
+
+            @media (max-width: 575px) {
+                margin-bottom: 1rem;
+            }
+
             .nav-item {
+
+                @media (max-width: 991px) {
+                    width: 144/300*100%;
+                }
 
                 a {
                     font-size: 1rem;
@@ -31,9 +65,23 @@
                         font-size: calc(16*100vw/1920);
                     }
 
+                    @media (max-width: 991px) {
+                        border: 1px solid #DADADA;
+                        border-radius: 10px;
+                    }
+
+                    @media (max-width: 575px) {
+                        font-size: .75rem;
+                        text-align: center;
+                    }
+
                     &.active {
                         background: #F4F4F4;
                         border-radius: .625em;
+
+                        @media (max-width: 991px) {
+                            border: none;
+                        }
                     }
 
                     &:hover {
@@ -46,6 +94,10 @@
 
             &-content {
                 width: 860/1160*100%;
+
+                @media (max-width: 1199px) {
+                    width: 100%;
+                }
             }
         }
     }

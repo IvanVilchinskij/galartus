@@ -38,7 +38,6 @@ const ExhibitionsList = ({exhibitionsLoaded, exhibitionsError, exhibitions, isLo
         } else {
             return (
                 items.map((item) => {
-
                     const date = new Date(item.date);
 
                     const dateData = {
@@ -49,7 +48,7 @@ const ExhibitionsList = ({exhibitionsLoaded, exhibitionsError, exhibitions, isLo
                     };
 
                     return (
-                        <Link to={`/exhibitions/${item.id}`} key={item.id} className="exhibition-card">
+                        <Link to={`/galartus_front/exhibitions/${item.id}`} key={item.id} className="exhibition-card">
                             <img 
                                 src={item.image} 
                                 alt={item.name} 

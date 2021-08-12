@@ -7,16 +7,36 @@
         margin-top: calc( 8.0625*16*100vw/1920);
     }
 
+    @media (max-width: 1199px) {
+        margin-top: 7.4375rem;
+    }
+
+    @media (max-width: 991px) {
+        margin-top: 5.1875rem;
+
+        padding: 3.875rem 0;
+    }
+
+    @media (max-width: 575px) {
+        margin-top: 3.4375rem;
+        padding: 1.875rem 0;
+    }
+
     &__wrapper {
         display: flex;
         justify-content: space-between;
+
+        @media (max-width: 991px) {
+            flex-direction: column;
+            align-items: center;
+        }
     }
 
     .tabs-wrapper {
-        width: 53.75rem;
+        width: 860/1160*100%;
 
-        @media (min-width: 1921px) {
-            width: calc( 53.75*16*100vw/1920);
+        @media (max-width: 991px) {
+            width: 100%;
         }
     }
 }
@@ -26,6 +46,16 @@
 
     @media (min-width: 1921px) {
         width: calc( 12.5*16*100vw/1920);
+    }
+
+    @media (max-width: 991px) {
+        margin-bottom: 3.5rem;
+    }
+
+    @media (max-width: 575px) {
+        width: 100%;
+
+        margin-bottom: 2rem;
     }
 
     &__header {
@@ -44,6 +74,12 @@
             margin-bottom: calc( 1.75*16*100vw/1920);
         }
 
+        @media (max-width: 575px) {
+            width: 10rem;
+            height: 10rem;
+            margin: 0 auto;
+        }
+
         img {
             display: block;
             object-fit: cover;
@@ -58,6 +94,10 @@
         @media (min-width: 1921px) {
             margin-bottom: calc( 1.5625*16*100vw/1920);
         }
+
+        @media (max-width: 575px) {
+            margin-bottom: 0.5rem;
+        }
     }
 
     &__name {
@@ -70,6 +110,13 @@
             font-size: calc( 2*16*100vw/1920);
             margin-bottom: calc( 0.4375*16*100vw/1920);
         }
+
+        @media (max-width: 575px) {
+            font-size: 1.5rem;
+            text-align: center;
+
+            margin-bottom: .21875rem;
+        }
     }
 
     &__birthday, &__mail {
@@ -79,6 +126,11 @@
 
         @media (min-width: 1921px) {
             font-size: calc( 16*100vw/1920);
+        }
+
+        @media (max-width: 575px) {
+            font-size: 0.75rem;
+            text-align: center;
         }
     }
 
@@ -109,6 +161,10 @@
         @media (min-width: 1921px) {
             font-size: calc( 16*100vw/1920);
         }
+
+        @media (max-width: 575px) {
+            font-size: 0.75rem;
+        }
     }
 }
 
@@ -130,6 +186,11 @@
 
         @media (min-width: 1921px) {
             font-size: calc( 16*100vw/1920);
+        }
+
+        @media (max-width: 575px) {
+            font-size: .875rem;
+            padding: 1em .875em;
         }
 
         &.active {

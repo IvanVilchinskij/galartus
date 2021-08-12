@@ -4,6 +4,9 @@ import collection3 from './images/collections/3.png';
 import collection4 from './images/collections/4.png';
 import collection5 from './images/collections/5.png';
 import collection6 from './images/collections/6.png';
+import collection7 from './components/slider/imgs/img.jpg';
+import collection8 from './components/slider/imgs/2.jpg';
+import collection9 from './components/slider/imgs/3.jpg';
 
 import picture1 from './images/pictures/1.png';
 import picture2 from './images/pictures/2.png';
@@ -52,6 +55,21 @@ const db = {
             id: 6,
             name: "Пейзажи",
             image: collection6,
+        },
+        {
+            id: 7,
+            name: "Сандро Боттичелли",
+            image: collection7,
+        },
+        {
+            id: 8,
+            name: "Сальвадор Дали",
+            image: collection8,
+        },
+        {
+            id: 9,
+            name: "Иван Айвазовский",
+            image: collection9,
         },
     ],
 
@@ -140,6 +158,7 @@ const db = {
             ]
         },
     ],
+
     exhibitions: [
         {
             id: 1,

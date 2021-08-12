@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
+
 import './map.scss';
 
 const Map = () => {

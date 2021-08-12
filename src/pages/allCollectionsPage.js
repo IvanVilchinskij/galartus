@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import { Container, ButtonGroup, Button } from 'reactstrap';
 import {connect} from 'react-redux';
 
 import * as actions from '../actions/actions';
@@ -13,10 +12,10 @@ const AllCollectionsPage = ({toggleHeaderColor}) => {
 
     return (    
         <div className='collection'>
-            <Container>
+            <div className='container'>
                 <h2 className="collection__title title page-title">Коллекции</h2>
                 <Collcetions/>
-            </Container>
+            </div>
         </div>
     );
 };

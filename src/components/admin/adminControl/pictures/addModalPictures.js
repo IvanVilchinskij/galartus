@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {
-    Button,
     Form,
     FormGroup,
     Label,
@@ -132,7 +131,12 @@ const AddModalPictures = ({collections, isLoadingCollections, isErrorCollcetions
     return (
         <Modal isOpen={isOpen} toggle={toggle} className='custom-modal'>
             <Form id='addPictureForm'>
-                <ModalHeader toggle={toggle} close={closeBtn}>Добавление картины</ModalHeader>
+                <ModalHeader 
+                    toggle={toggle} 
+                    close={closeBtn}
+                >
+                    Добавление картины
+                </ModalHeader>
                 <ModalBody>
                 <FormGroup>
                     <Label for="picName">Название</Label>

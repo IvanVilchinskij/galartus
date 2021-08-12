@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {
-    Button,
     Form,
     FormGroup,
     Label,
@@ -26,8 +25,6 @@ const AddModalCollcetions = ({isOpen, toggle, setUpdate}) => {
     const [error, setError] = useState(false);
 
     const [formValid, setFormValid] = useState(true);
-
-    // eslint-disable-next-line eqeqeq
 
     const handleChange = (e) => {
         const target = e.target;

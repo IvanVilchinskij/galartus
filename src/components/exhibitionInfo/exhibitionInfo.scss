@@ -25,13 +25,14 @@
     &__img {
         display: none;
         width: 100%;
-        height: 11.25rem;
+        min-height: 11.25rem;
         overflow: hidden;
         margin-bottom: 1.3125rem;
 
         img {
             display: block;
-            height: 100%;
+            width: 100%;
+            min-height: 100%;
             object-fit: cover;
         }
 

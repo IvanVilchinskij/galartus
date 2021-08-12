@@ -81,7 +81,6 @@ const AdminCollections = ({collections, collectionsLoaded, isErrorCollcetions, i
     }) : null;
 
     const loadingContent = isLoadingCollections ? <LoadingCard/> : null;
-
     const errorContent = isErrorCollcetions ? <ErrorCard/> : null;
 
     return (
@@ -95,7 +94,12 @@ const AdminCollections = ({collections, collectionsLoaded, isErrorCollcetions, i
                 {collectionsList}
                 {errorContent}
             </div>
-            <button className='admin-add-btn' onClick={toggleAddModal}>Добавить коллекцию</button>
+            <button 
+                className='admin-add-btn' 
+                onClick={toggleAddModal
+            }>
+                Добавить коллекцию
+            </button>
             <AddModalCollcetions 
                 isOpen={addModal} 
                 toggle={toggleAddModal} 

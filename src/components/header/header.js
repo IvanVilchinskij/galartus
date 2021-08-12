@@ -96,31 +96,31 @@ const Header = ({darkHeader, isAutorization}) => {
         <header onClick={(e) => handleClickSubstr(e)} className={`header ${noTransparentBG}`}>
             <div className='header__flex-wrapper container'>
                 <div className="header__logo title">
-                    <Link className={darkClass} to='/'>Galartus</Link>
+                    <Link className={darkClass} to='/galartus_front/'>Galartus</Link>
                 </div>
                 <div className="header__control">
                     <div className="header__logo title">
-                        <Link onClick={handleClik} to='/'>Galartus</Link>
+                        <Link onClick={handleClik} to='/galartus_front/'>Galartus</Link>
                     </div>
                     <nav className="header__nav nav">
                         <ul className="nav__list">
                             <li className="nav__item nav__item--menu">
-                                <Link onClick={handleClik} className={darkClass}  to='/'>
+                                <Link onClick={handleClik} className={darkClass}  to='/galartus_front/'>
                                     <span>Главная</span>
                                 </Link>
                             </li>
                             <li className="nav__item">
-                                <Link onClick={handleClik} className={darkClass}  to='/exhibitions'>
+                                <Link onClick={handleClik} className={darkClass}  to='/galartus_front/exhibitions'>
                                     <span>Выставки</span>
                                 </Link>
                             </li>
                             <li className="nav__item">
-                                <Link onClick={handleClik} className={darkClass}  to='/collections'>
+                                <Link onClick={handleClik} className={darkClass}  to='/galartus_front/collections'>
                                     <span>Коллекции</span>
                                 </Link>
                             </li>
                             <li className="nav__item">
-                                <Link onClick={handleClik} className={darkClass}  to='/about'>
+                                <Link onClick={handleClik} className={darkClass}  to='/galartus_front/about'>
                                     <span>О музее</span>
                                 </Link>
                             </li>
@@ -166,7 +166,7 @@ const LogOutBtn = ({toggleExit, darkClass}) => {
 const AdminBtn = ({darkClass, handleClik}) => {
     return (
         <button className={`btns-group__btn ${darkClass}`}>
-            <Link onClick={handleClik} className={darkClass} to='/admin'>Управление</Link>
+            <Link onClick={handleClik} className={darkClass} to='/galartus_front/admin'>Управление</Link>
         </button>
     );
 };
@@ -174,7 +174,7 @@ const AdminBtn = ({darkClass, handleClik}) => {
 const UserPA = ({darkClass, handleClik}) => {
     return (
         <button className={`btns-group__btn ${darkClass}`}>
-            <Link onClick={handleClik} className={darkClass} to='/user'>Личный кабинет</Link>
+            <Link onClick={handleClik} className={darkClass} to='/galartus_front/user'>Личный кабинет</Link>
         </button> 
     );
 };

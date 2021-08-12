@@ -47,7 +47,11 @@ const Collections = ({
             return (
                 items.map((item) => {
                     return (
-                        <Link to={`/collections/${item.id}`} className='collection-card' key={item.id}>   
+                        <Link 
+                            to={`/galartus_front/collections/${item.id}`} 
+                            className='collection-card' 
+                            key={item.id}
+                        >   
                             <div className="collection-card__img">
                                 <img src={item.image} alt={item.name}/>                       
                             </div> 

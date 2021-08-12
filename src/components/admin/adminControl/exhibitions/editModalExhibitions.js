@@ -1,6 +1,5 @@
-import React, {/* useEffect, */ useState} from 'react';
+import React, { useState} from 'react';
 import {
-    Button,
     Form,
     FormGroup,
     Label,
@@ -126,7 +125,12 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
     return (
         <Modal isOpen={isOpen} toggle={toggle} className='custom-modal'>
             <Form id='editExhibitionsForm'>
-                <ModalHeader toggle={toggle} close={closeBtn}>Изменеие "{modalName}"</ModalHeader>
+                <ModalHeader 
+                    toggle={toggle} 
+                    close={closeBtn}
+                >
+                    Изменение "{modalName}"
+                </ModalHeader>
                 <ModalBody>
                     <FormGroup>
                         <Label for="exhEditName">Название</Label>
@@ -174,6 +178,7 @@ const EditModalExhibitions = ({collections,  isLoadingCollections, isErrorCollce
                             type="time" 
                             name="time" 
                             id="exhEditTime"
+                            placeholder="чч:мм"
                             onChange={handleChange}
                             autoComplete='time'
                         />

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import {Button} from 'reactstrap';
 
 import * as actions from '../../../../actions/actions';
 import axiosInstance from '../../../../axios';

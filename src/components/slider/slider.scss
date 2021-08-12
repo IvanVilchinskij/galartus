@@ -9,6 +9,10 @@
         height: 100vh;
     }
 
+    @media (max-height: 420px) {
+        height: 150vh;
+    }
+
     &__flex-wrapper {
         position: relative;
         z-index: 3;
@@ -61,7 +65,7 @@
         font-size: 3.375rem;
         line-height: 100%;
 
-        color: #FFFFFF;
+        
         width: 80%;
         margin-bottom: .556em;
 
@@ -79,6 +83,18 @@
 
         @media (max-width: 575px) {
             font-size: 2rem;
+        }
+
+        a {
+            color: #FFFFFF;
+            opacity: 1;
+            transition: opacity .15s linear;
+
+            &:hover {
+                @media (min-width: 992px) {
+                    opacity: .8;
+                }
+            }
         }
 
     }

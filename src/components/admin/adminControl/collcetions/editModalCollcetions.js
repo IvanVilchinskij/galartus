@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-    Button,
     Form,
     FormGroup,
     Label,
@@ -31,7 +30,7 @@ const EditModalCollcetions = ({ isOpen, toggle, modalId, modalName, setUpdate}) 
         if ([target.name] == 'image') {
             setFormImg({
                 image: target.files,
-            })
+            });
         }
 
         updateCollectionData({
@@ -93,7 +92,12 @@ const EditModalCollcetions = ({ isOpen, toggle, modalId, modalName, setUpdate}) 
     return (
         <Modal isOpen={isOpen} toggle={toggle} className='custom-modal'>
             <Form id='editCollcetionForm'>
-                <ModalHeader toggle={toggle} close={closeBtn}>Изменеие "{modalName}"</ModalHeader>
+                <ModalHeader 
+                    toggle={toggle} 
+                    close={closeBtn}
+                >
+                    Изменение "{modalName}"
+                </ModalHeader>
                 <ModalBody>
                     <FormGroup>
                         <Label for="addName">Название</Label>
@@ -117,7 +121,12 @@ const EditModalCollcetions = ({ isOpen, toggle, modalId, modalName, setUpdate}) 
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>
-                    <button disabled onClick={handleSubmit}>Изменить</button>
+                    <button 
+                        disabled 
+                        onClick={handleSubmit}
+                    >
+                        Изменить
+                    </button>
                     {loadingText}
                     {errorText}
                 </ModalFooter>

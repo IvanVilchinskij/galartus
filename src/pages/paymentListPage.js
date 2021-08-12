@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {useParams} from 'react-router-dom';
-import { Container } from 'reactstrap';
 
 import '../styles/pages/paymentListPage.scss';
 
@@ -18,9 +17,9 @@ const PaymentListPage = ({toggleHeaderColor}) => {
 
     return (
         <div className="payment-list-page">
-            <Container>
+            <div className='container'>
                 <PaymentList exhId={id}/>
-            </Container>
+            </div>
         </div>
     )
 };

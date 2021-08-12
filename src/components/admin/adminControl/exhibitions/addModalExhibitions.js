@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {
-    Button,
     Form,
     FormGroup,
     Label,
@@ -52,7 +51,6 @@ const AddModalExhibitions = ({collections, isLoadingCollections, isErrorCollceti
     };
 
     const checkValidation = (fieldName, value) => {
-
         switch (fieldName){
             case 'image': 
                 if (!value) {
@@ -137,7 +135,12 @@ const AddModalExhibitions = ({collections, isLoadingCollections, isErrorCollceti
     return (
         <Modal isOpen={isOpen} toggle={toggle} className='custom-modal'>
             <Form id='addExhibitionsForm'>
-                <ModalHeader toggle={toggle} close={closeBtn}>Добавление выставки</ModalHeader>
+                <ModalHeader 
+                    toggle={toggle} 
+                    close={closeBtn}
+                >
+                    Добавление выставки
+                </ModalHeader>
                 <ModalBody>
                     <FormGroup>
                         <Label for="exhName">Название</Label>

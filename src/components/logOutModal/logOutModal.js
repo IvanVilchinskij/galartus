@@ -1,5 +1,5 @@
-import React,{ useEffect, useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
+import React,{  useState } from 'react';
+import {  Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { useHistory } from 'react-router-dom';
 import {connect} from 'react-redux';
 

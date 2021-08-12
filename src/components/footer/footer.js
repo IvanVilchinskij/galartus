@@ -10,24 +10,24 @@ const Footer = () => {
                 <div className="footer__flex-wrapper">
                     <div className="footer__logo">
                         <div className="footer__logo-name title">
-                            <Link to='/'>Galartus</Link>            
+                            <Link to='/galartus_front/'>Galartus</Link>            
                         </div>
                         <div className="footer__logo-year">2021</div>
                     </div>
                     <div className="footer__nav">
                         <ul className="footer__nav-list">
                             <li className="footer__nav-link">
-                                <Link to='/exhibitions'>
+                                <Link to='/galartus_front/exhibitions'>
                                     <span>Выставки</span> 
                                 </Link>
                             </li>
                             <li className="footer__nav-link">
-                                <Link to='/collections'>
+                                <Link to='/galartus_front/collections'>
                                     <span>Коллекции</span> 
                                 </Link>
                             </li>
                             <li className="footer__nav-link">
-                                <Link to='/about'>
+                                <Link to='/galartus_front/about'>
                                     <span>О музее</span>  
                                 </Link>
                             </li>
@@ -52,38 +52,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
-
-/* <footer className='footer'>
-            <Navbar 
-                className='footer__navbar navbar' 
-                expand='lg' 
-                dark 
-                color='dark'
-            >
-                <Container>
-                    <NavbarBrand href='/' className='navbar__logo'>Галартус</NavbarBrand>
-                    <Nav className='ml-auto navbar__nav'>
-                        <NavItem className='navbar__item'>
-                            <Link to='/'>Главная страница</Link>
-                        </NavItem>
-                        <NavItem className='navbar__item'>
-                            <Link to='/exhibitions'>Выставки</Link>
-                        </NavItem>
-                        <NavItem className='navbar__item'>
-                            <Link to='/collections'>Коллекция</Link>
-                        </NavItem>
-                        <NavItem className='navbar__item'>
-                            <Link to='/about'>О музее</Link>
-                        </NavItem>              
-                    </Nav>
-                </Container>
-            </Navbar>
-            <Container>
-                <div className="footer__info">                  
-                    <h4><a href="tel:+78005553535">8-800-555-35-35</a></h4>
-                    <h4><a href="mailto:qweqr@muzia.su">qweqr@muzia.su</a></h4>                             
-                </div>
-            </Container>
-            
-        </footer> */

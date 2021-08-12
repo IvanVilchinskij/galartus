@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import * as actions from '../../actions/actions';
@@ -25,32 +25,17 @@ const App = ({isAutorization, setAutorization, setCartCount, cartCount}) => {
         if (localStorage.getItem('access_token')) {
             setAutorization(true);
 
-            axiosInstance.get('cart/details?is_ordered=0')
+            /* axiosInstance.get('cart/details?is_ordered=0')
                 .then(res => {
                     if (res.data[0] && res.data[0].items.length > 0) {
                         setCartCount(cartCount, res.data[0].items.length);
                     } else {
                         setCartCount(0, 0);
                     }
-                })
+                }) */
         } else {
             setAutorization(false);
         }
-
-        const htmlEl = document.querySelector('html');
-        const initialFZ = getComputedStyle(htmlEl).fontSize;
-        const initilaWidth = document.documentElement.clientWidth;
-        
-
-        if (initilaWidth > 1920) {
-            const adaptiveCoef = initilaWidth/1920;
-            htmlEl.style.fontSize = `${adaptiveCoef*initialFZ}px`;
-
-            console.log(adaptiveCoef);
-        }
-        
-        
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAutorization]);
 
@@ -60,17 +45,17 @@ const App = ({isAutorization, setAutorization, setCartCount, cartCount}) => {
             <CartBtn cartCount={cartCount}/>
             <div className="content">
                 <Switch>
-                    <Route exact path='/' component={MainPage}/>
-                    <Route exact path='/exhibitions' component={ExhibitionsPage}/>
-                    <Route exact path='/collections' component={AllCollectionsPage}/>
-                    <Route exact path='/about' component={AboutPage}/>
-                    <Route exact path='/user' component={UserPage} />
-                    <Route exact path='/collections/:id' component={CollectionPage}/>
-                    <Route exact path={`/pictures/:id`} component={ItemPage} />
-                    <Route exact path='/exhibitions/:id' component={ExhibitionInfoPage}/>
-                    <Route exact path='/admin' component={AdminPage}/>
-                    <Route exact path='/cart' component={CartPage} />
-                    <Route exact path='/payment-list/:id' component={PaymentListPage}/>
+                    <Route exact path='/galartus_front/' component={MainPage}/>
+                    <Route exact path='/galartus_front/exhibitions' component={ExhibitionsPage}/>
+                    <Route exact path='/galartus_front/collections' component={AllCollectionsPage}/>
+                    <Route exact path='/galartus_front/about' component={AboutPage}/>
+                    <Route exact path='/galartus_front/user' component={UserPage} />
+                    <Route exact path='/galartus_front/collections/:id' component={CollectionPage}/>
+                    <Route exact path={`/galartus_front/pictures/:id`} component={ItemPage} />
+                    <Route exact path='/galartus_front/exhibitions/:id' component={ExhibitionInfoPage}/>
+                    <Route exact path='/galartus_front/admin' component={AdminPage}/>
+                    <Route exact path='/galartus_front/cart' component={CartPage} />
+                    <Route exact path='/galartus_front/payment-list/:id' component={PaymentListPage}/>
                     <Route component={NotFoundPage}/>
                 </Switch>
             </div>  

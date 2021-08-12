@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {Container} from 'reactstrap';
 import {connect} from 'react-redux';
 import {useParams} from 'react-router-dom';
 
@@ -48,10 +47,10 @@ const CollectionPage = ({toggleHeaderColor}) => {
 
     return (
         <div className="collection-page">
-            <Container>
+            <div className='container'>
                 <h2 className="pictures__title title page-title">{collectionName}</h2>
                 <CollectionsPictures collectionId={+id}/>            
-            </Container>        
+            </div>        
         </div>      
     );
 };

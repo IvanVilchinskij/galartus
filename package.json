@@ -2,7 +2,7 @@
   "name": "gallery",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ivanvilchinskij.github.io/gallery",
+  "homepage": "https://ivanvilchinskij.github.io/galartus_front",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.5",

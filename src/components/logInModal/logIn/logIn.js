@@ -3,7 +3,6 @@ import {
     Form,
     ModalBody,
     FormGroup,
-    Label,
     Input,
     ModalFooter,
 } from 'reactstrap';
@@ -24,7 +23,6 @@ const LogIn = ({toggle, setAutorization}) => {
     const history = useHistory();
 
     const [formData, updateFormData] = useState(initialFormData);
-
     const [formErrors, setFormErrors] = useState(initialFormData);
 
     const [emailValid, setEmailValid] = useState(false);

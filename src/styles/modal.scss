@@ -39,7 +39,7 @@
         
         .modal-title {
             @media (max-width: 575px) {
-                font-size: .75rem;
+                font-size: .875rem;
             }    
         }
 
@@ -163,6 +163,8 @@
 
             @media (max-width: 575px) {
                 font-size: .875rem;
+
+                margin-bottom: .4rem;
             }  
 
         }
@@ -191,7 +193,11 @@
                 box-shadow: none;
             }
 
-            &[accept='image/*'] {
+            &[type='date'], &[type='time'] {
+                height: 3.333em;
+            }
+
+            &[accept='image/*'],  {
                 padding: 0;
                 border: none;
                 border-radius: 0;
